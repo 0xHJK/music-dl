@@ -51,7 +51,7 @@ def qq_search(keyword, count=5) -> list:
             'title': m['songname'],
             'id': m['songid'],
             'mid': m['songmid'],
-            'length': str(datetime.timedelta(seconds=m['interval'])),
+            'duration': str(datetime.timedelta(seconds=m['interval'])),
             'singer': '、'.join(singers),
             'album': m['albumname'],
             # 'ext': m['ExtName'],

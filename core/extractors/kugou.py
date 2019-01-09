@@ -43,7 +43,7 @@ def kugou_search(keyword, count=5) -> list:
             'title': m['SongName'],
             'id': m['Scid'],
             'hash': m['FileHash'],
-            'length': str(datetime.timedelta(seconds=m['Duration'])),
+            'duration': str(datetime.timedelta(seconds=m['Duration'])),
             'singer': m['SingerName'],
             'album': m['AlbumName'],
             # 'ext': m['ExtName'],

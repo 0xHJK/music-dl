@@ -27,7 +27,7 @@ def colorize(string, color):
 def info(music):
     ''' 打印歌曲信息 '''
     s = '\n ------------ \n -> 歌曲：%s\n -> 歌手：%s\n -> 时长: %s\n -> 大小: %s\n -> 比特率: %s\n -> URL: %s\n' % \
-        (music['title'], music['singer'], music['length'], music['size'], music['rate'], music['url'])
+        (music['title'], music['singer'], music['duration'], music['size'], music['rate'], music['url'])
     print(s)
 
 
@@ -38,6 +38,6 @@ def menu(music_list):
         source = colorize('%6s | ' % music['source'].upper(), music['source'])
         size = colorize('%5sMB' % music['size'], 'yellow')
         info = '%s - %s - %s - %s - %s' % \
-               (music['length'], size, music['title'], music['singer'], music['album'])
+               (music['duration'], size, music['title'], music['singer'], music['album'])
 
         print(idx + source + info)
