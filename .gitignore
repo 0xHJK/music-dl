@@ -104,3 +104,8 @@ venv.bak/
 .mypy_cache/
 .idea
 test.py
+
+# music
+*.mp3
+*.ogg
+*.flac
