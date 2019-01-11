@@ -1,5 +1,5 @@
-#!/usr/bin/env python  
-#-*- coding:utf-8 _*-  
+#!/usr/bin/env python
+#-*- coding:utf-8 _*-
 """
 @author: HJK 
 @file: echo.py 
@@ -10,12 +10,15 @@
 """
 
 colors = {
-    'blue': '\033[94m',
-    'pink': '\033[95m',
+    'red': '\033[91m',
     'green': '\033[92m',
     'yellow': '\033[93m',
+    'blue': '\033[94m',
+    'pink': '\033[95m',
+    'cyan': '\033[96m',
     'qq': '\033[92m',
-    'kugou': '\033[95m',
+    'kugou': '\033[94m',
+    'netease': '\033[91m',
 }
 
 
@@ -34,8 +37,8 @@ def info(music):
 def menu(music_list):
     ''' 打印歌曲列表信息 '''
     for music in music_list:
-        idx = colorize(' [ %s ] ' % music_list.index(music), 'blue')
-        source = colorize('%6s | ' % music['source'].upper(), music['source'])
+        idx = colorize(' [ %2s ] ' % music_list.index(music), 'cyan')
+        source = colorize('%7s | ' % music['source'].upper(), music['source'])
         size = colorize('%5sMB' % music['size'], 'yellow')
         info = '%s - %s - %s - %s - %s' % \
                (music['duration'], size, music['title'], music['singer'], music['album'])
