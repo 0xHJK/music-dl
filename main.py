@@ -8,6 +8,7 @@
 """
 
 import sys
+import re
 from core.extractors import kugou
 from core.extractors import qq
 from utils import echo
@@ -19,6 +20,30 @@ addons = {
 }
 
 logger = CustomLog(__name__).getLogger()
+
+def indexOrRange(item):
+    pattern=r'^(\d*)[-,:](\d*)$'
+    m=re.match(pattern,str(item))
+    if m:
+        index1=int(m.group(1))
+        index2=int(m.group(2))
+        return 'range' , list(range(index1,index2+1))
+    else:
+        return 'index' , item
+
+def downloadByIndexList(indexlist,music_list):
+    for i in indexlist:
+        itemtype,value=indexOrRange(i)
+        if itemtype=='range' :
+            downloadByIndexList(value,music_list)
+            continue
+        if int(i) < 0 or int(i) >= len(music_list): raise ValueError
+        music = music_list[int(i)]
+        addons.get(music['source']).download(music)
+    return
+
+
+
 
 def main(keyword):
     music_list = []
@@ -35,11 +60,7 @@ def main(keyword):
 
     echo.menu(music_list)
     choices = input('请输入要下载的歌曲序号，多个序号用空格隔开：')
-    for i in choices.split():
-        if int(i) < 0 or int(i) >= len(music_list): raise ValueError
-        music = music_list[int(i)]
-        addons.get(music['source']).download(music)
-
+    downloadByIndexList(choices.split(),music_list)
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
