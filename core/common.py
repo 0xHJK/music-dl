@@ -28,4 +28,11 @@ def url_available(url) -> bool:
     return r.status_code == requests.codes.ok
 
 
+def content_length(url) -> int:
+    s = requests.Session()
+    s.headers.update(glovar.FAKE_HEADERS)
+    r = s.head(url)
+    if r.status_code == requests.codes.ok:
+        return int(r.headers.get('Content-Length', 0))
+    return 0
 
