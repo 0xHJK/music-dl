@@ -10,6 +10,7 @@ QQ音乐搜索和下载
 """
 
 import datetime
+import random
 import glovar
 from core.common import *
 from core.exceptions import *
@@ -67,8 +68,9 @@ def qq_search(keyword, count=5) -> list:
 def qq_download(music):
     ''' 根据songmid等信息获得下载链接 '''
     # 计算vkey
+    guid = str(random.randrange(1000000000, 10000000000))
     params = {
-        'guid': '5150825362',
+        'guid': guid,
         'format': 'json',
         'json': 3
     }
@@ -89,11 +91,13 @@ def qq_download(music):
     vkey = j['key']
 
     for prefix in ['M800', 'M500', 'C400']:
-        url = 'http://dl.stream.qqmusic.qq.com/%s%s.mp3?vkey=%s&guid=5150825362&fromtag=1' % \
-              (prefix, music['mid'], vkey)
-        if url_available(url):
+        url = 'http://dl.stream.qqmusic.qq.com/%s%s.mp3?vkey=%s&guid=%s&fromtag=1' % \
+              (prefix, music['mid'], vkey, guid)
+        size = content_length(url)
+        if size > 0:
             music['url'] = url
             music['rate'] = 320 if prefix == 'M800' else 128
+            music['size'] = round(size / 1048576, 2)
             break
 
     music['name'] = '%s - %s.mp3' % (music['singer'], music['title'])
