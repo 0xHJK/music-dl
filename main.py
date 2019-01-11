@@ -11,12 +11,14 @@ import sys
 import re
 from core.extractors import kugou
 from core.extractors import qq
+from core.extractors import netease
 from utils import echo
 from utils.customlog import CustomLog
 
 addons = {
     'qq': qq,
-    'kugou': kugou
+    'kugou': kugou,
+    'netease': netease,
 }
 
 logger = CustomLog(__name__).getLogger()
@@ -42,9 +44,6 @@ def downloadByIndexList(indexlist,music_list):
         addons.get(music['source']).download(music)
     return
 
-
-
-
 def main(keyword):
     music_list = []
     try:
@@ -56,6 +55,11 @@ def main(keyword):
         music_list += kugou.search(keyword)
     except Exception as e:
         logger.error('Get KUGOU music list failed.')
+        logger.error(e)
+    try:
+        music_list += netease.search(keyword)
+    except Exception as e:
+        logger.error('Get NETEASE music list failed.')
         logger.error(e)
 
     echo.menu(music_list)
