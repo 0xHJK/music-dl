@@ -47,7 +47,8 @@ def qq_search(keyword, count=5) -> list:
         for singer in m['singer']:
             singers.append(singer['name'])
 
-        size = m['size320'] or m['size128']
+        # size = m['size320'] or m['size128']
+        size = m['size128']
         music = {
             'title': m['songname'],
             'id': m['songid'],
