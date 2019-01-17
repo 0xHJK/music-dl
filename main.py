@@ -9,6 +9,8 @@
 
 import sys
 import re
+import getopt
+import glovar
 from core.extractors import kugou
 from core.extractors import qq
 from core.extractors import netease
@@ -44,32 +46,64 @@ def downloadByIndexList(indexlist,music_list):
         addons.get(music['source']).download(music)
     return
 
-def main(keyword):
+def setopts(args):
+    '''
+    根据命令行输入的参数修改全局变量
+    :param args: 命令行参数列表
+    :return:
+    '''
+    try:
+        opts, others = getopt.getopt(args, 'k:s:c:o:',
+                                        ['--keyword=', '--source=', '--count=', '--outdir='])
+    except getopt.GetoptError as e:
+        logger.error('命令解析失败')
+        logger.error(e)
+        echo.usage()
+        sys.exit(2)
+
+    glovar.init_option()
+
+    for o, a in opts:
+        if o in ('-k', '--keyword'):
+            glovar.set_option('keyword', a)
+        elif o in ('-s', '--source'):
+            glovar.set_option('source', a)
+        elif o in ('-c', '--count'):
+            glovar.set_option('count', int(a))
+        elif o in ('-o', '--outdir'):
+            glovar.set_option('outdir', a)
+        else:
+            assert False, 'unhandled option'
+
+def main():
     music_list = []
-    try:
-        music_list += qq.search(keyword)
-    except Exception as e:
-        logger.error('Get QQ music list failed.')
-        logger.error(e)
-    try:
-        music_list += kugou.search(keyword)
-    except Exception as e:
-        logger.error('Get KUGOU music list failed.')
-        logger.error(e)
-    try:
-        music_list += netease.search(keyword)
-    except Exception as e:
-        logger.error('Get NETEASE music list failed.')
-        logger.error(e)
+
+    if not glovar.get_option('keyword'):
+        # 如果未设置关键词
+        keyword = input('请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）：\n > ')
+        glovar.set_option('keyword', keyword)
+
+    for source in glovar.get_option('source').split():
+        try:
+            music_list += addons.get(source).search(glovar.get_option('keyword'))
+        except Exception as e:
+            logger.error('Get %s music list failed.' % source.upper())
+            logger.error(e)
 
     echo.menu(music_list)
     choices = input('请输入要下载的歌曲序号，多个序号用空格隔开：')
     downloadByIndexList(choices.split(),music_list)
 
+    # 下载完后继续搜索
+    keyword = input('请输入要搜索的歌曲，或Ctrl+C退出：\n > ')
+    glovar.set_option('keyword', keyword)
+    main()
+
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        keyword = input('请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）：\n > ')
-    else:
-        keyword = ' '.join(sys.argv[1:])
-    main(keyword)
+    if len(sys.argv) > 1:
+        setopts(sys.argv[1:])
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(0)
 
