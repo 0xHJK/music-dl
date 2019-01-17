@@ -17,8 +17,9 @@ from utils.customlog import CustomLog
 
 logger = CustomLog(__name__).getLogger()
 
-def kugou_search(keyword, count=glovar.COUNT) -> list:
+def kugou_search(keyword) -> list:
     ''' 搜索音乐 '''
+    count = glovar.get_option('count') or 5
     params = {
         'keyword': keyword,
         'platform': 'WebFilter',

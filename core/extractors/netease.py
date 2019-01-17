@@ -14,11 +14,13 @@ import binascii
 import json
 import datetime
 from Crypto.Cipher import AES
+import glovar
 from core.common import *
 from core.exceptions import *
 
-def netease_search(keyword, count=glovar.COUNT) -> list:
+def netease_search(keyword) -> list:
     ''' 从网易云音乐搜索 '''
+    count = glovar.get_option('count') or 5
     eparams = {
         'method': 'POST',
         'url': 'http://music.163.com/api/cloudsearch/pc',
