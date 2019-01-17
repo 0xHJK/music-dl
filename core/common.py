@@ -21,7 +21,7 @@ def music_download(music):
     echo.info(music)
     outfile = os.path.abspath(os.path.join(glovar.get_option('outdir'), music['name']))
     wget.download(music['url'], out=outfile)
-    print('已保存到：%s\n' % outfile)
+    print('\n已保存到：%s\n' % outfile)
 
 
 def url_available(url) -> bool:
