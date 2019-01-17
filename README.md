@@ -3,6 +3,8 @@ search and download music 从网易云音乐、虾米音乐、QQ音乐、酷狗�
 
 支持指定搜索数量和音乐源，默认下载能获得的最优品质的音乐。
 
+> 注意：仅支持python3，在python3.7.0运行通过
+
 普通模式：
 ![](./docs/preview.png)
 
