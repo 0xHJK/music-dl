@@ -53,8 +53,8 @@ def setopts(args):
     :return:
     '''
     try:
-        opts, others = getopt.getopt(args, 'hk:s:c:o:',
-                                        ['help', '--keyword=', '--source=', '--count=', '--outdir='])
+        opts, others = getopt.getopt(args, 'vhk:s:c:o:',
+                                        ['verbose', 'help', 'keyword=', 'source=', 'count=', 'outdir='])
     except getopt.GetoptError as e:
         logger.error('命令解析失败')
         logger.error(e)
@@ -67,6 +67,8 @@ def setopts(args):
         if o in ('-h', '--help'):
             echo.usage()
             sys.exit(2)
+        elif o in ('-v', '--verbose'):
+            glovar.set_option('verbose', True)
         elif o in ('-k', '--keyword'):
             glovar.set_option('keyword', a)
         elif o in ('-s', '--source'):

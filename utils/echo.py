@@ -8,6 +8,7 @@
 控制台输出内容控制
 
 """
+import glovar
 
 colors = {
     'red': '\033[91m',
@@ -29,6 +30,8 @@ def colorize(string, color):
 
 def info(music):
     ''' 打印歌曲信息 '''
+    if not glovar.get_option('verbose'):
+        return
     s = '\n ------------ \n -> 歌曲：%s\n -> 歌手：%s\n -> 时长: %s\n -> 大小: %s\n -> 比特率: %s\n -> URL: %s\n' % \
         (music['title'], music['singer'], music['duration'], music['size'], music['rate'], music['url'])
     print(s)
@@ -46,8 +49,9 @@ def menu(music_list):
         print(idx + source + info)
 
 def usage():
-    print('usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir]')
+    print('usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v]')
     print('\t%-16s %s' % ('-h --help ', '帮助'))
+    print('\t%-16s %s' % ('-v --verbose ', '详细模式'))
     print('\t%-16s %s' % ('-k --keyword= ', '搜索关键字'))
     print('\t%-16s %s' % ('-s --source= ', '数据源目前支持qq netease kugou'))
     print('\t%-16s %s' % ('-c --count= ', '数量限制'))

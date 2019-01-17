@@ -38,6 +38,8 @@ def init_option():
         'outdir': '.',
         # 搜索关键字
         'keyword': '',
+        # 显示详情
+        'verbose': False
     }
 
 def set_option(opt, value):
