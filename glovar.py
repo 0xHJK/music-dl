@@ -26,4 +26,10 @@ IOS_USERAGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebK
 LOG_LEVEL = logging.DEBUG
 LOG_FILE = None
 
-
+# 命令行参数
+# 自定义来源 -s --source
+SOURCE = 'qq netease kugou'
+# 自定义数量 -c --count
+COUNT = 5
+# 保存目录 -o --outdir
+OUTDIR = '.'

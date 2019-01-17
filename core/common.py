@@ -9,6 +9,7 @@
 
 """
 
+import os
 import requests
 import wget
 import glovar
@@ -18,7 +19,9 @@ from utils import echo
 def music_download(music):
     ''' 下载音乐保存到本地 '''
     echo.info(music)
-    wget.download(music['url'], out=music['name'])
+    outfile = os.path.abspath(os.path.join(glovar.OUTDIR, music['name']))
+    wget.download(music['url'], out=outfile)
+    print('已保存到：%s\n' % outfile)
 
 
 def url_available(url) -> bool:
