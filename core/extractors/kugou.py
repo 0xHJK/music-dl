@@ -17,7 +17,7 @@ from utils.customlog import CustomLog
 
 logger = CustomLog(__name__).getLogger()
 
-def kugou_search(keyword, count=5) -> list:
+def kugou_search(keyword, count=glovar.COUNT) -> list:
     ''' 搜索音乐 '''
     params = {
         'keyword': keyword,

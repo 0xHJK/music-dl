@@ -18,7 +18,7 @@ from utils.customlog import CustomLog
 
 logger = CustomLog(__name__).getLogger()
 
-def qq_search(keyword, count=5) -> list:
+def qq_search(keyword, count=glovar.COUNT) -> list:
     ''' 搜索音乐 '''
     params = {
         'w': keyword,

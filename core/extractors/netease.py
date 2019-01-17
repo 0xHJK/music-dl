@@ -17,7 +17,7 @@ from Crypto.Cipher import AES
 from core.common import *
 from core.exceptions import *
 
-def netease_search(keyword, count=5) -> list:
+def netease_search(keyword, count=glovar.COUNT) -> list:
     ''' 从网易云音乐搜索 '''
     eparams = {
         'method': 'POST',
