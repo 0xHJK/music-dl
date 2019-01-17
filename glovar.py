@@ -26,10 +26,22 @@ IOS_USERAGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebK
 LOG_LEVEL = logging.DEBUG
 LOG_FILE = None
 
-# 命令行参数
-# 自定义来源 -s --source
-SOURCE = 'qq netease kugou'
-# 自定义数量 -c --count
-COUNT = 5
-# 保存目录 -o --outdir
-OUTDIR = '.'
+def init_option():
+    # 命令行参数，写到函数里防止被意外初始化
+    global OPTS
+    OPTS = {
+        # 自定义来源 -s --source
+        'source': 'qq netease kugou',
+        # 自定义数量 -c --count
+        'count': 5,
+        # 保存目录 -o --outdir
+        'outdir': '.',
+        # 搜索关键字
+        'keyword': '',
+    }
+
+def set_option(opt, value):
+    OPTS[opt] = value
+
+def get_option(opt):
+    return OPTS.get(opt, '')
