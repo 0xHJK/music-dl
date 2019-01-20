@@ -14,6 +14,7 @@ import glovar
 from core.extractors import kugou
 from core.extractors import qq
 from core.extractors import netease
+from core.extractors import baidu
 from utils import echo
 from utils.customlog import CustomLog
 
@@ -21,6 +22,7 @@ addons = {
     'qq': qq,
     'kugou': kugou,
     'netease': netease,
+    'baidu': baidu,
 }
 
 logger = CustomLog(__name__).getLogger()
