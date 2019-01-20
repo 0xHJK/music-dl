@@ -3,20 +3,25 @@ search and download music from netease, qq, kugou and baidu.
 
 从网易云音乐、QQ音乐、酷狗音乐、百度音乐等搜索和下载歌曲
 
-You can specify music sources and limit count of search results. The default priority is to try to download 320K music, then 128K.
+You can specify music sources and limit count of search results. 
 
-支持指定搜索数量和音乐源，默认优先尝试下载320K，如果没有320K会下载128K。由于各大音乐网站限制，高品质音乐一般只能通过会员下载。
+The default priority is to try to download 320K music, then 128K.
 
-> 注意：仅支持python3，在python3.7.0运行通过。部分音乐源在一些国家和地区不可用，可以考虑使用中国大陆代理。
+支持指定搜索数量和音乐源，默认优先尝试下载320K，如果没有320K会下载128K。
+
+由于各大音乐网站限制，高品质音乐一般只能通过会员下载。
+
 > Note: Python3 only. Some music sources may not be available in some countries and regions. If so, you can use Chinese proxies.
 
-普通模式：
+> 注意：仅支持python3，在python3.7.0运行通过。部分音乐源在一些国家和地区不可用，可以考虑使用中国大陆代理。
+
+Normal 普通模式：
 ![](./docs/preview.png)
 
-详细模式：
+Verbose 详细模式：
 ![](./docs/verbose.png)
 
-## Uage 使用方式
+## Usage 使用方式
 ```
 $ python main.py -h
 usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v]
@@ -33,16 +38,16 @@ example: python main.py -k "周杰伦" -s "qq netease kugou baidu" -c 10 -o "/tm
 
 > 注意：如果经常需要指定数量、目录等参数可以考虑修改glovar.py中的变量
 
-## Music source 支持音乐源列表
+## Music sources 支持音乐源列表
 Supported 已支持
-- [x] qq       QQ音乐
-- [x] kugou    酷狗音乐
-- [x] netease  网易云音乐
-- [x] baidu    百度音乐    
+- [x] qq       QQ音乐 <https://y.qq.com/>
+- [x] kugou    酷狗音乐 <http://www.kugou.com/>
+- [x] netease  网易云音乐 <https://music.163.com/>
+- [x] baidu    百度音乐 <http://music.baidu.com/>
 
 Not yet 待支持
-- [ ] xiami    虾米音乐
-- [ ] kuwo     酷我音乐
+- [ ] xiami    虾米音乐 <https://www.xiami.com/>
+- [ ] kuwo     酷我音乐 <http://www.kuwo.cn/>
 
 欢迎提交插件支持更多音乐源！插件写法参考`core/extractors`中的文件
 
