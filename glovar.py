@@ -31,7 +31,7 @@ def init_option():
     global OPTS
     OPTS = {
         # 自定义来源 -s --source
-        'source': 'qq netease kugou',
+        'source': 'qq netease kugou baidu',
         # 自定义数量 -c --count
         'count': 5,
         # 保存目录 -o --outdir
