@@ -15,6 +15,7 @@ from core.extractors import kugou
 from core.extractors import qq
 from core.extractors import netease
 from core.extractors import baidu
+from core.extractors import xiami
 from utils import echo
 from utils.customlog import CustomLog
 
@@ -23,6 +24,7 @@ addons = {
     'kugou': kugou,
     'netease': netease,
     'baidu': baidu,
+    'xiami': xiami,
 }
 
 logger = CustomLog(__name__).getLogger()
@@ -92,6 +94,7 @@ def main():
 
     for source in glovar.get_option('source').split():
         try:
+            echo.notice(source=source)
             music_list += addons.get(source).search(glovar.get_option('keyword'))
         except Exception as e:
             logger.error('Get %s music list failed.' % source.upper())
