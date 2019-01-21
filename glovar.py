@@ -39,7 +39,9 @@ def init_option():
         # 搜索关键字
         'keyword': '',
         # 显示详情
-        'verbose': False
+        'verbose': False,
+        # 搜索结果排序和去重
+        'merge': False
     }
 
 def set_option(opt, value):

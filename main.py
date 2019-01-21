@@ -16,6 +16,7 @@ from core.extractors import qq
 from core.extractors import netease
 from core.extractors import baidu
 from core.extractors import xiami
+from core.common import music_list_merge
 from utils import echo
 from utils.customlog import CustomLog
 
@@ -57,8 +58,9 @@ def setopts(args):
     :return:
     '''
     try:
-        opts, others = getopt.getopt(args, 'vhk:s:c:o:',
-                                        ['verbose', 'help', 'keyword=', 'source=', 'count=', 'outdir='])
+        opts, others = getopt.getopt(args, 'vhmk:s:c:o:',
+                                        ['verbose', 'help', 'merge', 'nomerge',
+                                         'keyword=', 'source=', 'count=', 'outdir='])
     except getopt.GetoptError as e:
         logger.error('命令解析失败')
         logger.error(e)
@@ -81,6 +83,10 @@ def setopts(args):
             glovar.set_option('count', int(a))
         elif o in ('-o', '--outdir'):
             glovar.set_option('outdir', a)
+        elif o in ('-m', '--merge'):
+            glovar.set_option('merge', True)
+        elif o in ('--nomerge'):
+            glovar.set_option('merge', False)
         else:
             assert False, 'unhandled option'
 
@@ -99,6 +105,10 @@ def main():
         except Exception as e:
             logger.error('Get %s music list failed.' % source.upper())
             logger.error(e)
+
+    if glovar.get_option('merge'):
+        # 对搜索结果排序和去重
+        music_list = music_list_merge(music_list)
 
     echo.menu(music_list)
     choices = input('请输入要下载的歌曲序号，多个序号用空格隔开：')
