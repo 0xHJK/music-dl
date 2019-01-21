@@ -52,7 +52,7 @@ def menu(music_list):
         print(idx + source + info)
 
 def usage():
-    print('usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v]')
+    print('usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v] [-m]')
     print('\t%-16s %s' % ('-h --help ', '帮助'))
     print('\t%-16s %s' % ('-v --verbose ', '详细模式'))
     print('\t%-16s %s' % ('-m --merge ', '对搜索结果去重和排序'))
