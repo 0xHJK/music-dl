@@ -5,7 +5,7 @@
 
 由于各大音乐网站限制，高品质音乐一般只能通过会员下载。
 
-> 注意：仅支持python3，在python3.7.0运行通过。
+> 注意：仅支持python3，在macOS上的python3.7.0测试通过。
 > 
 > 部分音乐源在一些国家和地区不可用，可以考虑使用中国大陆代理。
 
@@ -18,6 +18,12 @@ The default priority is to try to download 320K music, then 128K.
 > Note: Python3 only. 
 > 
 > Some music sources may not be available in some countries and regions. If so, you can use Chinese proxies.
+
+## 免责声明
+- 本工具只用作个人学习研究，禁止用于商业及非法用途，如产生法律纠纷与本人无关。
+- API来自网络，非官方API，随时可能失效。
+- 音乐版权归各网站所有，本工具主要目的是协助搜索，发现哪家音乐有版权。
+- 音乐仅用于试听，如果需要保存，请自行去各个网站下载正版。
 
 ## Usage 使用方式
 ```
@@ -57,15 +63,13 @@ After merge 去重后：
 ![](./docs/merge.png)
 
 ## Music sources 支持音乐源列表
-Supported 已支持
-- [x] qq       QQ音乐 <https://y.qq.com/>
-- [x] kugou    酷狗音乐 <http://www.kugou.com/>
-- [x] netease  网易云音乐 <https://music.163.com/>
-- [x] baidu    百度音乐 <http://music.baidu.com/>
-- [x] xiami    虾米音乐 <https://www.xiami.com/>
-
-Not yet 待支持
-- [ ] kuwo     酷我音乐 <http://www.kuwo.cn/>
+| 音乐源     | 缩写    | 网址                    |
+| ---------- | ------- | ----------------------- |
+| QQ音乐     | qq      | <https://y.qq.com/>     |
+| 酷狗音乐   | kugou   | <http://www.kugou.com/> |
+| 网易云音乐 | netease | <https://music.163.com/>  |
+| 百度音乐   | baidu   | <http://music.baidu.com/> |
+| 虾米音乐   | xiami   | <https://www.xiami.com/>  |
 
 欢迎提交插件支持更多音乐源！插件写法参考`core/extractors`中的文件
 
