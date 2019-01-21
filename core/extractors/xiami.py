@@ -61,7 +61,16 @@ def xiami_search(keyword) -> list:
         music['rate'] = 128
         music['ext'] = 'mp3'
         music['name'] = '%s - %s.%s' % (music['singer'], music['title'], music['ext'])
-        music['size'] = round(content_length(music['url']) / 1048576, 2)
+
+        # 尝试获取虾米高品质音乐(320K)
+        url = music['url'].replace('m128.xiami.net', 'm320.xiami.net')
+        size = content_length(url)
+        if size:
+            music['size'] = round(size / 1048576, 2)
+            music['url'] = url
+            music['rate'] = 320
+        else:
+            music['size'] = round(content_length(music['url']) / 1048576, 2)
 
         music_list.append(music)
 
