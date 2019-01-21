@@ -39,7 +39,7 @@ usage: python main.py [-k keyword] [-s source] [-usage: python main.py [-k keywo
 example: python main.py -k "周杰伦" -s "qq netease kugou baidu xiami" -c 10 -o "/tmp"
 ```
 
-默认搜索所有音乐源，每个数量限制为5，保存目录为当前目录，不合并搜索结果，指定序号时可以使用`1-5 7 10`的形式。排序顺序按照歌名-歌手-文件大小依次排序。
+默认搜索所有音乐源，每个数量限制为5，保存目录为当前目录，不合并搜索结果，指定序号时可以使用`1-5 7 10`的形式。排序顺序按照歌名-歌手-文件大小依次排序，当三者都相同时判断为相同歌曲。
 
 > 注意：如果经常需要指定数量、目录等参数可以考虑修改glovar.py中的变量
 
