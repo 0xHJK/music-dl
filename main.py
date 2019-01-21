@@ -67,8 +67,6 @@ def setopts(args):
         echo.usage()
         sys.exit(2)
 
-    glovar.init_option()
-
     for o, a in opts:
         if o in ('-h', '--help'):
             echo.usage()
@@ -125,6 +123,9 @@ def main():
     main()
 
 if __name__ == '__main__':
+    # 初始化全局变量
+    glovar.init_option()
+
     if len(sys.argv) > 1:
         setopts(sys.argv[1:])
     try:
