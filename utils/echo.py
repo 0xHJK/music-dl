@@ -46,8 +46,9 @@ def menu(music_list):
         idx = colorize(' [ %2s ] ' % music_list.index(music), 'cyan')
         source = colorize('%7s | ' % music['source'].upper(), music['source'])
         size = colorize('%5sMB' % music['size'], 'yellow')
+        title = colorize(music['title'], 'yellow')
         info = '%s - %s - %s - %s - %s' % \
-               (music['duration'], size, music['title'], music['singer'], music['album'])
+               (music['duration'], size, music['singer'], title, music['album'])
 
         print(idx + source + info)
 
