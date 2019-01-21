@@ -102,7 +102,12 @@ def main():
 
     echo.menu(music_list)
     choices = input('请输入要下载的歌曲序号，多个序号用空格隔开：')
-    downloadByIndexList(choices.split(),music_list)
+
+    try:
+        downloadByIndexList(choices.split(),music_list)
+    except Exception as e:
+        logger.error('下载音乐失败')
+        logger.error(e)
 
     # 下载完后继续搜索
     keyword = input('请输入要搜索的歌曲，或Ctrl+C退出：\n > ')
