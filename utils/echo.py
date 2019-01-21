@@ -22,6 +22,7 @@ colors = {
     'kugou': '\033[94m',
     'netease': '\033[91m',
     'baidu': '\033[96m',
+    'xiami': '\033[93m',
 }
 
 
@@ -55,7 +56,11 @@ def usage():
     print('\t%-16s %s' % ('-h --help ', '帮助'))
     print('\t%-16s %s' % ('-v --verbose ', '详细模式'))
     print('\t%-16s %s' % ('-k --keyword= ', '搜索关键字'))
-    print('\t%-16s %s' % ('-s --source= ', '数据源目前支持qq netease kugou baidu'))
+    print('\t%-16s %s' % ('-s --source= ', '数据源目前支持qq netease kugou baidu xiami'))
     print('\t%-16s %s' % ('-c --count= ', '数量限制'))
     print('\t%-16s %s' % ('-o --outdir= ', '指定输出目录'))
     print('example: python main.py -k "周杰伦" -s "qq netease kugou baidu" -c 10 -o "/tmp"')
+
+
+def notice(source):
+    print('Searching music from %s ...' % colorize(source.upper(), source))
