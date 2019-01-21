@@ -56,7 +56,7 @@ def usage():
     print('\t%-16s %s' % ('-h --help ', '帮助'))
     print('\t%-16s %s' % ('-v --verbose ', '详细模式'))
     print('\t%-16s %s' % ('-m --merge ', '对搜索结果去重和排序'))
-    print('\t%-16s %s' % ('--nomerge ', '对搜索结果不去重'))
+    print('\t%-16s %s' % ('--nomerge ', '对搜索结果不去重（默认不去重）'))
     print('\t%-16s %s' % ('-k --keyword= ', '搜索关键字'))
     print('\t%-16s %s' % ('-s --source= ', '数据源目前支持qq netease kugou baidu xiami'))
     print('\t%-16s %s' % ('-c --count= ', '数量限制'))
