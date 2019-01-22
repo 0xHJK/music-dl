@@ -94,32 +94,42 @@ def setopts(args):
             assert False, 'unhandled option'
 
 
-def music_search(source, music_list):
+def music_search(source, music_list, errors):
     ''' 音乐搜索，music_list是搜索结果 '''
-    echo.notice(source=source)
-    music_list += addons.get(source).search(glovar.get_option('keyword'))
+    try:
+        music_list += addons.get(source).search(glovar.get_option('keyword'))
+    except Exception as e:
+        errors.append((source, e))
+    finally:
+        # 放在搜索后输出是为了营造出搜索很快的假象
+        echo.brand(source=source)
 
 
 def main():
     music_list = []
     thread_pool = []
+    errors = []
 
     if not glovar.get_option('keyword'):
         # 如果未设置关键词
         keyword = input('请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）：\n > ')
         glovar.set_option('keyword', keyword)
 
+    echo.notice(glovar.get_option('keyword'))
+
     for source in glovar.get_option('source').split():
-        try:
-            t = threading.Thread(target=music_search, args=(source, music_list))
-            thread_pool.append(t)
-            t.start()
-        except Exception as e:
-            logger.error('Get %s music list failed.' % source.upper())
-            logger.error(e)
+        t = threading.Thread(target=music_search, args=(source, music_list, errors))
+        thread_pool.append(t)
+        t.start()
 
     for t in thread_pool:
         t.join()
+
+    echo.line()
+
+    for err in errors:
+        logger.error('Get %s music list failed.' % err[0].upper())
+        logger.error(err[1])
 
     if glovar.get_option('merge'):
         # 对搜索结果排序和去重
