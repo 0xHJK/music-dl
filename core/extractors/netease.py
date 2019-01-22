@@ -117,7 +117,8 @@ def encode_netease_data(data) -> str:
     # 补足data长度，使其是16的倍数
     pad = 16 - len(data) % 16
     fix = chr(pad) * pad
-    return binascii.hexlify(encryptor.encrypt(data + fix)).upper().decode()
+    byte_data = (data + fix).encode('utf-8')
+    return binascii.hexlify(encryptor.encrypt(byte_data)).upper().decode()
 
 search = netease_search
 download = netease_download
