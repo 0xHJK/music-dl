@@ -10,6 +10,7 @@
 import sys
 import re
 import getopt
+import threading
 import glovar
 from core.extractors import kugou
 from core.extractors import qq
@@ -92,8 +93,16 @@ def setopts(args):
         else:
             assert False, 'unhandled option'
 
+
+def music_search(source, music_list):
+    ''' 音乐搜索，music_list是搜索结果 '''
+    echo.notice(source=source)
+    music_list += addons.get(source).search(glovar.get_option('keyword'))
+
+
 def main():
     music_list = []
+    thread_pool = []
 
     if not glovar.get_option('keyword'):
         # 如果未设置关键词
@@ -102,11 +111,15 @@ def main():
 
     for source in glovar.get_option('source').split():
         try:
-            echo.notice(source=source)
-            music_list += addons.get(source).search(glovar.get_option('keyword'))
+            t = threading.Thread(target=music_search, args=(source, music_list))
+            thread_pool.append(t)
+            t.start()
         except Exception as e:
             logger.error('Get %s music list failed.' % source.upper())
             logger.error(e)
+
+    for t in thread_pool:
+        t.join()
 
     if glovar.get_option('merge'):
         # 对搜索结果排序和去重
