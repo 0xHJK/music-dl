@@ -5,9 +5,8 @@
 
 由于各大音乐网站限制，高品质音乐一般只能通过会员下载。
 
-> 注意：仅支持python3，在macOS上的python3.7.0测试通过。
-> 
-> 部分音乐源在一些国家和地区不可用，可以考虑使用中国大陆代理。
+> 注意：部分音乐源在一些国家和地区不可用，可以考虑使用中国大陆代理。
+>
 
 Search and download music from netease, qq, kugou, baidu and xiami.
 
@@ -15,19 +14,36 @@ You can specify music sources and limit count of search results.
 
 The default priority is to try to download 320K music, then 128K.
 
-> Note: Python3 only. 
-> 
-> Some music sources may not be available in some countries and regions. If so, you can use Chinese proxies.
+> Note: Some music sources may not be available in some countries and regions. If so, you can use Chinese proxies.
+
+在以下环境测试通过（仅支持Python3）：
+
+| 系统名称 | 系统版本      | Python版本 |
+| -------- | ------------- | ---------- |
+| macOS    | 10.14         | 3.7.0      |
+| macOS    | 10.13         | 3.7.0      |
+| Windows  | Windows 7 x64 | 3.7.2      |
+| Ubuntu   | 16.04 x64     | 3.5.2      |
 
 ## 免责声明
+
 - 本工具只用作个人学习研究，禁止用于商业及非法用途，如产生法律纠纷与本人无关。
 - API来自网络，非官方API，随时可能失效。
 - 音乐版权归各网站所有，本工具主要目的是协助搜索，发现哪家音乐有版权。
 - 音乐仅用于试听，如果需要保存，请自行去各个网站下载正版。
 
 ## Usage 使用方式
+
+安装依赖：
+
 ```
-$ python main.py -h
+$ pip3 install -r requirements.txt
+```
+
+使用帮助：
+
+```
+$ python3 main.py -h
 usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v] [-m]
 	-h --help        帮助
 	-v --verbose     详细模式
