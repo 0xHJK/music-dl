@@ -31,31 +31,6 @@ addons = {
 
 logger = CustomLog(__name__).getLogger()
 
-def indexOrRange(item):
-    pattern=r'^(\d*)[-,:](\d*)$'
-    m=re.match(pattern,str(item))
-    if m:
-        index1=int(m.group(1))
-        index2=int(m.group(2))
-        return 'range' , list(range(index1,index2+1))
-    else:
-        return 'index' , item
-
-def downloadByIndexList(indexlist,music_list):
-    for i in indexlist:
-        itemtype,value=indexOrRange(i)
-        if itemtype=='range' :
-            downloadByIndexList(value,music_list)
-            continue
-        if int(i) < 0 or int(i) >= len(music_list): raise ValueError
-        music = music_list[int(i)]
-        try:
-            addons.get(music['source']).download(music)
-        except Exception as e:
-            logger.error('下载音乐失败')
-            logger.error(e)
-    return
-
 def setopts(args):
     '''
     根据命令行输入的参数修改全局变量
@@ -105,6 +80,15 @@ def music_search(source, music_list, errors):
         echo.brand(source=source)
 
 
+def music_download(idx, music_list):
+    music = music_list[int(idx)]
+    try:
+        addons.get(music['source']).download(music)
+    except Exception as e:
+        logger.error('下载音乐失败')
+        logger.error(e)
+
+
 def main():
     music_list = []
     thread_pool = []
@@ -138,12 +122,19 @@ def main():
     echo.menu(music_list)
     choices = input('请输入要下载的歌曲序号，多个序号用空格隔开：')
 
-    downloadByIndexList(choices.split(),music_list)
+    for choice in choices.split():
+        start, _, end = choice.partition('-')
+        if end:
+            for i in range(int(start), int(end)+1):
+                music_download(i, music_list)
+        else:
+            music_download(start, music_list)
 
     # 下载完后继续搜索
     keyword = input('请输入要搜索的歌曲，或Ctrl+C退出：\n > ')
     glovar.set_option('keyword', keyword)
     main()
+
 
 if __name__ == '__main__':
     # 初始化全局变量
