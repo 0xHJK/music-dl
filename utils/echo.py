@@ -68,5 +68,11 @@ def usage():
     print('example: python main.py -k "周杰伦" -s "qq netease kugou baidu xiami" -c 10 -o "/tmp"')
 
 
-def notice(source):
-    print('Searching music from %s ...' % colorize(source.upper(), source))
+def notice(keyword):
+    print('\nSearching %s from ...' % colorize(keyword, 'yellow'), end='', flush=True)
+
+def brand(source):
+    print(' %s ...' % colorize(source.upper(), source), end='', flush=True)
+
+def line():
+    print('\n---------------------------\n')
