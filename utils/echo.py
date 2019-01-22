@@ -8,6 +8,7 @@
 控制台输出内容控制
 
 """
+import platform
 import glovar
 
 colors = {
@@ -28,6 +29,8 @@ colors = {
 
 def colorize(string, color):
     if not color in colors: return string
+    if platform.system() == 'Windows':
+        return string
     return colors[color] + string + '\033[0m'
 
 
