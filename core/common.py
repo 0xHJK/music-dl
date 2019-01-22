@@ -59,9 +59,9 @@ def music_list_merge(music_list) -> list:
     music_list.sort(key=lambda music: (music['singer'], music['title'], music['size']), reverse=True)
     result_list = []
     for i in range(len(music_list)):
-        # 如果大小、名称、歌手都一致的话就去重
+        # 如果名称、歌手都一致的话就去重，保留最大的文件
         if i != 0 \
-            and music_list[i]['size'] == music_list[i-1]['size'] \
+            and music_list[i]['size'] <= music_list[i-1]['size'] \
             and music_list[i]['title'] == music_list[i-1]['title'] \
             and music_list[i]['singer'] == music_list[i-1]['singer']:
             continue

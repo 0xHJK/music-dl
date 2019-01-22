@@ -48,7 +48,11 @@ def downloadByIndexList(indexlist,music_list):
             continue
         if int(i) < 0 or int(i) >= len(music_list): raise ValueError
         music = music_list[int(i)]
-        addons.get(music['source']).download(music)
+        try:
+            addons.get(music['source']).download(music)
+        except Exception as e:
+            logger.error('下载音乐失败')
+            logger.error(e)
     return
 
 def setopts(args):
@@ -66,8 +70,6 @@ def setopts(args):
         logger.error(e)
         echo.usage()
         sys.exit(2)
-
-    glovar.init_option()
 
     for o, a in opts:
         if o in ('-h', '--help'):
@@ -113,11 +115,7 @@ def main():
     echo.menu(music_list)
     choices = input('请输入要下载的歌曲序号，多个序号用空格隔开：')
 
-    try:
-        downloadByIndexList(choices.split(),music_list)
-    except Exception as e:
-        logger.error('下载音乐失败')
-        logger.error(e)
+    downloadByIndexList(choices.split(),music_list)
 
     # 下载完后继续搜索
     keyword = input('请输入要搜索的歌曲，或Ctrl+C退出：\n > ')
@@ -125,6 +123,9 @@ def main():
     main()
 
 if __name__ == '__main__':
+    # 初始化全局变量
+    glovar.init_option()
+
     if len(sys.argv) > 1:
         setopts(sys.argv[1:])
     try:

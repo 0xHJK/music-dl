@@ -49,17 +49,18 @@ def menu(music_list):
         idx = colorize(' [ %2s ] ' % music_list.index(music), 'cyan')
         source = colorize('%7s | ' % music['source'].upper(), music['source'])
         size = colorize('%5sMB' % music['size'], 'yellow')
+        title = colorize(music['title'], 'yellow')
         info = '%s - %s - %s - %s - %s' % \
-               (music['duration'], size, music['title'], music['singer'], music['album'])
+               (music['duration'], size, music['singer'], title, music['album'])
 
         print(idx + source + info)
 
 def usage():
-    print('usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v]')
+    print('usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v] [-m]')
     print('\t%-16s %s' % ('-h --help ', '帮助'))
     print('\t%-16s %s' % ('-v --verbose ', '详细模式'))
     print('\t%-16s %s' % ('-m --merge ', '对搜索结果去重和排序'))
-    print('\t%-16s %s' % ('--nomerge ', '对搜索结果不去重'))
+    print('\t%-16s %s' % ('--nomerge ', '对搜索结果不去重（默认不去重）'))
     print('\t%-16s %s' % ('-k --keyword= ', '搜索关键字'))
     print('\t%-16s %s' % ('-s --source= ', '数据源目前支持qq netease kugou baidu xiami'))
     print('\t%-16s %s' % ('-c --count= ', '数量限制'))

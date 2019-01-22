@@ -53,7 +53,8 @@ def baidu_search(keyword) -> list:
         mj = mr.json()
         mj_music = mj['data']['songList'][0]
         music['duration'] = str(datetime.timedelta(seconds=mj_music['time']))
-        music['size'] = round(mj_music['size'] / 1048576, 2)
+        size = mj_music['size'] or 0
+        music['size'] = round(size / 1048576, 2)
         music['rate'] = mj_music['rate']
         music['ext'] = mj_music['format']
         music['url'] = mj_music['songLink']
