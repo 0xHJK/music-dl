@@ -32,7 +32,7 @@ def xiami_search(keyword) -> list:
     s = requests.Session()
     s.headers.update(glovar.FAKE_HEADERS)
     # 获取cookie
-    s.get('http://m.xiami.com')
+    s.head('http://m.xiami.com')
     s.headers.update({'referer': 'http://m.xiami.com/'})
 
     music_list = []
