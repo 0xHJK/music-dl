@@ -8,34 +8,23 @@
 """
 
 import sys
+import importlib
 import threading
 import traceback
 import glovar
-from core.extractors import kugou
-from core.extractors import qq
-from core.extractors import netease
-from core.extractors import baidu
-from core.extractors import xiami
 from core.common import music_list_merge
 from core.exceptions import *
 from utils import echo
 from utils import cli
 from utils.customlog import CustomLog
 
-addons = {
-    'qq': qq,
-    'kugou': kugou,
-    'netease': netease,
-    'baidu': baidu,
-    'xiami': xiami,
-}
-
 logger = CustomLog(__name__).getLogger()
 
 def music_search(source, music_list, errors):
     ''' 音乐搜索，music_list是搜索结果 '''
     try:
-        music_list += addons.get(source).search(glovar.get_option('keyword'))
+        addon = importlib.import_module('.' + source, 'core.extractors')
+        music_list += addon.search(glovar.get_option('keyword'))
     except (RequestError, ResponseError, DataError) as e:
         errors.append((source, e))
     except Exception as e:
@@ -50,7 +39,8 @@ def music_download(idx, music_list):
     ''' 音乐下载，music_list是搜索结果 '''
     music = music_list[int(idx)]
     try:
-        addons.get(music['source']).download(music)
+        addon = importlib.import_module('.' + music['source'], 'core.extractors')
+        addon.download(music)
     except Exception as e:
         logger.error('下载音乐失败')
         err = traceback.format_exc() if glovar.get_option('verbose') else str(e)
