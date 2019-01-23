@@ -53,7 +53,8 @@ def music_download(idx, music_list):
         addons.get(music['source']).download(music)
     except Exception as e:
         logger.error('下载音乐失败')
-        logger.error(e)
+        err = traceback.format_exc() if glovar.get_option('verbose') else str(e)
+        logger.error(err)
 
 
 def main():
