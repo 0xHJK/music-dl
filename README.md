@@ -14,7 +14,7 @@ You can specify music sources and limit count of search results.
 
 The default priority is to try to download 320K music, then 128K.
 
-> Note: Some music sources may not be available in some countries and regions. If so, you can use Chinese proxies.
+> Note: Some music sources may not be available in some countries and regions. If so, you should use Chinese proxies.
 
 在以下环境测试通过（仅支持Python3）：
 
@@ -31,6 +31,15 @@ The default priority is to try to download 320K music, then 128K.
 - API来自网络，非官方API，随时可能失效。
 - 音乐版权归各网站所有，本工具主要目的是协助搜索，发现哪家音乐有版权。
 - 音乐仅用于试听，如果需要保存，请自行去各个网站下载正版。
+
+## 提Issues说明
+
+- **检查是否是最新的代码，检查是否是Python3，检查依赖有没有安装完整**。
+- 说明使用的操作系统，例如Windows 10 x64
+- 说明Python版本，以及是否使用了pyenv等虚拟环境
+- 说明使用的命令参数、搜索关键字和出错的音乐源
+- 使用`-v`参数重试，说明详细的错误信息，最好有截图
+- 如果有新的思路和建议也欢迎提交
 
 ## Usage 使用方式
 
