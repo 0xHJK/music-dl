@@ -9,6 +9,7 @@
 
 import sys
 import threading
+import traceback
 import glovar
 from core.extractors import kugou
 from core.extractors import qq
@@ -16,6 +17,7 @@ from core.extractors import netease
 from core.extractors import baidu
 from core.extractors import xiami
 from core.common import music_list_merge
+from core.exceptions import *
 from utils import echo
 from utils import cli
 from utils.customlog import CustomLog
@@ -34,8 +36,11 @@ def music_search(source, music_list, errors):
     ''' 音乐搜索，music_list是搜索结果 '''
     try:
         music_list += addons.get(source).search(glovar.get_option('keyword'))
-    except Exception as e:
+    except (RequestError, ResponseError, DataError) as e:
         errors.append((source, e))
+    except Exception as e:
+        err = traceback.format_exc() if glovar.get_option('verbose') else str(e)
+        errors.append((source, err))
     finally:
         # 放在搜索后输出是为了营造出搜索很快的假象
         echo.brand(source=source)

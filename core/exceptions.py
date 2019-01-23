@@ -16,6 +16,12 @@ class RequestError(RuntimeError):
 
 
 class ResponseError(RuntimeError):
-    ''' 得到的response中没有需要的内容 '''
+    ''' 得到的response状态错误 '''
+    def __init__(self, *args, **kwargs):
+        pass
+
+
+class DataError(RuntimeError):
+    ''' 得到的data中没有预期的内容 '''
     def __init__(self, *args, **kwargs):
         pass
