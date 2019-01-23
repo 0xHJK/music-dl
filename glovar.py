@@ -21,10 +21,9 @@ FAKE_HEADERS = {
 
 IOS_USERAGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
 
-
 # 日志
 LOG_LEVEL = logging.DEBUG
-LOG_FILE = None
+
 
 def init_option():
     # 命令行参数，写到函数里防止被意外初始化
