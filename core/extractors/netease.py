@@ -9,10 +9,10 @@
 
 """
 
-import base64
 import binascii
 import json
 import datetime
+import traceback
 from Crypto.Cipher import AES
 import glovar
 from core.common import *
@@ -47,32 +47,38 @@ def netease_search(keyword) -> list:
         raise ResponseError(j)
 
     music_list = []
-    for m in j['result']['songs']:
-        if m['privilege']['fl'] == 0:
-            # 没有版权
-            continue
-        # 获得歌手名字
-        singers = []
-        for singer in m['ar']:
-            singers.append(singer['name'])
-        # 获得最优音质的文件大小
-        if m['privilege']['fl'] >= 320000:
-            size = m['h']['size']
-        elif m['privilege']['fl'] >= 192000:
-            size = m['m']['size']
-        else:
-            size = m['l']['size']
+    try:
+        for m in j['result']['songs']:
+            if m['privilege']['fl'] == 0:
+                # 没有版权
+                continue
+            # 获得歌手名字
+            singers = []
+            for singer in m['ar']:
+                singers.append(singer['name'])
+            # 获得最优音质的文件大小
+            if m['privilege']['fl'] >= 320000 and 'h' in m.keys() and m['h']:
+                # 有时候即使>=320000，h属性依然为None
+                size = m['h']['size']
+            elif m['privilege']['fl'] >= 192000 and 'm' in m.keys() and m['m']:
+                size = m['m']['size']
+            else:
+                size = m['l']['size']
 
-        music = {
-            'title': m['name'],
-            'id': m['id'],
-            'duration': str(datetime.timedelta(seconds=int(m['dt']/1000))),
-            'singer': '、'.join(singers),
-            'album': m['al']['name'],
-            'size': round(size / 1048576, 2),
-            'source': 'netease'
-        }
-        music_list.append(music)
+            music = {
+                'title': m['name'],
+                'id': m['id'],
+                'duration': str(datetime.timedelta(seconds=int(m['dt']/1000))),
+                'singer': '、'.join(singers),
+                'album': m['al']['name'],
+                'size': round(size / 1048576, 2),
+                'source': 'netease'
+            }
+            music_list.append(music)
+    except Exception as e:
+        # 如果是详细模式则输出详细错误信息
+        err = traceback.format_exc() if glovar.get_option('verbose') else str(e)
+        raise DataError(err)
 
     return music_list
 
