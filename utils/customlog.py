@@ -14,20 +14,14 @@ import glovar
 
 
 class CustomLog(object):
-    def __init__(self, name, outfile=glovar.LOG_FILE, errfile=None, level=glovar.LOG_LEVEL):
+    def __init__(self, name, level=glovar.LOG_LEVEL):
         super(CustomLog, self).__init__()
         self.name = name
         self.level = level
 
-        # 控制台输出样式（无色）
+        # 控制台输出样式
         self.formatter = logging.Formatter(
-            fmt='[%(asctime)s] %(levelname)-8s | %(msg)s',
-            datefmt='%Y-%m-%d %H:%M:%S'
-        )
-
-        # 保存到文件格式
-        self.file_formatter = logging.Formatter(
-            fmt='[%(asctime)s] %(levelname)-8s | %(msg)s',
+            fmt='[%(asctime)s] %(levelname)-8s | %(msg)s （%(filename)s %(funcName)s %(lineno)s）',
             datefmt='%Y-%m-%d %H:%M:%S'
         )
 
@@ -44,19 +38,6 @@ class CustomLog(object):
         sh.setFormatter(self.formatter)
 
         self.logger.addHandler(sh)
-
-        if outfile:
-            fh = logging.FileHandler(outfile)
-            fh.setLevel(self.level)
-            fh.setFormatter(self.file_formatter)
-            self.logger.addHandler(fh)
-
-        if errfile:
-            efh = logging.FileHandler(errfile)
-            efh.setLevel(logging.ERROR)
-            efh.setFormatter(self.file_formatter)
-            self.logger.addHandler(efh)
-
 
     def getLogger(self):
         return self.logger
