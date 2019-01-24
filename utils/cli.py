@@ -8,6 +8,7 @@
 负责用户交互
 
 """
+import re
 import sys
 import getopt
 import glovar
@@ -55,10 +56,16 @@ def set_opts(args):
             assert False, 'unhandled option'
 
 
-def get_music_select(comment='请输入要下载的歌曲序号，多个序号用空格隔开：') -> list:
+def get_music_select(comment='请输入下载序号，多个序号用空格隔开，输入N跳过下载：\n > ') -> list:
     ''' 得到用户选择的序号，返回一个列表 '''
-    choices = input(comment)
     selected = []
+
+    choices = input(comment)
+    if choices.lower() == 'n':
+        print('')
+        return selected
+    if not re.match(r'^((\d+\-\d+)|(\d+)|\s+)+$', choices):
+        return get_music_select('%s仅支持形如 0 3-5 8 的格式，输入N跳过下载：\n > ' % echo.colorize('输入有误！', 'red'))
 
     for choice in choices.split():
         start, _, end = choice.partition('-')
