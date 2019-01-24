@@ -43,7 +43,8 @@ def set_opts(args):
         elif o in ('-s', '--source'):
             glovar.set_option('source', a)
         elif o in ('-c', '--count'):
-            glovar.set_option('count', int(a))
+            c = int(a) if int(a) < 51 else 50
+            glovar.set_option('count', c)
         elif o in ('-o', '--outdir'):
             glovar.set_option('outdir', a)
         elif o in ('-m', '--merge'):
