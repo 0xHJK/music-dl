@@ -12,6 +12,7 @@ import importlib
 import threading
 import traceback
 import glovar
+from core import extractors
 from core.common import music_list_merge
 from core.exceptions import *
 from utils import echo
