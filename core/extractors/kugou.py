@@ -30,6 +30,8 @@ def kugou_search(keyword) -> list:
     s = requests.Session()
     s.headers.update(glovar.FAKE_HEADERS)
     s.headers.update({'referer': 'http://www.kugou.com'})
+    if glovar.get_option('proxies'):
+        s.proxies.update(glovar.get_option('proxies'))
 
     music_list = []
     r = s.get('http://songsearch.kugou.com/song_search_v2', params=params)
@@ -74,6 +76,8 @@ def kugou_download(music):
         'referer': 'http://m.kugou.com',
         'User-Agent': glovar.IOS_USERAGENT
     })
+    if glovar.get_option('proxies'):
+        s.proxies.update(glovar.get_option('proxies'))
 
     r = s.get('http://m.kugou.com/app/i/getSongInfo.php', params=params)
     if r.status_code != requests.codes.ok:

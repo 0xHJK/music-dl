@@ -38,6 +38,9 @@ def netease_search(keyword) -> list:
     s.headers.update({
         'referer': 'http://music.163.com/',
     })
+    if glovar.get_option('proxies'):
+        s.proxies.update(glovar.get_option('proxies'))
+
     r = s.post('http://music.163.com/api/linux/forward', data=data)
 
     if r.status_code != requests.codes.ok:
@@ -100,6 +103,9 @@ def netease_download(music):
     s.headers.update({
         'referer': 'http://music.163.com/',
     })
+    if glovar.get_option('proxies'):
+        s.proxies.update(glovar.get_option('proxies'))
+
     r = s.post('http://music.163.com/api/linux/forward', data=data)
 
     if r.status_code != requests.codes.ok:

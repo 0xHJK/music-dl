@@ -30,6 +30,8 @@ def baidu_search(keyword) -> list:
     s = requests.Session()
     s.headers.update(glovar.FAKE_HEADERS)
     s.headers.update({'referer': 'http://music.baidu.com/'})
+    if glovar.get_option('proxies'):
+        s.proxies.update(glovar.get_option('proxies'))
 
     music_list = []
     r = s.get('http://musicapi.qianqian.com/v1/restserver/ting', params=params)
@@ -51,6 +53,8 @@ def baidu_search(keyword) -> list:
         if mr.status_code != requests.codes.ok:
             raise RequestError(mr.text)
         mj = mr.json()
+        if not mj['data']['songList']:
+            continue
         mj_music = mj['data']['songList'][0]
         music['duration'] = str(datetime.timedelta(seconds=mj_music['time']))
         size = mj_music['size'] or 0

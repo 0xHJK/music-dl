@@ -33,6 +33,8 @@ def qq_search(keyword) -> list:
         'referer': 'http://m.y.qq.com',
         'User-Agent': glovar.IOS_USERAGENT
     })
+    if glovar.get_option('proxies'):
+        s.proxies.update(glovar.get_option('proxies'))
 
     music_list = []
     r = s.get('http://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp', params=params)
@@ -82,6 +84,8 @@ def qq_download(music):
         'referer': 'http://y.qq.com',
         'User-Agent': glovar.IOS_USERAGENT
     })
+    if glovar.get_option('proxies'):
+        s.proxies.update(glovar.get_option('proxies'))
 
     r = s.get('http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg', params=params)
     if r.status_code != requests.codes.ok:

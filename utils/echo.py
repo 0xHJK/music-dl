@@ -66,6 +66,7 @@ def usage():
     print('\t%-16s %s' % ('-s --source= ', '数据源目前支持qq netease kugou baidu xiami flac'))
     print('\t%-16s %s' % ('-c --count= ', '数量限制'))
     print('\t%-16s %s' % ('-o --outdir= ', '指定输出目录'))
+    print('\t%-16s %s' % ('-x --proxy= ', '指定代理（如http://127.0.0.1:1087）'))
     print('example: python main.py -k "周杰伦" -s "qq netease kugou baidu xiami" -c 10 -o "/tmp"')
 
 

@@ -24,9 +24,9 @@ def set_opts(args):
     :return:
     '''
     try:
-        opts, others = getopt.getopt(args, 'vhmk:s:c:o:',
+        opts, others = getopt.getopt(args, 'vhmk:s:c:o:x:',
                                         ['verbose', 'help', 'merge', 'nomerge',
-                                         'keyword=', 'source=', 'count=', 'outdir='])
+                                         'keyword=', 'source=', 'count=', 'outdir=', 'proxy='])
     except getopt.GetoptError as e:
         logger.error('命令解析失败')
         logger.error(e)
@@ -48,6 +48,9 @@ def set_opts(args):
             glovar.set_option('count', c)
         elif o in ('-o', '--outdir'):
             glovar.set_option('outdir', a)
+        elif o in ('-x', '--proxy'):
+            proxies = { 'http': a, 'https': a}
+            glovar.set_option('proxies', proxies)
         elif o in ('-m', '--merge'):
             glovar.set_option('merge', True)
         elif o in ('--nomerge'):

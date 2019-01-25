@@ -34,6 +34,8 @@ def xiami_search(keyword) -> list:
     # 获取cookie
     s.head('http://m.xiami.com')
     s.headers.update({'referer': 'http://m.xiami.com/'})
+    if glovar.get_option('proxies'):
+        s.proxies.update(glovar.get_option('proxies'))
 
     music_list = []
     r = s.get('http://api.xiami.com/web', params=params)
@@ -82,6 +84,8 @@ def xiami_music_info(music, music_list, s):
     if mr.status_code != requests.codes.ok:
         raise RequestError(mr.text)
     mj = mr.json()
+    if not mj['data']['trackList']:
+        return
     mj_music = mj['data']['trackList'][0]
     music['duration'] = str(datetime.timedelta(seconds=mj_music['length']))
     music['rate'] = 128
@@ -103,5 +107,3 @@ def xiami_music_info(music, music_list, s):
 
 search = xiami_search
 download = xiami_download
-
-
