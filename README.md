@@ -62,6 +62,7 @@ usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v] [-m]
 	-s --source=     数据源目前支持qq netease kugou baidu xiami flac
 	-c --count=      数量限制
 	-o --outdir=     指定输出目录
+	-x --proxy=      指定代理（如http://127.0.0.1:1087）
 example: python main.py -k "周杰伦" -s "qq netease kugou baidu xiami" -c 10 -o "/tmp"
 ```
 
@@ -71,7 +72,11 @@ example: python main.py -k "周杰伦" -s "qq netease kugou baidu xiami" -c 10 -
 
 需要合并搜索结果时，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
 
-无损音乐搜索速度较慢，歌曲数量很少，建议只在搜索特定歌曲名时手动打开`-s flac`
+无损音乐歌曲数量较少，如果没有无损会显示128K或320K，建议只在搜索特定歌曲名时手动打开`-s flac`
+
+支持http代理和socks代理，使用`-x http://127.0.0.1:1087`或`-x socks5://127.0.0.1:1086`打开该功能
+
+获取代理的方式参考我的另一个项目<https://github.com/0xHJK/Proxies>
 
 > 注意：如果经常需要指定数量、目录等参数可以考虑修改glovar.py中的变量
 
@@ -79,7 +84,7 @@ Example 使用示例：
 
 ![](./docs/preview.png)
 
-去重效果展示：
+去重效果展示（早期版本截图）：
 
 Before merge 去重前：
 
