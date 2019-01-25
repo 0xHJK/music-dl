@@ -24,6 +24,7 @@ colors = {
     'netease': '\033[91m',
     'baidu': '\033[96m',
     'xiami': '\033[93m',
+    'flac': '\033[95m',
 }
 
 
