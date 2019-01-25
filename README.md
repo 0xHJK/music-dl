@@ -59,7 +59,7 @@ usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v] [-m]
 	-m --merge       对搜索结果去重和排序
 	--nomerge        对搜索结果不去重（默认不去重）
 	-k --keyword=    搜索关键字
-	-s --source=     数据源目前支持qq netease kugou baidu xiami
+	-s --source=     数据源目前支持qq netease kugou baidu xiami flac
 	-c --count=      数量限制
 	-o --outdir=     指定输出目录
 example: python main.py -k "周杰伦" -s "qq netease kugou baidu xiami" -c 10 -o "/tmp"
@@ -70,6 +70,8 @@ example: python main.py -k "周杰伦" -s "qq netease kugou baidu xiami" -c 10 -
 指定序号时可以使用`1-5 7 10`的形式。
 
 需要合并搜索结果时，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
+
+无损音乐搜索速度较慢，歌曲数量很少，建议只在搜索特定歌曲名时手动打开`-s flac`
 
 > 注意：如果经常需要指定数量、目录等参数可以考虑修改glovar.py中的变量
 
@@ -95,15 +97,28 @@ After merge 去重后：
 | 网易云音乐 | netease | <https://music.163.com/>  |
 | 百度音乐   | baidu   | <http://music.baidu.com/> |
 | 虾米音乐   | xiami   | <https://www.xiami.com/>  |
+| 百度无损音乐   | flac   | <http://music.baidu.com/> |
 
 欢迎提交插件支持更多音乐源！插件写法参考`core/extractors`中的文件
 
 ![](./docs/fork.png)
 
+## 更新记录
+- 2019-01-25 支持百度无损音乐
+- 2019-01-24 优化交互、修复bug
+- 2019-01-22 解决Windows兼容问题，支持多线程，发布v1.0版
+- 2019-01-21 支持虾米音乐，支持去重
+- 2019-01-20 支持百度音乐
+- 2019-01-17 支持指定目录、数量、音乐源
+- 2019-01-12 QQ音乐320K失效
+- 2019-01-11 支持网易云音乐
+- 2019-01-09 完成v0.1版，支持酷狗和QQ
+
 ## Credits 致谢
 本项目受以下项目启发，参考了其中一部分思路，向这些开发者表示感谢。
 - <https://github.com/soimort/you-get>
 - <https://github.com/maicong/music>
+- <https://github.com/YongHaoWu/NeteaseCloudMusicFlac>
 
 ## LICENSE
 
