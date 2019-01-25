@@ -1,29 +1,31 @@
 # music-dl
 从网易云音乐、QQ音乐、酷狗音乐、百度音乐、虾米音乐等搜索和下载歌曲。
 
-支持指定搜索数量和音乐源，默认优先尝试下载320K，如果没有320K会下载128K。
-
-由于各大音乐网站限制，高品质音乐一般只能通过会员下载。
-
-> 注意：部分音乐源在一些国家和地区不可用，可以考虑使用中国大陆代理。
->
-
 Search and download music from netease, qq, kugou, baidu and xiami.
 
-You can specify music sources and limit count of search results. 
+> 注意：部分音乐源在一些国家和地区不可用，可以考虑使用中国大陆代理。
 
-The default priority is to try to download 320K music, then 128K.
+> Note: Some music sources may not be available in some countries and regions. If so, you should use Chinese proxies. See <https://github.com/0xHJK/Proxies> for public proxies.
 
-> Note: Some music sources may not be available in some countries and regions. If so, you should use Chinese proxies.
+## Feature
+
+- 支持指定搜索数量、音乐源和保存目录（默认搜索全部音乐源，数量为5）
+- 支持无损音乐搜索（数量较少，默认不打开）
+- 搜索音质优先级由高到低（flac -> 320K -> 128K)
+- 支持http代理和socks代理（海外党福音）
+- 支持多线程搜索
+- 支持排序和去重（默认不去重）
 
 在以下环境测试通过（仅支持Python3）：
 
 | 系统名称 | 系统版本      | Python版本 |
-| -------- | ------------- | ---------- |
-| macOS    | 10.14         | 3.7.0      |
-| macOS    | 10.13         | 3.7.0      |
-| Windows  | Windows 7 x64 | 3.7.2      |
-| Ubuntu   | 16.04 x64     | 3.5.2      |
+| -------- | -------------- | ---------- |
+| macOS    | 10.14          | 3.7.0      |
+| macOS    | 10.13          | 3.7.0      |
+| Windows  | Windows 7 x64  | 3.7.2      |
+| Windows  | Windows 10 x64 | 3.7.2      |
+| Ubuntu   | 16.04 x64      | 3.5.2      |
+
 
 ## 免责声明
 
@@ -66,19 +68,13 @@ usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v] [-m]
 example: python main.py -k "周杰伦" -s "qq netease kugou baidu xiami" -c 10 -o "/tmp"
 ```
 
-支持多线程搜索，默认搜索所有音乐源，每个数量限制为5，保存目录为当前目录，不合并搜索结果。
+- 默认搜索所有音乐源，每个数量限制为5，保存目录为当前目录，不合并搜索结果。
+- 指定序号时可以使用`1-5 7 10`的形式。
+- 需要合并搜索结果时，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
+- 无损音乐歌曲数量较少，如果没有无损会显示320K或128K，建议只在搜索特定歌曲名时手动打开`-s flac`
+- 支持http代理和socks代理，使用`-x http://127.0.0.1:1087`或`-x socks5://127.0.0.1:1086`打开该功能
 
-指定序号时可以使用`1-5 7 10`的形式。
-
-需要合并搜索结果时，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
-
-无损音乐歌曲数量较少，如果没有无损会显示128K或320K，建议只在搜索特定歌曲名时手动打开`-s flac`
-
-支持http代理和socks代理，使用`-x http://127.0.0.1:1087`或`-x socks5://127.0.0.1:1086`打开该功能
-
-获取代理的方式参考我的另一个项目<https://github.com/0xHJK/Proxies>
-
-> 注意：如果经常需要指定数量、目录等参数可以考虑修改glovar.py中的变量
+获取公共代理的方式可以参考我的另一个项目<https://github.com/0xHJK/Proxies>，100行Python代码快速获得一个代理池，两分钟获得数千个有效代理。
 
 Example 使用示例：
 
