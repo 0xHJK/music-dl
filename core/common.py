@@ -11,20 +11,49 @@
 
 import os
 import requests
-import wget
+import click
 import glovar
 from utils import echo
 from utils.customlog import CustomLog
 
 logger = CustomLog(__name__).getLogger()
 
+def get_unique_outfile(outdir, filename):
+    ''' 判断文件是否已存在，并返回一个唯一名称 '''
+    outfile = os.path.abspath(os.path.join(outdir, filename))
+    if os.path.exists(outfile):
+        name, ext = filename.rsplit('.', 1)
+        names = [x for x in os.listdir(outdir) if x.startswith(name)]
+        names = [x.rsplit('.', 1)[0] for x in names]
+        suffixes = [x.replace(name, '') for x in names]
+        # filter suffixes that match ' (x)' pattern
+        suffixes = [x[2:-1] for x in suffixes
+                       if x.startswith(' (') and x.endswith(')')]
+        indexes  = [int(x) for x in suffixes
+                       if set(x) <= set('0123456789')]
+        idx = 1
+        if indexes:
+            idx += sorted(indexes)[-1]
+        outfile = os.path.abspath(os.path.join(outdir, '%s (%d).%s' % (name, idx, ext)))
+    return outfile
+
+
 def music_download(music):
     ''' 下载音乐保存到本地 '''
     echo.info(music)
-    outfile = os.path.abspath(os.path.join(glovar.get_option('outdir'), music['name']))
+    outfile = get_unique_outfile(glovar.get_option('outdir'), music['name'])
     try:
-        wget.download(music['url'], out=outfile)
-        print('\n已保存到：%s\n' % outfile)
+        r = requests.get(music['url'], stream=True,
+                         headers=glovar.WGET_HEADERS,
+                         proxies=glovar.get_option('proxies'))
+        total_size = int(r.headers['content-length'])
+        with click.progressbar(length=total_size, label='Downloading...') as bar:
+            with open(outfile, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=1024):
+                    if chunk:
+                        f.write(chunk)
+                        bar.update(len(chunk))
+        print('已保存到：%s\n' % outfile)
     except Exception as e:
         print('')
         logger.error('下载音乐失败：')

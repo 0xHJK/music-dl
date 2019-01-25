@@ -21,6 +21,14 @@ FAKE_HEADERS = {
 
 IOS_USERAGENT = 'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
 
+# QQ下载音乐不能没有User-Agent
+# 百度下载音乐User-Agent不能是浏览器，神奇……
+WGET_HEADERS = {
+    "Accept": "*/*",
+    "Accept-Encoding": "identity",
+    "User-Agent": "Wget/1.19.5 (darwin17.5.0)"
+}
+
 # 日志
 LOG_LEVEL = logging.DEBUG
 
@@ -40,7 +48,9 @@ def init_option():
         # 显示详情
         'verbose': False,
         # 搜索结果排序和去重
-        'merge': False
+        'merge': False,
+        # 代理
+        'proxies': None,
     }
 
 def set_option(opt, value):
