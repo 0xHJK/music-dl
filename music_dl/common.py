@@ -12,9 +12,9 @@
 import os
 import requests
 import click
-from .. import glovar
-from ..utils import echo
-from ..utils.customlog import CustomLog
+from . import glovar
+from .utils import echo
+from .utils.customlog import CustomLog
 
 logger = CustomLog(__name__).getLogger()
 

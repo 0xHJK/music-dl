@@ -14,7 +14,6 @@ import json
 import datetime
 import traceback
 from Crypto.Cipher import AES
-# import glovar
 from ..common import *
 from ..exceptions import *
 

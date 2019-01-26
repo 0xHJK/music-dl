@@ -12,9 +12,8 @@ import importlib
 import threading
 import traceback
 from . import glovar
-from .core import extractors
-from .core.common import music_list_merge
-from .core.exceptions import *
+from .common import music_list_merge
+from .exceptions import *
 from .utils import echo
 from .utils import cli
 from .utils.customlog import CustomLog
@@ -24,7 +23,7 @@ logger = CustomLog(__name__).getLogger()
 def music_search(source, music_list, errors):
     ''' 音乐搜索，music_list是搜索结果 '''
     try:
-        addon = importlib.import_module('.core.extractors.' + source, __package__)
+        addon = importlib.import_module('.extractors.' + source, __package__)
         music_list += addon.search(glovar.get_option('keyword'))
     except (RequestError, ResponseError, DataError) as e:
         errors.append((source, e))
@@ -40,7 +39,7 @@ def music_download(idx, music_list):
     ''' 音乐下载，music_list是搜索结果 '''
     music = music_list[int(idx)]
     try:
-        addon = importlib.import_module('.core.extractors.' + music['source'], __package__)
+        addon = importlib.import_module('.extractors.' + music['source'], __package__)
         addon.download(music)
     except Exception as e:
         logger.error('下载音乐失败')

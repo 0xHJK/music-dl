@@ -11,10 +11,9 @@ QQ音乐搜索和下载
 
 import datetime
 import random
-# import glovar
 from ..common import *
 from ..exceptions import *
-from ...utils.customlog import CustomLog
+from ..utils.customlog import CustomLog
 
 logger = CustomLog(__name__).getLogger()
 
