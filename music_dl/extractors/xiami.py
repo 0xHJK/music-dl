@@ -13,9 +13,8 @@ import datetime
 import threading
 from ..common import *
 from ..exceptions import *
-from ..utils.customlog import CustomLog
 
-logger = CustomLog(__name__).getLogger()
+__all__ = ['xiami_search', 'xiami_download']
 
 def xiami_search(keyword) -> list:
     ''' 搜索音乐 '''
@@ -65,11 +64,9 @@ def xiami_search(keyword) -> list:
 
     return music_list
 
-
 def xiami_download(music):
     ''' 从虾米音乐下载音乐 '''
     music_download(music)
-
 
 def xiami_music_info(music, music_list, s):
     '''
@@ -102,7 +99,6 @@ def xiami_music_info(music, music_list, s):
         music['size'] = round(content_length(music['url']) / 1048576, 2)
 
     music_list.append(music)
-
 
 search = xiami_search
 download = xiami_download

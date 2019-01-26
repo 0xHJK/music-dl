@@ -14,7 +14,7 @@ import requests
 import click
 from . import config
 from .utils import echo
-from .utils.customlog import CustomLog
+from .utils.log import CustomLog
 
 logger = CustomLog(__name__).getLogger()
 

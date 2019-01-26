@@ -16,7 +16,7 @@ from .common import music_list_merge
 from .exceptions import *
 from .utils import echo
 from .utils import cli
-from .utils.customlog import CustomLog
+from .utils.log import CustomLog
 
 # 初始化全局变量
 config.init()

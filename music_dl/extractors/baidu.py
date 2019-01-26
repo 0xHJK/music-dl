@@ -12,9 +12,8 @@
 import datetime
 from ..common import *
 from ..exceptions import *
-from ..utils.customlog import CustomLog
 
-logger = CustomLog(__name__).getLogger()
+__all__ = ['baidu_search', 'baidu_download']
 
 def baidu_search(keyword) -> list:
     ''' 搜索音乐 '''
@@ -66,7 +65,6 @@ def baidu_search(keyword) -> list:
         music_list.append(music)
 
     return music_list
-
 
 def baidu_download(music):
     ''' 从百度音乐下载音乐 '''

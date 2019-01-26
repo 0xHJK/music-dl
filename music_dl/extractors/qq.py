@@ -13,9 +13,8 @@ import datetime
 import random
 from ..common import *
 from ..exceptions import *
-from ..utils.customlog import CustomLog
 
-logger = CustomLog(__name__).getLogger()
+__all__ = ['qq_search', 'qq_download']
 
 def qq_search(keyword) -> list:
     ''' 搜索音乐 '''
@@ -67,7 +66,6 @@ def qq_search(keyword) -> list:
 
     return music_list
 
-
 def qq_download(music):
     ''' 根据songmid等信息获得下载链接 '''
     # 计算vkey
@@ -106,9 +104,7 @@ def qq_download(music):
             break
 
     music['name'] = '%s - %s.mp3' % (music['singer'], music['title'])
-
     music_download(music)
-
 
 search = qq_search
 download = qq_download

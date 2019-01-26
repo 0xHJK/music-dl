@@ -13,7 +13,7 @@ import sys
 import getopt
 from .. import config
 from . import echo
-from .customlog import CustomLog
+from .log import CustomLog
 
 logger = CustomLog(__name__).getLogger()
 

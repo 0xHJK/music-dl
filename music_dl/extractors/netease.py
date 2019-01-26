@@ -17,6 +17,8 @@ from Crypto.Cipher import AES
 from ..common import *
 from ..exceptions import *
 
+__all__ = ['netease_search', 'netease_download']
+
 def netease_search(keyword) -> list:
     ''' 从网易云音乐搜索 '''
     count = config.get('count') or 5
@@ -119,7 +121,6 @@ def netease_download(music):
     music['name'] = '%s - %s.mp3' % (music['singer'], music['title'])
 
     music_download(music)
-
 
 def encode_netease_data(data) -> str:
     data = json.dumps(data)

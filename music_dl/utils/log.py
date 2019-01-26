@@ -40,4 +40,3 @@ class CustomLog(object):
 
     def getLogger(self):
         return self.logger
-

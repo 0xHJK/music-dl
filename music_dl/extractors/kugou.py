@@ -12,9 +12,8 @@
 import datetime
 from ..common import *
 from ..exceptions import *
-from ..utils.customlog import CustomLog
 
-logger = CustomLog(__name__).getLogger()
+__all__ = ['kugou_search', 'kugou_download']
 
 def kugou_search(keyword) -> list:
     ''' 搜索音乐 '''
@@ -62,7 +61,6 @@ def kugou_search(keyword) -> list:
 
     return music_list
 
-
 def kugou_download(music):
     ''' 根据hash从酷狗下载音乐 '''
     params = {
@@ -92,7 +90,6 @@ def kugou_download(music):
     music['url'] = j['url']
 
     music_download(music)
-
 
 search = kugou_search
 download = kugou_download

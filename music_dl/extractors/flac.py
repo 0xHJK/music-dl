@@ -12,9 +12,8 @@
 import datetime
 from ..common import *
 from ..exceptions import *
-from ..utils.customlog import CustomLog
 
-logger = CustomLog(__name__).getLogger()
+__all__ = ['flac_search', 'flac_download']
 
 def flac_search(keyword) -> list:
     ''' 搜索无损音乐 '''
@@ -62,7 +61,6 @@ def flac_search(keyword) -> list:
         music_list.append(music)
 
     return music_list
-
 
 def flac_download(music):
     ''' 从百度音乐下载无损音乐 '''
