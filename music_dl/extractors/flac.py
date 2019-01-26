@@ -26,7 +26,7 @@ def flac_search(keyword) -> list:
 
     music_list = []
     r = requests.get('http://sug.music.baidu.com/info/suggestion', params=params,
-                     proxies=glovar.get_option('proxies'))
+                     proxies=config.get('proxies'))
     if r.status_code != requests.codes.ok:
         raise RequestError(r.text)
     j = r.json()
@@ -41,7 +41,7 @@ def flac_search(keyword) -> list:
         m_params = {'songIds': music['id'], 'type': 'flac'}
         # 不在同一个session能提高请求成功率
         mr = requests.get('http://music.baidu.com/data/music/fmlink', params=m_params,
-                          proxies=glovar.get_option('proxies'))
+                          proxies=config.get('proxies'))
         if mr.status_code != requests.codes.ok:
             raise RequestError(mr.text)
         mj = mr.json()

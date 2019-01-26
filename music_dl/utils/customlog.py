@@ -10,10 +10,10 @@
 """
 
 import logging
-from .. import glovar
+from .. import config
 
 class CustomLog(object):
-    def __init__(self, name, level=glovar.LOG_LEVEL):
+    def __init__(self, name, level=logging.DEBUG):
         super(CustomLog, self).__init__()
         self.name = name
         self.level = level

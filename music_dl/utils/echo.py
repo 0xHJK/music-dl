@@ -9,7 +9,7 @@
 
 """
 import platform
-from .. import glovar
+from .. import config
 
 colors = {
     'red': '\033[91m',
@@ -37,7 +37,7 @@ def colorize(string, color):
 
 def info(music):
     ''' 打印歌曲信息 '''
-    if not glovar.get_option('verbose'):
+    if not config.get('verbose'):
         return
     s = '\n ------------ \n -> 歌曲：%s\n -> 歌手：%s\n -> 时长: %s\n -> 大小: %s\n -> 比特率: %s\n -> URL: %s\n' % \
         (music['title'], music['singer'], music['duration'], music['size'], music['rate'], music['url'])

@@ -19,7 +19,7 @@ from ..exceptions import *
 
 def netease_search(keyword) -> list:
     ''' 从网易云音乐搜索 '''
-    count = glovar.get_option('count') or 5
+    count = config.get('count') or 5
     eparams = {
         'method': 'POST',
         'url': 'http://music.163.com/api/cloudsearch/pc',
@@ -33,12 +33,12 @@ def netease_search(keyword) -> list:
     data = {'eparams': encode_netease_data(eparams)}
 
     s = requests.Session()
-    s.headers.update(glovar.FAKE_HEADERS)
+    s.headers.update(config.get('fake_headers'))
     s.headers.update({
         'referer': 'http://music.163.com/',
     })
-    if glovar.get_option('proxies'):
-        s.proxies.update(glovar.get_option('proxies'))
+    if config.get('proxies'):
+        s.proxies.update(config.get('proxies'))
 
     r = s.post('http://music.163.com/api/linux/forward', data=data)
 
@@ -79,7 +79,7 @@ def netease_search(keyword) -> list:
             music_list.append(music)
     except Exception as e:
         # 如果是详细模式则输出详细错误信息
-        err = traceback.format_exc() if glovar.get_option('verbose') else str(e)
+        err = traceback.format_exc() if config.get('verbose') else str(e)
         raise DataError(err)
 
     return music_list
@@ -98,12 +98,12 @@ def netease_download(music):
     data = {'eparams': encode_netease_data(eparams)}
 
     s = requests.Session()
-    s.headers.update(glovar.FAKE_HEADERS)
+    s.headers.update(config.get('fake_headers'))
     s.headers.update({
         'referer': 'http://music.163.com/',
     })
-    if glovar.get_option('proxies'):
-        s.proxies.update(glovar.get_option('proxies'))
+    if config.get('proxies'):
+        s.proxies.update(config.get('proxies'))
 
     r = s.post('http://music.163.com/api/linux/forward', data=data)
 

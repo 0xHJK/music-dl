@@ -18,7 +18,7 @@ logger = CustomLog(__name__).getLogger()
 
 def kugou_search(keyword) -> list:
     ''' 搜索音乐 '''
-    count = glovar.get_option('count') or 5
+    count = config.get('count') or 5
     params = {
         'keyword': keyword,
         'platform': 'WebFilter',
@@ -27,10 +27,10 @@ def kugou_search(keyword) -> list:
         'pagesize': count
     }
     s = requests.Session()
-    s.headers.update(glovar.FAKE_HEADERS)
+    s.headers.update(config.get('fake_headers'))
     s.headers.update({'referer': 'http://www.kugou.com'})
-    if glovar.get_option('proxies'):
-        s.proxies.update(glovar.get_option('proxies'))
+    if config.get('proxies'):
+        s.proxies.update(config.get('proxies'))
 
     music_list = []
     r = s.get('http://songsearch.kugou.com/song_search_v2', params=params)
@@ -70,13 +70,13 @@ def kugou_download(music):
         'hash': music['hash']
     }
     s = requests.Session()
-    s.headers.update(glovar.FAKE_HEADERS)
+    s.headers.update(config.get('fake_headers'))
     s.headers.update({
         'referer': 'http://m.kugou.com',
-        'User-Agent': glovar.IOS_USERAGENT
+        'User-Agent': config.get('ios_headers')
     })
-    if glovar.get_option('proxies'):
-        s.proxies.update(glovar.get_option('proxies'))
+    if config.get('proxies'):
+        s.proxies.update(config.get('proxies'))
 
     r = s.get('http://m.kugou.com/app/i/getSongInfo.php', params=params)
     if r.status_code != requests.codes.ok:

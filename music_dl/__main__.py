@@ -11,24 +11,26 @@ import sys
 import importlib
 import threading
 import traceback
-from . import glovar
+from . import config
 from .common import music_list_merge
 from .exceptions import *
 from .utils import echo
 from .utils import cli
 from .utils.customlog import CustomLog
 
+# 初始化全局变量
+config.init()
 logger = CustomLog(__name__).getLogger()
 
 def music_search(source, music_list, errors):
     ''' 音乐搜索，music_list是搜索结果 '''
     try:
         addon = importlib.import_module('.extractors.' + source, __package__)
-        music_list += addon.search(glovar.get_option('keyword'))
+        music_list += addon.search(config.get('keyword'))
     except (RequestError, ResponseError, DataError) as e:
         errors.append((source, e))
     except Exception as e:
-        err = traceback.format_exc() if glovar.get_option('verbose') else str(e)
+        err = traceback.format_exc() if config.get('verbose') else str(e)
         errors.append((source, err))
     finally:
         # 放在搜索后输出是为了营造出搜索很快的假象
@@ -43,7 +45,7 @@ def music_download(idx, music_list):
         addon.download(music)
     except Exception as e:
         logger.error('下载音乐失败')
-        err = traceback.format_exc() if glovar.get_option('verbose') else str(e)
+        err = traceback.format_exc() if config.get('verbose') else str(e)
         logger.error(err)
 
 
@@ -52,14 +54,14 @@ def run():
     thread_pool = []
     errors = []
 
-    if not glovar.get_option('keyword'):
+    if not config.get('keyword'):
         # 如果未设置关键词
         cli.set_music_keyword('请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）：\n > ')
 
-    echo.notice(glovar.get_option('keyword'))
+    echo.notice(config.get('keyword'))
 
     # 多线程搜索
-    for source in glovar.get_option('source').split():
+    for source in config.get('source').split():
         t = threading.Thread(target=music_search, args=(source, music_list, errors))
         thread_pool.append(t)
         t.start()
@@ -73,7 +75,7 @@ def run():
         logger.error('Get %s music list failed.' % err[0].upper())
         logger.error(err[1])
 
-    if glovar.get_option('merge'):
+    if config.get('merge'):
         # 对搜索结果排序和去重
         music_list = music_list_merge(music_list)
 
@@ -88,9 +90,6 @@ def run():
     run()
 
 def main():
-    # 初始化全局变量
-    glovar.init_option()
-
     if len(sys.argv) > 1:
         cli.set_opts(sys.argv[1:])
     try:

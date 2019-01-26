@@ -11,7 +11,7 @@
 import re
 import sys
 import getopt
-from .. import glovar
+from .. import config
 from . import echo
 from .customlog import CustomLog
 
@@ -38,23 +38,23 @@ def set_opts(args):
             echo.usage()
             sys.exit(2)
         elif o in ('-v', '--verbose'):
-            glovar.set_option('verbose', True)
+            config.set('verbose', True)
         elif o in ('-k', '--keyword'):
-            glovar.set_option('keyword', a)
+            config.set('keyword', a)
         elif o in ('-s', '--source'):
-            glovar.set_option('source', a)
+            config.set('source', a)
         elif o in ('-c', '--count'):
             c = int(a) if int(a) < 51 else 50
-            glovar.set_option('count', c)
+            config.set('count', c)
         elif o in ('-o', '--outdir'):
-            glovar.set_option('outdir', a)
+            config.set('outdir', a)
         elif o in ('-x', '--proxy'):
             proxies = { 'http': a, 'https': a}
-            glovar.set_option('proxies', proxies)
+            config.set('proxies', proxies)
         elif o in ('-m', '--merge'):
-            glovar.set_option('merge', True)
+            config.set('merge', True)
         elif o in ('--nomerge'):
-            glovar.set_option('merge', False)
+            config.set('merge', False)
         else:
             assert False, 'unhandled option'
 
@@ -82,5 +82,5 @@ def get_music_select(comment='请输入下载序号，多个序号用空格隔�
 
 def set_music_keyword(comment='请输入要搜索的歌曲，或Ctrl+C退出：\n > '):
     keyword = input(comment)
-    glovar.set_option('keyword', keyword)
+    config.set('keyword', keyword)
 

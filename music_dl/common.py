@@ -12,7 +12,7 @@
 import os
 import requests
 import click
-from . import glovar
+from . import config
 from .utils import echo
 from .utils.customlog import CustomLog
 
@@ -41,11 +41,11 @@ def get_unique_outfile(outdir, filename):
 def music_download(music):
     ''' 下载音乐保存到本地 '''
     echo.info(music)
-    outfile = get_unique_outfile(glovar.get_option('outdir'), music['name'])
+    outfile = get_unique_outfile(config.get('outdir'), music['name'])
     try:
         r = requests.get(music['url'], stream=True,
-                         headers=glovar.WGET_HEADERS,
-                         proxies=glovar.get_option('proxies'))
+                         headers=config.get('wget_headers'),
+                         proxies=config.get('proxies'))
         total_size = int(r.headers['content-length'])
         with click.progressbar(length=total_size, label='Downloading...') as bar:
             with open(outfile, 'wb') as f:
@@ -59,20 +59,20 @@ def music_download(music):
         logger.error('下载音乐失败：')
         logger.error('URL：%s' % music['url'])
         logger.error('位置：%s\n' % outfile )
-        if glovar.get_option('verbose'):
+        if config.get('verbose'):
             logger.error(e)
 
 
 def url_available(url) -> bool:
     s = requests.Session()
-    s.headers.update(glovar.FAKE_HEADERS)
+    s.headers.update(config.get('fake_headers'))
     r = s.head(url)
     return r.status_code == requests.codes.ok
 
 
 def content_length(url) -> int:
     s = requests.Session()
-    s.headers.update(glovar.FAKE_HEADERS)
+    s.headers.update(config.get('fake_headers'))
     try:
         r = s.head(url)
         if r.status_code == requests.codes.ok:

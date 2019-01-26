@@ -19,7 +19,7 @@ logger = CustomLog(__name__).getLogger()
 
 def qq_search(keyword) -> list:
     ''' 搜索音乐 '''
-    count = glovar.get_option('count') or 5
+    count = config.get('count') or 5
     params = {
         'w': keyword,
         'format': 'json',
@@ -27,13 +27,13 @@ def qq_search(keyword) -> list:
         'n': count
     }
     s = requests.Session()
-    s.headers.update(glovar.FAKE_HEADERS)
+    s.headers.update(config.get('fake_headers'))
     s.headers.update({
         'referer': 'http://m.y.qq.com',
-        'User-Agent': glovar.IOS_USERAGENT
+        'User-Agent': config.get('ios_useragent')
     })
-    if glovar.get_option('proxies'):
-        s.proxies.update(glovar.get_option('proxies'))
+    if config.get('proxies'):
+        s.proxies.update(config.get('proxies'))
 
     music_list = []
     r = s.get('http://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp', params=params)
@@ -78,13 +78,13 @@ def qq_download(music):
         'json': 3
     }
     s = requests.Session()
-    s.headers.update(glovar.FAKE_HEADERS)
+    s.headers.update(config.get('fake_headers'))
     s.headers.update({
         'referer': 'http://y.qq.com',
-        'User-Agent': glovar.IOS_USERAGENT
+        'User-Agent': config.get('ios_useragent')
     })
-    if glovar.get_option('proxies'):
-        s.proxies.update(glovar.get_option('proxies'))
+    if config.get('proxies'):
+        s.proxies.update(config.get('proxies'))
 
     r = s.get('http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg', params=params)
     if r.status_code != requests.codes.ok:

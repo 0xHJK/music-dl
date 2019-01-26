@@ -19,7 +19,7 @@ logger = CustomLog(__name__).getLogger()
 
 def xiami_search(keyword) -> list:
     ''' 搜索音乐 '''
-    count = glovar.get_option('count') or 5
+    count = config.get('count') or 5
     params = {
         'key': keyword,
         'v': '2.0',
@@ -29,12 +29,12 @@ def xiami_search(keyword) -> list:
         'limit': count
     }
     s = requests.Session()
-    s.headers.update(glovar.FAKE_HEADERS)
+    s.headers.update(config.get('fake_headers'))
     # 获取cookie
     s.head('http://m.xiami.com')
     s.headers.update({'referer': 'http://m.xiami.com/'})
-    if glovar.get_option('proxies'):
-        s.proxies.update(glovar.get_option('proxies'))
+    if config.get('proxies'):
+        s.proxies.update(config.get('proxies'))
 
     music_list = []
     r = s.get('http://api.xiami.com/web', params=params)
