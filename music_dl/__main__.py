@@ -11,12 +11,15 @@ import sys
 import importlib
 import threading
 import traceback
+import click
 from . import config
 from .common import music_list_merge
 from .exceptions import *
 from .utils import echo
 from .utils import cli
 from .utils.log import CustomLog
+
+__version__ = '2.0.0'
 
 # 初始化全局变量
 config.init()
@@ -89,12 +92,41 @@ def run():
     cli.set_music_keyword()
     run()
 
-def main():
-    if len(sys.argv) > 1:
-        cli.set_opts(sys.argv[1:])
+@click.command()
+@click.version_option()
+@click.option('-k', '--keyword', prompt='请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）',
+              help='搜索关键字')
+@click.option('-s', '--source', default='qq netease kugou baidu xiami',
+              help='数据源目前支持qq netease kugou baidu xiami flac')
+@click.option('-c', '--count', default=5, help='搜索数量限制')
+@click.option('-o', '--outdir', default='.', help='指定输出目录')
+@click.option('-x', '--proxy', default='', help='指定代理（如http://127.0.0.1:1087）')
+@click.option('-m', '--merge', default=False, is_flag=True,
+              help='对搜索结果去重和排序（默认不去重）')
+@click.option('-v', '--verbose', default=False, is_flag=True,
+              help='详细模式')
+def main(keyword, source, count, outdir, proxy, merge, verbose):
+    '''
+        Search and download music from netease, qq, kugou, baidu and xiami.
+        example: music-dl -k "周杰伦" -s "qq  baidu xiami" -c 10 -o "/tmp
+    '''
+    # if len(sys.argv) > 1:
+    #     cli.set_opts(sys.argv[1:])
+    config.set('keyword', keyword)
+    config.set('source', source)
+    config.set('count', count)
+    config.set('outdir', outdir)
+    config.set('merge', merge)
+    config.set('verbose', verbose)
+    if proxy:
+        proxies = {
+            'http': proxy,
+            'https': proxy
+        }
+        config.set('proxies', proxies)
     try:
         run()
-    except KeyboardInterrupt:
+    except (EOFError, KeyboardInterrupt):
         sys.exit(0)
 
 if __name__ == '__main__':
