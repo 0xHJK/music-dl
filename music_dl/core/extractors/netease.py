@@ -14,9 +14,9 @@ import json
 import datetime
 import traceback
 from Crypto.Cipher import AES
-import glovar
-from core.common import *
-from core.exceptions import *
+# import glovar
+from ..common import *
+from ..exceptions import *
 
 def netease_search(keyword) -> list:
     ''' 从网易云音乐搜索 '''

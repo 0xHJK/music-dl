@@ -10,8 +10,7 @@
 """
 
 import logging
-import glovar
-
+from .. import glovar
 
 class CustomLog(object):
     def __init__(self, name, level=glovar.LOG_LEVEL):

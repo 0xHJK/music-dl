@@ -9,7 +9,7 @@
 
 """
 import platform
-import glovar
+from .. import glovar
 
 colors = {
     'red': '\033[91m',

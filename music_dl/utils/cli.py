@@ -11,9 +11,9 @@
 import re
 import sys
 import getopt
-import glovar
-from utils import echo
-from utils.customlog import CustomLog
+from .. import glovar
+from . import echo
+from .customlog import CustomLog
 
 logger = CustomLog(__name__).getLogger()
 
