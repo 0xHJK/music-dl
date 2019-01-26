@@ -8,15 +8,15 @@
 """
 
 import sys
+import re
 import importlib
 import threading
 import traceback
 import click
 from . import config
-from .common import music_list_merge
+from .common import music_list_merge, get_sequence
 from .exceptions import *
 from .utils import echo
-from .utils import cli
 from .utils.log import CustomLog
 
 __version__ = '2.0.0'
@@ -57,10 +57,6 @@ def run():
     thread_pool = []
     errors = []
 
-    if not config.get('keyword'):
-        # 如果未设置关键词
-        cli.set_music_keyword('请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）：\n > ')
-
     echo.notice(config.get('keyword'))
 
     # 多线程搜索
@@ -84,13 +80,19 @@ def run():
 
     echo.menu(music_list)
 
-    selected = cli.get_music_select()
-    for idx in selected:
+    choices = click.prompt('请输入下载序号，多个序号用空格隔开，输入N跳过下载')
+    while choices.lower() != 'n' and not re.match(r'^((\d+\-\d+)|(\d+)|\s+)+$', choices):
+        choices = click.prompt('输入有误！仅支持形如 0 3-5 8 的格式，输入N跳过下载')
+
+    selected_list = get_sequence(choices)
+    for idx in selected_list:
         music_download(idx, music_list)
 
     # 下载完后继续搜索
-    cli.set_music_keyword()
+    keyword = click.prompt('请输入要搜索的歌曲，或Ctrl+C退出')
+    config.set('keyword', keyword)
     run()
+
 
 @click.command()
 @click.version_option()

@@ -10,6 +10,7 @@
 """
 
 import os
+import re
 import requests
 import click
 from . import config
@@ -97,3 +98,19 @@ def music_list_merge(music_list) -> list:
         result_list.append(music_list[i])
 
     return result_list
+
+
+def get_sequence(numbers) -> list:
+    ''' 输入3 4-6 9，返回一个列表[3,4,5,6,9] '''
+    result = []
+    if not re.match(r'^((\d+\-\d+)|(\d+)|\s+)+$', numbers):
+        return result
+
+    for choice in numbers.split():
+        start, _, end = choice.partition('-')
+        if end:
+            result += range(int(start), int(end)+1)
+        else:
+            result.append(start)
+
+    return result
