@@ -124,4 +124,4 @@ After merge 去重后：
 
 ## LICENSE
 
-WTFPL
+[MIT License]('https://github.com/0xHJK/music-dl/master/LICENSE')
