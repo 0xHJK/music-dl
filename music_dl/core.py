@@ -2,10 +2,10 @@
 #-*- coding:utf-8 _*-  
 """
 @author: HJK 
-@file: common.py 
+@file: core.py
 @time: 2019-01-09
 
-公用的一些方法
+被main调用的主要方法
 
 """
 
