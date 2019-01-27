@@ -9,9 +9,9 @@
 
 """
 
-import datetime
 from ..common import *
 from ..exceptions import *
+from ..music import Music
 
 __all__ = ['kugou_search', 'kugou_download']
 
@@ -27,9 +27,9 @@ def kugou_search(keyword) -> list:
     }
     s = requests.Session()
     s.headers.update(config.get('fake_headers'))
-    s.headers.update({'referer': 'http://www.kugou.com'})
     if config.get('proxies'):
         s.proxies.update(config.get('proxies'))
+    s.headers.update({'referer': 'http://www.kugou.com'})
 
     music_list = []
     r = s.get('http://songsearch.kugou.com/song_search_v2', params=params)
@@ -37,25 +37,24 @@ def kugou_search(keyword) -> list:
         raise RequestError(r.text)
     j = r.json()
     if j['status'] != 1:
-        raise ResponseError(j)
+        raise ResponseError(r.text)
 
     for m in j['data']['lists']:
-        music = {
-            'title': m['SongName'],
-            'id': m['Scid'],
-            'hash': m['FileHash'],
-            'duration': str(datetime.timedelta(seconds=m['Duration'])),
-            'singer': m['SingerName'],
-            'album': m['AlbumName'],
-            # 'ext': m['ExtName'],
-            'size': round(m['FileSize'] / 1048576, 2),
-            'source': 'kugou'
-        }
+        music = Music()
+        music.source = 'kugou'
+        music.id = m['Scid']
+        music.title = m['SongName']
+        music.singer = m['SingerName']
+        music.duration = m['Duration']
+        music.album = m['AlbumName']
+        music.size = round(m['FileSize'] / 1048576, 2)
         # 如果有更高品质的音乐选择高品质（尽管好像没什么卵用）
         if m['SQFileHash'] and m['SQFileHash'] != '00000000000000000000000000000000':
-            music['hash'] = m['SQFileHash']
+            music.hash = m['SQFileHash']
         elif m['HQFileHash'] and m['HQFileHash'] != '00000000000000000000000000000000':
-            music['hash'] = m['HQFileHash']
+            music.hash = m['HQFileHash']
+        else:
+            music.hash = m['FileHash']
 
         music_list.append(music)
 
@@ -65,31 +64,29 @@ def kugou_download(music):
     ''' 根据hash从酷狗下载音乐 '''
     params = {
         'cmd': 'playInfo',
-        'hash': music['hash']
+        'hash': music.hash
     }
     s = requests.Session()
     s.headers.update(config.get('fake_headers'))
+    if config.get('proxies'):
+        s.proxies.update(config.get('proxies'))
     s.headers.update({
         'referer': 'http://m.kugou.com',
         'User-Agent': config.get('ios_headers')
     })
-    if config.get('proxies'):
-        s.proxies.update(config.get('proxies'))
 
     r = s.get('http://m.kugou.com/app/i/getSongInfo.php', params=params)
     if r.status_code != requests.codes.ok:
         raise RequestError(r.text)
     j = r.json()
     if j['status'] != 1:
-        raise ResponseError(j)
+        raise ResponseError(r.text)
 
-    music['ext'] = j['extName']
-    music['name'] = j['fileName'] + '.' + j['extName']
-    music['size'] = round(j['fileSize'] / 1048576, 2)
-    music['rate'] = j['bitRate']
-    music['url'] = j['url']
+    music.url = j['url']
+    music.rate = j['bitRate']
+    music.ext = j['extName']
 
-    music_download(music)
+    music.download()
 
 search = kugou_search
 download = kugou_download
