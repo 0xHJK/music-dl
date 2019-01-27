@@ -9,9 +9,9 @@
 
 """
 
-import datetime
 from ..common import *
 from ..exceptions import *
+from ..music import Music
 
 __all__ = ['flac_search', 'flac_download']
 
@@ -31,33 +31,30 @@ def flac_search(keyword) -> list:
     j = r.json()
 
     for m in j['data']['song']:
-        music = {
-            'title': m['songname'],
-            'id': m['songid'],
-            'singer': m['artistname'],
-            'source': 'flac'
-        }
-        m_params = {'songIds': music['id'], 'type': 'flac'}
+        music = Music()
+        music.source = 'flac'
+        music.id = m['songid']
+        music.title = m['songname']
+        music.singer = m['singer']
+
+        m_params = {'songIds': music.id, 'type': 'flac'}
         # 不在同一个session能提高请求成功率
         mr = requests.get('http://music.baidu.com/data/music/fmlink', params=m_params,
                           proxies=config.get('proxies'))
         if mr.status_code != requests.codes.ok:
             raise RequestError(mr.text)
         mj = mr.json()
-        if mj['errorCode'] != 22000:
+        if mj['errorCode'] != 22000 or mj['data']['songList']:
             continue
-        if not mj['data']['songList']:
-            continue
-        mj_music = mj['data']['songList'][0]
-        music['duration'] = str(datetime.timedelta(seconds=mj_music['time']))
-        size = mj_music['size'] or 0
-        music['size'] = round(size / 1048576, 2)
-        music['rate'] = mj_music['rate']
-        music['ext'] = mj_music['format']
-        music['url'] = mj_music['songLink']
-        music['album'] = mj_music['albumName']
-        music['name'] = '%s - %s.%s' % (mj_music['artistName'], mj_music['songName'], mj_music['format'])
 
+        mj_music = mj['data']['songList'][0]
+        music.url = mj_music['songLink']
+        if not music.avaiable:
+            continue
+        music.duration = mj_music['time']
+        music.rate = mj_music['rate']
+        music.ext = mj_music['format']
+        music.album = mj_music['albumName']
         music_list.append(music)
 
     return music_list
