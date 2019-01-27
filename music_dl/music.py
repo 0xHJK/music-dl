@@ -10,6 +10,7 @@ music object
 """
 
 import os
+import datetime
 import click
 import requests
 from . import config
@@ -27,11 +28,11 @@ class Music():
         self.title = ''
         self.ext = ''
         self.singer = ''
-        self.ablum = ''
-        self.duration = ''
+        self.album = ''
         self.size = ''
         self.rate = ''
         self.source = ''
+        self._duration = ''
         self._url = ''
         self.outdir = config.get('outdir')
         self.verbose = config.get('verbose')
@@ -58,6 +59,15 @@ class Music():
         return '%s - %s.%s' % (self.singer, self.title, self.ext)
 
     @property
+    def duration(self):
+        ''' 持续时间 H:M:S '''
+        return self._duration
+
+    @duration.setter
+    def duration(self, seconds):
+        self._duration = str(datetime.timedelta(seconds=int(seconds)))
+
+    @property
     def info(self):
         ''' 歌曲摘要信息，列出搜索歌曲时使用 '''
         source = colorize('%7s' % self.source.upper(), self.source)
@@ -65,7 +75,7 @@ class Music():
         title = colorize(self.title, 'yellow')
         v = colorize(' | ', self.source)
         h = colorize(' - ', self.source)
-        return source + v + self.duration + h + size + h + self.singer + h + title + h + self.ablum
+        return source + v + self.duration + h + size + h + self.singer + h + title + h + self.album
 
     @property
     def url(self):
