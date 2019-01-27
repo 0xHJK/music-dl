@@ -10,13 +10,14 @@
 """
 
 import logging
-from .. import config
+from . import config
 
 class CustomLog(object):
-    def __init__(self, name, level=logging.DEBUG):
+    def __init__(self, name):
         super(CustomLog, self).__init__()
         self.name = name
-        self.level = level
+        # self.level = logging.DEBUG if config.get('verbose') else logging.INFO
+        self.level = logging.DEBUG
 
         # 控制台输出样式
         self.formatter = logging.Formatter(
@@ -40,3 +41,5 @@ class CustomLog(object):
 
     def getLogger(self):
         return self.logger
+
+# logger = CustomLog('music-dl').getLogger()

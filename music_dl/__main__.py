@@ -14,10 +14,10 @@ import threading
 import traceback
 import click
 from . import config
-from .common import music_list_merge, get_sequence
+from . import utils
+from .core import *
 from .exceptions import *
-from .utils import echo
-from .utils.log import CustomLog
+from .log import CustomLog
 
 __version__ = '2.0.0'
 
@@ -25,39 +25,12 @@ __version__ = '2.0.0'
 config.init()
 logger = CustomLog(__name__).getLogger()
 
-def music_search(source, music_list, errors):
-    ''' 音乐搜索，music_list是搜索结果 '''
-    try:
-        addon = importlib.import_module('.extractors.' + source, __package__)
-        music_list += addon.search(config.get('keyword'))
-    except (RequestError, ResponseError, DataError) as e:
-        errors.append((source, e))
-    except Exception as e:
-        err = traceback.format_exc() if config.get('verbose') else str(e)
-        errors.append((source, err))
-    finally:
-        # 放在搜索后输出是为了营造出搜索很快的假象
-        echo.brand(source=source)
-
-
-def music_download(idx, music_list):
-    ''' 音乐下载，music_list是搜索结果 '''
-    music = music_list[int(idx)]
-    try:
-        addon = importlib.import_module('.extractors.' + music['source'], __package__)
-        addon.download(music)
-    except Exception as e:
-        logger.error('下载音乐失败')
-        err = traceback.format_exc() if config.get('verbose') else str(e)
-        logger.error(err)
-
-
 def run():
     music_list = []
     thread_pool = []
     errors = []
 
-    echo.notice(config.get('keyword'))
+    utils.notice(config.get('keyword'))
 
     # 多线程搜索
     for source in config.get('source').split():
@@ -68,7 +41,7 @@ def run():
         t.join()
 
     # 分割线
-    echo.line()
+    utils.line()
     # 输出错误信息
     for err in errors:
         logger.error('Get %s music list failed.' % err[0].upper())
@@ -78,25 +51,28 @@ def run():
         # 对搜索结果排序和去重
         music_list = music_list_merge(music_list)
 
-    echo.menu(music_list)
+    # echo.menu(music_list)
+    for index, music in enumerate(music_list):
+        idx = utils.colorize(' [ %2s ] ' % index, 'cyan')
+        click.echo(idx + music.info)
 
-    choices = click.prompt('请输入下载序号，多个序号用空格隔开，输入N跳过下载')
+    choices = click.prompt('请输入下载序号，多个序号用空格隔开，输入N跳过下载\n >>')
     while choices.lower() != 'n' and not re.match(r'^((\d+\-\d+)|(\d+)|\s+)+$', choices):
-        choices = click.prompt('输入有误！仅支持形如 0 3-5 8 的格式，输入N跳过下载')
+        choices = click.prompt('输入有误！仅支持形如 0 3-5 8 的格式，输入N跳过下载\n >>')
 
     selected_list = get_sequence(choices)
     for idx in selected_list:
         music_download(idx, music_list)
 
     # 下载完后继续搜索
-    keyword = click.prompt('请输入要搜索的歌曲，或Ctrl+C退出')
+    keyword = click.prompt('请输入要搜索的歌曲，或Ctrl+C退出\n >>')
     config.set('keyword', keyword)
     run()
 
 
 @click.command()
 @click.version_option()
-@click.option('-k', '--keyword', prompt='请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）',
+@click.option('-k', '--keyword', prompt='请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）\n >>',
               help='搜索关键字')
 @click.option('-s', '--source', default='qq netease kugou baidu xiami',
               help='数据源目前支持qq netease kugou baidu xiami flac')

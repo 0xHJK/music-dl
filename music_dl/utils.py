@@ -2,8 +2,8 @@
 #-*- coding:utf-8 _*-
 """
 @author: HJK 
-@file: echo.py 
-@time: 2019-01-09
+@file: utils.py
+@time: 2019-01-28
 
 控制台输出内容控制
 

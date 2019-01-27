@@ -14,8 +14,8 @@ import datetime
 import click
 import requests
 from . import config
-from .utils.log import CustomLog
-from .utils.echo import *
+from .log import CustomLog
+from .utils import *
 
 class Music():
     '''
