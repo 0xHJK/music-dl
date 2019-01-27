@@ -9,10 +9,10 @@
 
 """
 
-import datetime
 import threading
 from ..common import *
 from ..exceptions import *
+from ..music import Music
 
 __all__ = ['xiami_search', 'xiami_download']
 
@@ -29,11 +29,11 @@ def xiami_search(keyword) -> list:
     }
     s = requests.Session()
     s.headers.update(config.get('fake_headers'))
+    if config.get('proxies'):
+        s.proxies.update(config.get('proxies'))
     # 获取cookie
     s.head('http://m.xiami.com')
     s.headers.update({'referer': 'http://m.xiami.com/'})
-    if config.get('proxies'):
-        s.proxies.update(config.get('proxies'))
 
     music_list = []
     r = s.get('http://api.xiami.com/web', params=params)
@@ -46,14 +46,15 @@ def xiami_search(keyword) -> list:
     for m in j['data']['songs']:
         # 如果无版权则不显示
         if not m['listen_file']: continue
-        music = {
-            'title': m['song_name'],
-            'id': m['song_id'],
-            'singer': m['artist_name'],
-            'album': m['album_name'],
-            'url': m['listen_file'],
-            'source': 'xiami'
-        }
+        music = Music()
+        music.source = 'xiami'
+        music.id = m['song_id']
+        music.title = m['song_name']
+        music.singer = m['artist_name']
+        music.album = m['album_name']
+        # 默认使用320K
+        music.url = m['listen_file'].replace('m128.xiami.net', 'm320.xiami.net')
+        music.rate = 320
 
         t = threading.Thread(target=xiami_music_info, args=(music, music_list, s))
         thread_pool.append(t)
@@ -66,7 +67,7 @@ def xiami_search(keyword) -> list:
 
 def xiami_download(music):
     ''' 从虾米音乐下载音乐 '''
-    music_download(music)
+    music.download()
 
 def xiami_music_info(music, music_list, s):
     '''
@@ -76,27 +77,20 @@ def xiami_music_info(music, music_list, s):
     :param s: requests session
     :return: 返回结果直接追加到music_list中
     '''
-    mr = s.get('http://www.xiami.com/song/playlist/id/%s/type/0/cat/json' % music['id'])
+    mr = s.get('http://www.xiami.com/song/playlist/id/%s/type/0/cat/json' % music.id)
     if mr.status_code != requests.codes.ok:
         raise RequestError(mr.text)
     mj = mr.json()
     if not mj['data']['trackList']:
-        return
-    mj_music = mj['data']['trackList'][0]
-    music['duration'] = str(datetime.timedelta(seconds=mj_music['length']))
-    music['rate'] = 128
-    music['ext'] = 'mp3'
-    music['name'] = '%s - %s.%s' % (music['singer'], music['title'], music['ext'])
+        raise DataError('no data.trackList')
 
-    # 尝试获取虾米高品质音乐(320K)
-    url = music['url'].replace('m128.xiami.net', 'm320.xiami.net')
-    size = content_length(url)
-    if size:
-        music['size'] = round(size / 1048576, 2)
-        music['url'] = url
-        music['rate'] = 320
-    else:
-        music['size'] = round(content_length(music['url']) / 1048576, 2)
+    mj_music = mj['data']['trackList'][0]
+    music.duration = mj_music['length']
+
+    if not music.avaiable:
+        # 如果没有320K则使用128K
+        music.url = music.url.replace('m320.xiami.net', 'm128.xiami.net')
+        music.rate = 128
 
     music_list.append(music)
 
