@@ -12,6 +12,7 @@
 import datetime
 from ..common import *
 from ..exceptions import *
+from ..music import Music
 
 __all__ = ['baidu_search', 'baidu_download']
 
@@ -27,9 +28,9 @@ def baidu_search(keyword) -> list:
     }
     s = requests.Session()
     s.headers.update(config.get('fake_headers'))
-    s.headers.update({'referer': 'http://music.baidu.com/'})
     if config.get('proxies'):
         s.proxies.update(config.get('proxies'))
+    s.headers.update({'referer': 'http://music.baidu.com/'})
 
     music_list = []
     r = s.get('http://musicapi.qianqian.com/v1/restserver/ting', params=params)
@@ -38,37 +39,36 @@ def baidu_search(keyword) -> list:
     j = r.json()
 
     for m in j['song_list']:
-        music = {
-            'title': m['title'].replace('<em>', '').replace('</em>', ''),
-            'id': m['song_id'],
-            'singer': m['author'].replace('<em>', '').replace('</em>', ''),
-            'album': m['album_title'].replace('<em>', '').replace('</em>', ''),
-            'source': 'baidu'
-        }
-        s.headers.update({'referer': 'http://music.baidu.com/song/' + m['song_id']})
-        m_params = {'songIds': m['song_id']}
+        music = Music()
+        music.source = 'baidu'
+        music.id = m['song_id']
+        music.title = m['title'].replace('<em>', '').replace('</em>', '')
+        music.singer = m['author'].replace('<em>', '').replace('</em>', '')
+        music.album = m['album_title'].replace('<em>', '').replace('</em>', '')
+
+        s.headers.update({'referer': 'http://music.baidu.com/song/' + music.id})
+        m_params = {'songIds': music.id}
         mr = s.get('http://music.baidu.com/data/music/links', params=m_params)
         if mr.status_code != requests.codes.ok:
             raise RequestError(mr.text)
         mj = mr.json()
         if not mj['data']['songList']:
             continue
-        mj_music = mj['data']['songList'][0]
-        music['duration'] = str(datetime.timedelta(seconds=mj_music['time']))
-        size = mj_music['size'] or 0
-        music['size'] = round(size / 1048576, 2)
-        music['rate'] = mj_music['rate']
-        music['ext'] = mj_music['format']
-        music['url'] = mj_music['songLink']
-        music['name'] = '%s - %s.%s' % (mj_music['artistName'], mj_music['songName'], mj_music['format'])
 
+        mj_music = mj['data']['songList'][0]
+        music.url = mj_music['songLink']
+        if not music.avaiable: # 如果URL拿不到内容
+            continue
+        music.duration = mj_music['time']
+        music.rate = mj_music['rate']
+        music.ext = mj_music['format']
         music_list.append(music)
 
     return music_list
 
 def baidu_download(music):
     ''' 从百度音乐下载音乐 '''
-    music_download(music)
+    music.download()
 
 search = baidu_search
 download = baidu_download
