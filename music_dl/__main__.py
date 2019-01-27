@@ -19,9 +19,6 @@ from .log import CustomLog
 
 __version__ = '2.0.0'
 
-# 初始化全局变量
-config.init()
-logger = CustomLog(__name__).getLogger()
 
 def run():
     music_list = []
@@ -85,8 +82,8 @@ def main(keyword, source, count, outdir, proxy, merge, verbose):
         Search and download music from netease, qq, kugou, baidu and xiami.
         example: music-dl -k "周杰伦" -s "qq  baidu xiami" -c 10 -o "/tmp
     '''
-    # if len(sys.argv) > 1:
-    #     cli.set_opts(sys.argv[1:])
+    # 初始化全局变量
+    config.init()
     config.set('keyword', keyword)
     config.set('source', source)
     config.set('count', count)
@@ -99,6 +96,10 @@ def main(keyword, source, count, outdir, proxy, merge, verbose):
             'https': proxy
         }
         config.set('proxies', proxies)
+
+    global logger
+    logger = CustomLog(__name__).getLogger()
+
     try:
         run()
     except (EOFError, KeyboardInterrupt):
