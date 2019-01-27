@@ -35,16 +35,16 @@ def flac_search(keyword) -> list:
         music.source = 'flac'
         music.id = m['songid']
         music.title = m['songname']
-        music.singer = m['singer']
+        music.singer = m['artistname']
 
-        m_params = {'songIds': music.id, 'type': 'flac'}
+        m_params = {'songIds': int(music.id), 'type': 'flac'}
         # 不在同一个session能提高请求成功率
         mr = requests.get('http://music.baidu.com/data/music/fmlink', params=m_params,
                           proxies=config.get('proxies'))
         if mr.status_code != requests.codes.ok:
             raise RequestError(mr.text)
         mj = mr.json()
-        if mj['errorCode'] != 22000 or mj['data']['songList']:
+        if mj['errorCode'] != 22000 or not mj['data']['songList']:
             continue
 
         mj_music = mj['data']['songList'][0]
@@ -61,7 +61,7 @@ def flac_search(keyword) -> list:
 
 def flac_download(music):
     ''' 从百度音乐下载无损音乐 '''
-    music_download(music)
+    music.download()
 
 search = flac_search
 download = flac_download
