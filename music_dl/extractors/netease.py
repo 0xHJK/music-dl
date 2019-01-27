@@ -11,11 +11,10 @@
 
 import binascii
 import json
-import datetime
-import traceback
 from Crypto.Cipher import AES
 from ..common import *
 from ..exceptions import *
+from ..music import Music
 
 __all__ = ['netease_search', 'netease_download']
 
@@ -36,19 +35,16 @@ def netease_search(keyword) -> list:
 
     s = requests.Session()
     s.headers.update(config.get('fake_headers'))
-    s.headers.update({
-        'referer': 'http://music.163.com/',
-    })
     if config.get('proxies'):
         s.proxies.update(config.get('proxies'))
+    s.headers.update({'referer': 'http://music.163.com/',})
 
     r = s.post('http://music.163.com/api/linux/forward', data=data)
-
     if r.status_code != requests.codes.ok:
         raise RequestError(r.text)
     j = r.json()
     if j['code'] != 200:
-        raise ResponseError(j)
+        raise ResponseError(r.text)
 
     music_list = []
     try:
@@ -57,35 +53,29 @@ def netease_search(keyword) -> list:
                 # 没有版权
                 continue
             # 获得歌手名字
-            singers = []
-            for singer in m['ar']:
-                singers.append(singer['name'])
+            singers = [s['name'] for s in m['ar']]
             # 获得最优音质的文件大小
-            if m['privilege']['fl'] >= 320000 and 'h' in m.keys() and m['h']:
+            if m['privilege']['fl'] >= 320000 and 'h' in m and m['h']:
                 # 有时候即使>=320000，h属性依然为None
                 size = m['h']['size']
-            elif m['privilege']['fl'] >= 192000 and 'm' in m.keys() and m['m']:
+            elif m['privilege']['fl'] >= 192000 and 'm' in m and m['m']:
                 size = m['m']['size']
             else:
                 size = m['l']['size']
 
-            music = {
-                'title': m['name'],
-                'id': m['id'],
-                'duration': str(datetime.timedelta(seconds=int(m['dt']/1000))),
-                'singer': '、'.join(singers),
-                'album': m['al']['name'],
-                'size': round(size / 1048576, 2),
-                'source': 'netease'
-            }
+            music = Music()
+            music.source = 'netease'
+            music.id = m['id']
+            music.title = m['name']
+            music.singer = '、'.join(singers)
+            music.album = m['al']['name']
+            music.duration = int(m['dt']/1000)
+            music.size = round(size / 1048576, 2)
             music_list.append(music)
     except Exception as e:
-        # 如果是详细模式则输出详细错误信息
-        err = traceback.format_exc() if config.get('verbose') else str(e)
-        raise DataError(err)
+        raise DataError(e)
 
     return music_list
-
 
 def netease_download(music):
     ''' 从网易云音乐下载 '''
@@ -93,7 +83,7 @@ def netease_download(music):
         'method': 'POST',
         'url': 'http://music.163.com/api/song/enhance/player/url',
         'params': {
-            'ids': [music['id']],
+            'ids': [music.id],
             'br': 320000,
         }
     }
@@ -101,26 +91,21 @@ def netease_download(music):
 
     s = requests.Session()
     s.headers.update(config.get('fake_headers'))
-    s.headers.update({
-        'referer': 'http://music.163.com/',
-    })
     if config.get('proxies'):
         s.proxies.update(config.get('proxies'))
+    s.headers.update({'referer': 'http://music.163.com/',})
 
     r = s.post('http://music.163.com/api/linux/forward', data=data)
-
     if r.status_code != requests.codes.ok:
         raise RequestError(r.text)
     j = r.json()
     if j['code'] != 200:
-        raise ResponseError(j)
+        raise ResponseError(r.text)
 
-    music['url'] = j['data'][0]['url']
-    music['rate'] = int(j['data'][0]['br'] / 1000)
-    music['size'] = round(j['data'][0]['size'] / 1048576, 2)
-    music['name'] = '%s - %s.mp3' % (music['singer'], music['title'])
+    music.url = j['data'][0]['url']
+    music.rate = int(j['data'][0]['br'] / 1000)
 
-    music_download(music)
+    music.download()
 
 def encode_netease_data(data) -> str:
     data = json.dumps(data)
