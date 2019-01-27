@@ -9,7 +9,8 @@
 
 """
 
-from ..common import *
+import requests
+from .. import config
 from ..exceptions import *
 from ..music import Music
 

@@ -10,7 +10,8 @@ QQ音乐搜索和下载
 """
 
 import random
-from ..common import *
+import requests
+from .. import config
 from ..exceptions import *
 from ..music import Music
 

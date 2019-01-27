@@ -11,8 +11,9 @@
 
 import binascii
 import json
+import requests
 from Crypto.Cipher import AES
-from ..common import *
+from .. import config
 from ..exceptions import *
 from ..music import Music
 
