@@ -9,12 +9,10 @@
 
 import sys
 import re
-import importlib
 import threading
-import traceback
 import click
 from . import config
-from . import utils
+from .utils import colorize
 from .core import *
 from .exceptions import *
 from .log import CustomLog
@@ -30,7 +28,7 @@ def run():
     thread_pool = []
     errors = []
 
-    utils.notice(config.get('keyword'))
+    click.echo('\nSearching %s from ...' % colorize(config.get('keyword'), 'yellow'), nl=False)
 
     # 多线程搜索
     for source in config.get('source').split():
@@ -41,7 +39,7 @@ def run():
         t.join()
 
     # 分割线
-    utils.line()
+    click.echo('\n---------------------------\n')
     # 输出错误信息
     for err in errors:
         logger.error('Get %s music list failed.' % err[0].upper())
@@ -51,9 +49,8 @@ def run():
         # 对搜索结果排序和去重
         music_list = music_list_merge(music_list)
 
-    # echo.menu(music_list)
     for index, music in enumerate(music_list):
-        idx = utils.colorize(' [ %2s ] ' % index, 'cyan')
+        idx = colorize(' [ %2s ] ' % index, 'cyan')
         click.echo(idx + music.info)
 
     choices = click.prompt('请输入下载序号，多个序号用空格隔开，输入N跳过下载\n >>')

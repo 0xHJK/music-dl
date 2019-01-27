@@ -33,13 +33,3 @@ def colorize(string, color):
         return string
     return colors[color] + string + '\033[0m'
 
-
-
-def notice(keyword):
-    print('\nSearching %s from ...' % colorize(keyword, 'yellow'), end='', flush=True)
-
-def brand(source):
-    print(' %s ...' % colorize(source.upper(), source), end='', flush=True)
-
-def line():
-    print('\n---------------------------\n')

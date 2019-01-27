@@ -12,8 +12,9 @@
 import re
 import importlib
 import traceback
+import click
 from . import config
-from . import utils
+from .utils import colorize
 from .exceptions import *
 from .log import CustomLog
 
@@ -31,7 +32,7 @@ def music_search(source, music_list, errors):
         errors.append((source, err))
     finally:
         # 放在搜索后输出是为了营造出搜索很快的假象
-        utils.brand(source=source)
+        click.echo(' %s ...' % colorize(source.upper(), source), nl=False)
 
 
 def music_download(idx, music_list):
