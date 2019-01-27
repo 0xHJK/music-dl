@@ -26,7 +26,7 @@ class Music():
     def __init__(self):
         self.id = ''
         self.title = ''
-        self.ext = ''
+        self.ext = 'mp3'
         self.singer = ''
         self.album = ''
         self.size = ''
@@ -85,14 +85,13 @@ class Music():
     def url(self, url):
         ''' 设置URL的时候同时更新size大小 '''
         try:
-            r = requests.head(url,
+            r = requests.get(url, stream=True,
                              headers=config.get('wget_headers'),
                              proxies=config.get('proxies'))
-            if r.status_code == requests.codes.ok:
-                self._url = url
-                size = int(r.headers.get('Content-Length', 0))
-                # 转换成MB并保留两位小数
-                self.size = round(size / 1048576, 2)
+            self._url = url
+            size = int(r.headers.get('Content-Length', 0))
+            # 转换成MB并保留两位小数
+            self.size = round(size / 1048576, 2)
         except:
             pass
 
@@ -118,13 +117,18 @@ class Music():
 
     def download(self):
         ''' 下载音乐 '''
+        if config.get('verbose'):
+            click.echo(str(self))
+        else:
+            click.echo(self.info)
+
         outfile = self.fullname
         try:
             r = requests.get(self.url, stream=True,
                              headers=config.get('wget_headers'),
                              proxies=config.get('proxies'))
             total_size = int(r.headers['content-length'])
-            with click.progressbar(length=total_size, label='Downloading...') as bar:
+            with click.progressbar(length=total_size, label='下载中...') as bar:
                 with open(outfile, 'wb') as f:
                     for chunk in r.iter_content(chunk_size=1024):
                         if chunk:
