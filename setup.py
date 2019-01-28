@@ -13,10 +13,10 @@ import setuptools
 
 here = os.path.abspath(os.path.dirname(__file__))
 about = {}
-with open(os.path.join(here, 'music_dl', '__version__.py'), 'r') as f:
+with open(os.path.join(here, 'music_dl', '__version__.py'), 'r', encoding='utf-8') as f:
     exec(f.read(), about)
 
-with open("README.md", "r") as fh:
+with open('README.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
@@ -41,27 +41,27 @@ setuptools.setup(
         'pycryptodome',
     ],
     classifiers=[
-        "Development Status :: 4 - Beta",
-        "Environment :: Console",
-        "Intended Audience :: Developers",
-        "Intended Audience :: End Users/Desktop",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.0",
-        "Programming Language :: Python :: 3.1",
-        "Programming Language :: Python :: 3.2",
-        "Programming Language :: Python :: 3.3",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
-        "Programming Language :: Python :: 3.6",
-        "Programming Language :: Python :: 3.7",
-        "Topic :: Internet",
-        "Topic :: Internet :: WWW/HTTP",
-        "Topic :: Multimedia",
-        "Topic :: Multimedia :: Sound/Audio",
-        "Topic :: Utilities"
+        'Development Status :: 4 - Beta',
+        'Environment :: Console',
+        'Intended Audience :: Developers',
+        'Intended Audience :: End Users/Desktop',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3 :: Only',
+        'Programming Language :: Python :: 3.0',
+        'Programming Language :: Python :: 3.1',
+        'Programming Language :: Python :: 3.2',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Topic :: Internet',
+        'Topic :: Internet :: WWW/HTTP',
+        'Topic :: Multimedia',
+        'Topic :: Multimedia :: Sound/Audio',
+        'Topic :: Utilities'
     ],
 )
