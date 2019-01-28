@@ -26,7 +26,6 @@ Search and download music from netease, qq, kugou, baidu and xiami.
 | Windows  | Windows 10 x64 | 3.7.2      |
 | Ubuntu   | 16.04 x64      | 3.5.2      |
 
-
 ## 免责声明
 
 - 本工具只用作个人学习研究，禁止用于商业及非法用途，如产生法律纠纷与本人无关。
@@ -43,29 +42,50 @@ Search and download music from netease, qq, kugou, baidu and xiami.
 - 使用`-v`参数重试，说明详细的错误信息，最好有截图
 - 如果有新的思路和建议也欢迎提交
 
+## Install 安装
+
+pip 安装
+```bash
+pip3 install pymusic-dl
+
+# 推荐使用pip安装，前面加一个py是因为和别人重名了
+```
+
+手动安装
+```bash
+git clone https://github.com/0xHJK/music-dl.git
+cd music-dl
+python3 setup.py install
+```
+
+直接运行
+```bash
+git clone https://github.com/0xHJK/music-dl.git
+cd music-dl
+pip3 install -r requirements.txt
+./music-dl
+# 或 python3 music-dl
+```
+
 ## Usage 使用方式
 
-安装依赖：
-
 ```
-$ pip3 install -r requirements.txt
-```
+$ music-dl --help
+Usage: music-dl [OPTIONS]
 
-使用帮助：
+  Search and download music from netease, qq, kugou, baidu and xiami.
+  example: music-dl -k "周杰伦" -s "qq baidu xiami" -c 10 -o "/tmp"
 
-```
-$ python3 main.py -h
-usage: python main.py [-k keyword] [-s source] [-c count] [-o outdir] [-v] [-m]
-	-h --help        帮助
-	-v --verbose     详细模式
-	-m --merge       对搜索结果去重和排序
-	--nomerge        对搜索结果不去重（默认不去重）
-	-k --keyword=    搜索关键字
-	-s --source=     数据源目前支持qq netease kugou baidu xiami flac
-	-c --count=      数量限制
-	-o --outdir=     指定输出目录
-	-x --proxy=      指定代理（如http://127.0.0.1:1087）
-example: python main.py -k "周杰伦" -s "qq netease kugou baidu xiami" -c 10 -o "/tmp"
+Options:
+  --version            Show the version and exit.
+  -k, --keyword TEXT   搜索关键字
+  -s, --source TEXT    数据源目前支持qq netease kugou baidu xiami flac
+  -c, --count INTEGER  搜索数量限制
+  -o, --outdir TEXT    指定输出目录
+  -x, --proxy TEXT     指定代理（如http://127.0.0.1:1087）
+  -m, --merge          对搜索结果去重和排序（默认不去重）
+  -v, --verbose        详细模式
+  --help               Show this message and exit.
 ```
 
 - 默认搜索所有音乐源，每个数量限制为5，保存目录为当前目录，不合并搜索结果。
@@ -100,11 +120,12 @@ After merge 去重后：
 | 虾米音乐   | xiami   | <https://www.xiami.com/>  |
 | 百度无损音乐   | flac   | <http://music.baidu.com/> |
 
-欢迎提交插件支持更多音乐源！插件写法参考`core/extractors`中的文件
+欢迎提交插件支持更多音乐源！插件写法参考`extractors`中的文件
 
 ![](./docs/fork.png)
 
 ## 更新记录
+- 2019-01-28 重写一半以上代码，全面优化，发布到pip库，发布v2.0.0版本
 - 2019-01-26 支持http和socks代理，删除wget库，新增click库，发布v1.1版
 - 2019-01-25 支持百度无损音乐
 - 2019-01-24 优化交互、修复bug
