@@ -85,7 +85,7 @@ def run():
 def main(keyword, source, count, outdir, proxy, merge, verbose):
     '''
         Search and download music from netease, qq, kugou, baidu and xiami.
-        example: music-dl -k "周杰伦" -s "qq baidu xiami" -c 10 -o "/tmp"
+        Example: music-dl -k "周杰伦"
     '''
     # 初始化全局变量
     config.init()
