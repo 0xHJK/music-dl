@@ -5,23 +5,30 @@
 @file: setup.py 
 @time: 2019-01-26
 
-
+打包配置文件
 
 """
-
+import os
 import setuptools
+
+here = os.path.abspath(os.path.dirname(__file__))
+about = {}
+with open(os.path.join(here, 'music_dl', '__version__.py'), 'r') as f:
+    exec(f.read(), about)
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pymusic-dl",
-    version="2.0.0",
-    author="HJK",
-    author_email="HJKdev@gmail.com",
-    description="Search and download music from netease, qq, kugou, baidu and xiami.",
+    name=about['__title__'],
+    version=about['__version__'],
+    description=about['__description__'],
+    author=about['__author__'],
+    author_email=about['__author_email__'],
+    url=about['__url__'],
+    license=about['__license__'],
     long_description=long_description,
-    url="https://github.com/0xHJK/music-dl",
+    long_description_content_type='text/markdown',
     packages=setuptools.find_packages(),
     entry_points={
         'console_scripts': [
