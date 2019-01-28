@@ -24,6 +24,7 @@ class Music():
         以及一些方法（如download，info等）
     '''
     def __init__(self):
+        self.idx = 0
         self.id = ''
         self.title = ''
         self.ext = 'mp3'
@@ -40,11 +41,15 @@ class Music():
 
     def __str__(self):
         ''' 在打印详情时调用 '''
+        idx = colorize(' [ %s ] ' % self.idx, 'cyan')
+        source = colorize('%s' % self.source.upper(), self.source)
         return '\n ------------ \n' + \
+               ' -> 来源：%s%s #%s\n' % (idx, source, self.id) + \
                ' -> 歌曲：%s\n' % self.title + \
                ' -> 歌手：%s\n' % self.singer + \
+               ' -> 专辑：%s\n' % self.album + \
                ' -> 时长: %s\n' % self.duration + \
-               ' -> 大小: %s\n' % self.size + \
+               ' -> 大小: %sMB\n' % self.size + \
                ' -> 比特率: %s\n' % self.rate + \
                ' -> URL: %s\n' % self.url
 
@@ -70,12 +75,13 @@ class Music():
     @property
     def info(self):
         ''' 歌曲摘要信息，列出搜索歌曲时使用 '''
+        idx = colorize(' [ %2s ] ' % self.idx, 'cyan')
         source = colorize('%7s' % self.source.upper(), self.source)
         size = colorize('%5sMB' % self.size, 'yellow')
         title = colorize(self.title, 'yellow')
         v = colorize(' | ', self.source)
         h = colorize(' - ', self.source)
-        return source + v + self.duration + h + size + h + self.singer + h + title + h + self.album
+        return idx + source + v + self.duration + h + size + h + self.singer + h + title + h + self.album
 
     @property
     def url(self):

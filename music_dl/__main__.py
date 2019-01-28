@@ -47,8 +47,8 @@ def run():
         music_list = music_list_merge(music_list)
 
     for index, music in enumerate(music_list):
-        idx = colorize(' [ %2s ] ' % index, 'cyan')
-        click.echo(idx + music.info)
+        music.idx = index
+        click.echo(music.info)
 
     choices = click.prompt('请输入下载序号，多个序号用空格隔开，输入N跳过下载\n >>')
     while choices.lower() != 'n' and not re.match(r'^((\d+\-\d+)|(\d+)|\s+)+$', choices):
