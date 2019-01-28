@@ -41,7 +41,7 @@ class Music():
 
     def __str__(self):
         ''' 在打印详情时调用 '''
-        idx = colorize(' [ %s ] ' % self.idx, 'cyan')
+        idx = colorize('[ %s ] ' % self.idx, 'cyan')
         source = colorize('%s' % self.source.upper(), self.source)
         return '\n ------------ \n' + \
                ' -> 来源：%s%s #%s\n' % (idx, source, self.id) + \
