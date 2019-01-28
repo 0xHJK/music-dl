@@ -8,7 +8,6 @@
 全局变量
 
 """
-import logging
 
 __all__ = ['init', 'set', 'get']
 
@@ -29,8 +28,6 @@ def init():
         'merge': False,
         # 代理
         'proxies': None,
-        # 日志级别
-        'log_level': logging.DEBUG,
 
         # 一般情况下的headers
         'fake_headers': {

@@ -11,10 +11,10 @@ music object
 
 import os
 import datetime
+import logging
 import click
 import requests
 from . import config
-from .log import CustomLog
 from .utils import *
 
 class Music():
@@ -36,7 +36,7 @@ class Music():
         self._url = ''
         self.outdir = config.get('outdir')
         self.verbose = config.get('verbose')
-        self.logger = CustomLog(__name__).getLogger()
+        self.logger = logging.getLogger(__name__)
 
     def __str__(self):
         ''' 在打印详情时调用 '''

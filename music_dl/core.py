@@ -12,13 +12,12 @@
 import re
 import importlib
 import traceback
+import logging
 import click
 from . import config
 from .utils import colorize
 from .exceptions import *
-from .log import CustomLog
 
-logger = CustomLog(__name__).getLogger()
 
 def music_search(source, music_list, errors):
     ''' 音乐搜索，music_list是搜索结果 '''
@@ -28,6 +27,7 @@ def music_search(source, music_list, errors):
     except (RequestError, ResponseError, DataError) as e:
         errors.append((source, e))
     except Exception as e:
+        # 最后一块输出免得影响搜索结果列表排版
         err = traceback.format_exc() if config.get('verbose') else str(e)
         errors.append((source, err))
     finally:
@@ -38,6 +38,7 @@ def music_search(source, music_list, errors):
 def music_download(idx, music_list):
     ''' 音乐下载，music_list是搜索结果 '''
     music = music_list[int(idx)]
+    logger = logging.getLogger(__name__)
     try:
         addon = importlib.import_module('.extractors.' + music.source, __package__)
         addon.download(music)

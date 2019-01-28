@@ -11,16 +11,16 @@ import sys
 import re
 import threading
 import click
+import logging
 from . import config
 from .utils import colorize
 from .core import *
 from .exceptions import *
-from .log import CustomLog
-
-__version__ = '2.0.0'
+# from .log import CustomLog
 
 
 def run():
+    logger = logging.getLogger(__name__)
     music_list = []
     thread_pool = []
     errors = []
@@ -80,7 +80,7 @@ def run():
 def main(keyword, source, count, outdir, proxy, merge, verbose):
     '''
         Search and download music from netease, qq, kugou, baidu and xiami.
-        example: music-dl -k "周杰伦" -s "qq  baidu xiami" -c 10 -o "/tmp
+        example: music-dl -k "周杰伦" -s "qq baidu xiami" -c 10 -o "/tmp"
     '''
     # 初始化全局变量
     config.init()
@@ -97,8 +97,10 @@ def main(keyword, source, count, outdir, proxy, merge, verbose):
         }
         config.set('proxies', proxies)
 
-    global logger
-    logger = CustomLog(__name__).getLogger()
+    level = logging.INFO if verbose else logging.WARNING
+    logging.basicConfig(level=level,
+                        format='[%(asctime)s] %(levelname)-8s | %(name)s: %(msg)s ',
+                        datefmt='%Y-%m-%d %H:%M:%S')
 
     try:
         run()
