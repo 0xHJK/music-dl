@@ -83,7 +83,8 @@ def xiami_music_info(music, music_list, s):
         raise RequestError(mr.text)
     mj = mr.json()
     if not mj['data']['trackList']:
-        raise DataError('no data.trackList')
+        # raise DataError('no data.trackList')
+        return
 
     mj_music = mj['data']['trackList'][0]
     music.duration = mj_music['length']
