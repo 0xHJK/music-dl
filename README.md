@@ -98,17 +98,17 @@ Options:
 
 Example 使用示例：
 
-![](./docs/preview.png)
+![](https://github.com/0xHJK/music-dl/raw/master/docs/preview.png)
 
 去重效果展示（早期版本截图）：
 
 Before merge 去重前：
 
-![](./docs/normal.png)
+![](https://github.com/0xHJK/music-dl/raw/master/docs/normal.png)
 
 After merge 去重后：
 
-![](./docs/merge.png)
+![](https://github.com/0xHJK/music-dl/raw/master/docs/merge.png)
 
 ## Music sources 支持音乐源列表
 | 音乐源     | 缩写    | 网址                    |
