@@ -11,12 +11,12 @@
 import platform
 
 colors = {
-    'red': '\033[91m',
-    'green': '\033[92m',
-    'yellow': '\033[93m',
-    'blue': '\033[94m',
-    'pink': '\033[95m',
-    'cyan': '\033[96m',
+    'red': '\033[31m',
+    'green': '\033[32m',
+    'yellow': '\033[33m',
+    'blue': '\033[34m',
+    'pink': '\033[35m',
+    'cyan': '\033[36m',
 
     'qq': '\033[92m',
     'kugou': '\033[94m',

@@ -16,7 +16,6 @@ from . import config
 from .utils import colorize
 from .core import *
 from .exceptions import *
-# from .log import CustomLog
 
 
 def run():
@@ -41,18 +40,24 @@ def run():
     for err in errors:
         logger.error('Get %s music list failed.' % err[0].upper())
         logger.error(err[1])
-
+    # 对搜索结果排序和去重
     if config.get('merge'):
-        # 对搜索结果排序和去重
         music_list = music_list_merge(music_list)
-
+    # 遍历输出搜索列表
     for index, music in enumerate(music_list):
         music.idx = index
         click.echo(music.info)
 
-    choices = click.prompt('请输入下载序号，多个序号用空格隔开，输入N跳过下载\n >>')
+    # 分割线
+    click.echo('\n---------------------------')
+    # 用户指定下载序号
+    prompt = '请输入%s，支持形如 %s 的格式，输入 %s 跳过下载\n >>' % \
+             (colorize('下载序号', 'yellow'),
+              colorize('0 3-5 8', 'yellow'),
+              colorize('N', 'yellow'))
+    choices = click.prompt(prompt)
     while choices.lower() != 'n' and not re.match(r'^((\d+\-\d+)|(\d+)|\s+)+$', choices):
-        choices = click.prompt('输入有误！仅支持形如 0 3-5 8 的格式，输入N跳过下载\n >>')
+        choices = click.prompt('%s%s' % (colorize('输入有误！', 'red'), prompt))
 
     selected_list = get_sequence(choices)
     for idx in selected_list:
