@@ -1,8 +1,20 @@
 # https://travis-ci.org/0xHJK/music-dl
 language: python
-python:
-  - "3.5"
-  - "3.6"
-  - "3.7"
+
 install: make install
-script: make test
+
+jobs:
+  include:
+    - stage: test
+      script: make test
+      python: '3.4'
+    - stage: test
+      script: make test
+      python: '3.5'
+    - stage: test
+      script: make test
+      python: '3.6'
+    - stage: test
+      script: make test
+      python: '3.7'
+      dist: xenial
