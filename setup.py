@@ -38,6 +38,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     packages=setuptools.find_packages(),
+    test_suite = 'tests',
     entry_points={
         'console_scripts': [
             'music-dl = music_dl.__main__:main',
