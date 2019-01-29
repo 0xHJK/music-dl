@@ -1,0 +1,13 @@
+# https://travis-ci.org/0xHJK/music-dl
+language: python
+python:
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7-dev"
+  - "nightly"
+  - "pypy3"
+install: make install
+script: make test
