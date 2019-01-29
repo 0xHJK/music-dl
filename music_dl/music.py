@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-@author: HJK 
-@file: music.py 
+@author: HJK
+@file: music.py
 @time: 2019-01-27
 
 music object
@@ -15,7 +15,7 @@ import logging
 import click
 import requests
 from . import config
-from .utils import *
+from .utils import colorize
 
 
 class Music:
@@ -118,8 +118,9 @@ class Music:
             size = int(r.headers.get("Content-Length", 0))
             # 转换成MB并保留两位小数
             self.size = round(size / 1048576, 2)
-        except:
-            pass
+        except Exception as e:
+            self.logger.info("Request failed: %s" % url)
+            self.logger.info(e)
 
     @property
     def fullname(self):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
+@author: HJK
 @file: qq.py
 @time: 2019-01-09
 
@@ -12,7 +12,7 @@ QQ音乐搜索和下载
 import random
 import requests
 from .. import config
-from ..exceptions import *
+from ..exceptions import RequestError, ResponseError, DataError
 from ..music import Music
 
 __all__ = ["qq_search", "qq_download"]

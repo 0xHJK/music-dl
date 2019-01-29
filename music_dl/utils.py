@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
+@author: HJK
 @file: utils.py
 @time: 2019-01-28
 
@@ -27,7 +27,7 @@ colors = {
 
 
 def colorize(string, color):
-    if not color in colors:
+    if color not in colors:
         return string
     if platform.system() == "Windows":
         return string

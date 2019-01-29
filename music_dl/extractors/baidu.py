@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-@author: HJK 
-@file: baidu.py 
+@author: HJK
+@file: baidu.py
 @time: 2019-01-20
 
 百度音乐搜索和下载
@@ -11,7 +11,7 @@
 
 import requests
 from .. import config
-from ..exceptions import *
+from ..exceptions import RequestError, ResponseError, DataError
 from ..music import Music
 
 __all__ = ["baidu_search", "baidu_download"]

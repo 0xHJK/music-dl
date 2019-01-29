@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
-@file: flac.py 
+@author: HJK
+@file: flac.py
 @time: 2019-01-25
 
 从百度音乐获得flac无损音乐
@@ -11,7 +11,7 @@
 
 import requests
 from .. import config
-from ..exceptions import *
+from ..exceptions import RequestError, ResponseError, DataError
 from ..music import Music
 
 __all__ = ["flac_search", "flac_download"]

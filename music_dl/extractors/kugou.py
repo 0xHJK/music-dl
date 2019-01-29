@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
-@file: kugou.py 
+@author: HJK
+@file: kugou.py
 @time: 2019-01-08
 
 酷狗音乐搜索和下载
@@ -11,7 +11,7 @@
 
 import requests
 from .. import config
-from ..exceptions import *
+from ..exceptions import RequestError, ResponseError, DataError
 from ..music import Music
 
 __all__ = ["kugou_search", "kugou_download"]

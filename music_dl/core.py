@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
+@author: HJK
 @file: core.py
 @time: 2019-01-09
 
@@ -16,7 +16,7 @@ import logging
 import click
 from . import config
 from .utils import colorize
-from .exceptions import *
+from .exceptions import RequestError, ResponseError, DataError
 
 
 def music_search(source, music_list, errors):

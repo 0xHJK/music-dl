@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
+@author: HJK
 @file: config.py
 @time: 2019-01-27
 

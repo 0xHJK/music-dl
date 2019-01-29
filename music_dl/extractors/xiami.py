@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
-@file: xiami.py 
+@author: HJK
+@file: xiami.py
 @time: 2019-01-21
 
 从虾米搜索和下载音乐
@@ -12,7 +12,7 @@
 import threading
 import requests
 from .. import config
-from ..exceptions import *
+from ..exceptions import RequestError, ResponseError, DataError
 from ..music import Music
 
 __all__ = ["xiami_search", "xiami_download"]

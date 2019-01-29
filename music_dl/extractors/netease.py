@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 """
-@author: HJK 
-@file: netease.py 
+@author: HJK
+@file: netease.py
 @time: 2019-01-11
 
 网易云音乐下载
@@ -14,7 +14,7 @@ import json
 import requests
 from Crypto.Cipher import AES
 from .. import config
-from ..exceptions import *
+from ..exceptions import RequestError, ResponseError, DataError
 from ..music import Music
 
 __all__ = ["netease_search", "netease_download"]

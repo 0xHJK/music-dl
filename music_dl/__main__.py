@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
-@file: main.py 
+@author: HJK
+@file: main.py
 @time: 2019-01-08
-
 """
 
 import sys
@@ -14,8 +13,7 @@ import click
 import logging
 from . import config
 from .utils import colorize
-from .core import *
-from .exceptions import *
+from .core import music_search, music_download, music_list_merge, get_sequence
 
 
 def run():
@@ -99,7 +97,7 @@ def main(keyword, source, count, outdir, proxy, merge, verbose):
     config.init()
     config.set("keyword", keyword)
     config.set("source", source)
-    config.set("count", count)
+    config.set("count", min(count, 50))
     config.set("outdir", outdir)
     config.set("merge", merge)
     config.set("verbose", verbose)

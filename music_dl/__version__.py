@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
-@file: __version__.py 
+@author: HJK
+@file: __version__.py
 @time: 2019-01-28
-
 """
 
 __title__ = "pymusic-dl"

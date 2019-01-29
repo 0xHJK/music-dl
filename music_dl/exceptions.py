@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 _*-
 """
-@author: HJK 
-@file: exceptions.py 
+@author: HJK
+@file: exceptions.py
 @time: 2019-01-09
 
 自定义异常
