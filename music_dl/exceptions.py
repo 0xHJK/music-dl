@@ -1,5 +1,5 @@
-#!/usr/bin/env python  
-#-*- coding:utf-8 _*-  
+#!/usr/bin/env python
+# -*- coding:utf-8 _*-
 """
 @author: HJK 
 @file: exceptions.py 
@@ -9,19 +9,23 @@
 
 """
 
+
 class RequestError(RuntimeError):
-    ''' 请求时的状态码错误 '''
+    """ 请求时的状态码错误 """
+
     def __init__(self, *args, **kwargs):
         pass
 
 
 class ResponseError(RuntimeError):
-    ''' 得到的response状态错误 '''
+    """ 得到的response状态错误 """
+
     def __init__(self, *args, **kwargs):
         pass
 
 
 class DataError(RuntimeError):
-    ''' 得到的data中没有预期的内容 '''
+    """ 得到的data中没有预期的内容 """
+
     def __init__(self, *args, **kwargs):
         pass

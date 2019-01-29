@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*- coding:utf-8 _*-
+# -*- coding:utf-8 _*-
 """
 @author: HJK 
 @file: utils.py
@@ -11,25 +11,24 @@
 import platform
 
 colors = {
-    'red': '\033[31m',
-    'green': '\033[32m',
-    'yellow': '\033[33m',
-    'blue': '\033[34m',
-    'pink': '\033[35m',
-    'cyan': '\033[36m',
-
-    'qq': '\033[92m',
-    'kugou': '\033[94m',
-    'netease': '\033[91m',
-    'baidu': '\033[96m',
-    'xiami': '\033[93m',
-    'flac': '\033[95m',
+    "red": "\033[31m",
+    "green": "\033[32m",
+    "yellow": "\033[33m",
+    "blue": "\033[34m",
+    "pink": "\033[35m",
+    "cyan": "\033[36m",
+    "qq": "\033[92m",
+    "kugou": "\033[94m",
+    "netease": "\033[91m",
+    "baidu": "\033[96m",
+    "xiami": "\033[93m",
+    "flac": "\033[95m",
 }
 
 
 def colorize(string, color):
-    if not color in colors: return string
-    if platform.system() == 'Windows':
+    if not color in colors:
         return string
-    return colors[color] + string + '\033[0m'
-
+    if platform.system() == "Windows":
+        return string
+    return colors[color] + string + "\033[0m"
