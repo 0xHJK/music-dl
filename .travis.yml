@@ -1,7 +1,9 @@
 # https://travis-ci.org/0xHJK/music-dl
 language: python
 
-install: make install
+install:
+  - pip install codecov
+  - make install
 
 jobs:
   include:
