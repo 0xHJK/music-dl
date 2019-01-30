@@ -1,7 +1,7 @@
 .PHONY: test
 
-default:
-	python3 -i -c 'import music_dl; print("music-dl %s\n>>> import music_dl" % music_dl.__version__)'
+ci:
+	py.test -n 8 --boxed --junitxml=report.xml
 
 test:
 	python3 setup.py test
