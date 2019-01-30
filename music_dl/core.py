@@ -80,6 +80,6 @@ def get_sequence(numbers) -> list:
         if end:
             result += range(int(start), int(end) + 1)
         else:
-            result.append(start)
+            result.append(int(start))
 
     return result
