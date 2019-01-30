@@ -4,12 +4,12 @@
 </h1>
 
 <p align="center">
-  <a herf="https://travis-ci.org/0xHJK/music-dl.svg?branch=dev">
-    <img src="https://travis-ci.org/0xHJK/music-dl.svg?branch=dev">
+  <a herf="https://travis-ci.org/0xHJK/music-dl.svg">
+    <img src="https://travis-ci.org/0xHJK/music-dl.svg">
   </a>
   <a><img src="https://img.shields.io/pypi/pyversions/pymusic-dl.svg"></a>
   <a href="https://codecov.io/gh/0xHJK/music-dl">
-    <img src="https://codecov.io/gh/0xHJK/music-dl/branch/dev/graph/badge.svg" />
+    <img src="https://codecov.io/gh/0xHJK/music-dl/branch/graph/badge.svg" />
   </a>
   <a><img src="https://img.shields.io/github/release/0xHJK/music-dl.svg"></a>
   <a><img src="https://img.shields.io/github/license/0xHJK/music-dl.svg"></a>
@@ -133,6 +133,7 @@ Options:
 ![](https://github.com/0xHJK/music-dl/raw/master/docs/fork.png)
 
 ## 更新记录
+- 2019-01-31 新增单元测试，集成发布，新增LOGO，新增小徽章，发布v2.1.0版本
 - 2019-01-28 重写一半以上代码，全面优化，发布到pip库，发布v2.0.0版本
 - 2019-01-26 支持http和socks代理，删除wget库，新增click库，发布v1.1版
 - 2019-01-25 支持百度无损音乐
@@ -147,6 +148,7 @@ Options:
 
 ## Credits 致谢
 本项目受以下项目启发，参考了其中一部分思路，向这些开发者表示感谢。
+- <https://github.com/requests/requests>
 - <https://github.com/soimort/you-get>
 - <https://github.com/maicong/music>
 - <https://github.com/YongHaoWu/NeteaseCloudMusicFlac>
