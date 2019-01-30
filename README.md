@@ -1,13 +1,13 @@
 # music-dl
 
-![](https://img.shields.io/travis/:0xHJK/:music-dl/:dev.svg)
+![](https://img.shields.io/travis/0xHJK/music-dl/dev.svg)
 [![Build Status](https://travis-ci.org/0xHJK/music-dl.svg?branch=dev)](https://travis-ci.org/0xHJK/music-dl)
-![](https://img.shields.io/github/downloads/:0xHJK/:music-dl/total.svg)
-![](https://img.shields.io/pypi/dd/:pymusic-dl.svg)
-![](https://img.shields.io/github/license/:0xHJK/:music-dl.svg)
-![](https://img.shields.io/github/release/:0xHJK/:music-dl.svg)
-![](https://img.shields.io/pypi/pyversions/:pymusic-dl.svg)
-![](https://img.shields.io/github/last-commit/:0xHJK/:music-dl.svg)
+![](https://img.shields.io/github/downloads/0xHJK/music-dl/total.svg)
+![](https://img.shields.io/pypi/dd/pymusic-dl.svg)
+![](https://img.shields.io/github/license/0xHJK/music-dl.svg)
+![](https://img.shields.io/github/release/0xHJK/music-dl.svg)
+![](https://img.shields.io/pypi/pyversions/pymusic-dl.svg)
+![](https://img.shields.io/github/last-commit/0xHJK/music-dl.svg)
 
 从网易云音乐、QQ音乐、酷狗音乐、百度音乐、虾米音乐等搜索和下载歌曲。
 
