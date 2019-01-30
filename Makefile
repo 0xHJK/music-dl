@@ -1,13 +1,13 @@
 .PHONY: test
 
 ci:
-	py.test -n 8 --boxed --junitxml=report.xml
+	py.test --junitxml=report.xml
 
 test:
 	python3 setup.py test
 
 coverage:
-	py.test --cov-report term --cov-report html --cov=music_dl tests
+	py.test --cov-config .coveragerc --verbose --cov-report term --cov-report xml --cov=music_dl tests
 
 flake8:
 	flake8 --ignore=E501,F401,W503 music_dl
