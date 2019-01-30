@@ -1,10 +1,13 @@
-.PHONY: default clean install publish
+.PHONY: test
 
 default:
 	python3 -i -c 'import music_dl; print("music-dl %s\n>>> import music_dl" % music_dl.__version__)'
 
 test:
 	python3 setup.py test
+
+coverage:
+	py.test --cov-report term --cov-report html --cov=music_dl tests
 
 flake8:
 	flake8 --ignore=E501,F401,W503 music_dl
