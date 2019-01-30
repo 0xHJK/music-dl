@@ -7,9 +7,6 @@ jobs:
   include:
     - stage: test
       script: make test
-      python: '3.4'
-    - stage: test
-      script: make test
       python: '3.5'
     - stage: test
       script: make test
