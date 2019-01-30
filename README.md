@@ -4,10 +4,15 @@
 </h1>
 
 <p align="center">
-  <a><img src="https://img.shields.io/travis/0xHJK/music-dl/dev.svg"></a>
+  <a herf="https://travis-ci.org/0xHJK/music-dl.svg?branch=dev">
+    <img src="https://travis-ci.org/0xHJK/music-dl.svg?branch=dev">
+  </a>
   <a><img src="https://img.shields.io/pypi/pyversions/pymusic-dl.svg"></a>
-  <a><img src="https://img.shields.io/github/license/0xHJK/music-dl.svg"></a>
+  <a href="https://codecov.io/gh/0xHJK/music-dl">
+    <img src="https://codecov.io/gh/0xHJK/music-dl/branch/dev/graph/badge.svg" />
+  </a>
   <a><img src="https://img.shields.io/github/release/0xHJK/music-dl.svg"></a>
+  <a><img src="https://img.shields.io/github/license/0xHJK/music-dl.svg"></a>
 </p>
 
 从网易云音乐、QQ音乐、酷狗音乐、百度音乐、虾米音乐等搜索和下载歌曲。
