@@ -9,6 +9,7 @@
 import os
 from music_dl.music import Music
 
+
 def test_music(capsys):
     music = Music()
     music.id = 816477
@@ -37,5 +38,3 @@ def test_music(capsys):
     music.download()
     out, err = capsys.readouterr()
     assert out.find("已保存到：/tmp/周杰伦 - 晴天")
-
-

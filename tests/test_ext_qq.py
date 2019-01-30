@@ -8,6 +8,7 @@
 
 from music_dl.extractors import qq
 
+
 def test_qq(capsys):
     music_list = qq.search("周杰伦")
     assert music_list is not None

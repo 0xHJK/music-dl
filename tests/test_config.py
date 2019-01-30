@@ -8,6 +8,7 @@
 import pytest
 from music_dl import config
 
+
 def test_init():
     with pytest.raises(AttributeError):
         config.opts
@@ -27,10 +28,7 @@ def test_set():
     assert config.get("fasdfjklasd") == ""
     config.set("fasdfjklasd", "music-dl")
     assert config.get("fasdfjklasd") == "music-dl"
-    proxies = {
-        "http": "http://127.0.0.1:1087",
-        "https": "http://127.0.0.1:1087",
-    }
+    proxies = {"http": "http://127.0.0.1:1087", "https": "http://127.0.0.1:1087"}
     config.set("proxies", proxies)
     assert config.get("proxies")["http"] == "http://127.0.0.1:1087"
     assert config.get("proxies")["https"] == "http://127.0.0.1:1087"

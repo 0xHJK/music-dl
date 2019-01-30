@@ -8,6 +8,7 @@
 
 from music_dl.extractors import baidu
 
+
 def test_baidu(capsys):
     music_list = baidu.search("朴树")
     assert music_list is not None

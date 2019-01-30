@@ -8,6 +8,7 @@
 
 from music_dl.extractors import netease
 
+
 def test_netease(capsys):
     music_list = netease.search("朴树")
     assert music_list is not None

@@ -10,6 +10,7 @@ from click.testing import CliRunner
 from music_dl import __main__ as m
 from music_dl import config
 
+
 def test_run():
     pass
 

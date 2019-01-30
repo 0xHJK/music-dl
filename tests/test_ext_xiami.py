@@ -8,6 +8,7 @@
 
 from music_dl.extractors import xiami
 
+
 def test_xiami(capsys):
     music_list = xiami.search("朴树")
     assert music_list is not None

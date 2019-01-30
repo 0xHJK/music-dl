@@ -8,8 +8,9 @@
 
 from music_dl.extractors import kugou
 
+
 def test_kugou(capsys):
-    music_list = kugou .search("周杰伦")
+    music_list = kugou.search("周杰伦")
     assert music_list is not None
     # if len(music_list) > 0:
     #     music_list[0].download()

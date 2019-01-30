@@ -9,6 +9,7 @@
 import platform
 from music_dl import utils
 
+
 def test_color():
     if platform.system() == "Windows":
         assert utils.colorize("music-dl", "qq") == "music-dl"

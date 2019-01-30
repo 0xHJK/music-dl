@@ -10,6 +10,7 @@ from music_dl import config
 from music_dl import core
 from music_dl.music import Music
 
+
 def test_music_list_merge():
     config.init()
     m1 = Music()
