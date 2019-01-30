@@ -27,6 +27,7 @@ colors = {
 
 
 def colorize(string, color):
+    string = str(string)
     if color not in colors:
         return string
     if platform.system() == "Windows":
