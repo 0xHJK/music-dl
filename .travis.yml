@@ -5,9 +5,6 @@ install:
   - pip install codecov
   - make install
 
-script:
-  - make ci
-
 jobs:
   include:
     - stage: test
@@ -28,4 +25,6 @@ jobs:
       dist: xenial
     - stage: coverage
       python: '3.6'
-      script: codecov
+      script:
+        - make ci
+        - codecov
