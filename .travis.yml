@@ -5,6 +5,9 @@ install:
   - pip install codecov
   - make install
 
+script:
+  - make ci
+
 jobs:
   include:
     - stage: test
