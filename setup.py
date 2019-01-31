@@ -24,7 +24,7 @@ about = {}
 with open(os.path.join(here, 'music_dl', '__version__.py'), 'r', encoding='utf-8') as f:
     exec(f.read(), about)
 
-with open('README.md', 'r', encoding='utf-8') as fh:
+with open('README.en.md', 'r', encoding='utf-8') as fh:
     long_description = fh.read()
 
 setuptools.setup(
