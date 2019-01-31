@@ -165,4 +165,4 @@ Options:
 
 ## LICENSE
 
-[MIT License]('https://github.com/0xHJK/music-dl/blob/master/LICENSE')
+[MIT License](https://github.com/0xHJK/music-dl/blob/master/LICENSE)

@@ -133,4 +133,4 @@ Welcome to submit plugins to support more music sources! Refer to the files in `
 
 ## LICENSE
 
-[MIT License]('https://github.com/0xHJK/music-dl/blob/master/LICENSE')
+[MIT License](https://github.com/0xHJK/music-dl/blob/master/LICENSE)
