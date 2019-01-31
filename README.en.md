@@ -17,6 +17,7 @@
   </a>
   <a><img src="https://img.shields.io/github/license/0xHJK/music-dl.svg"></a>
 </p>
+
 **Music-dl** is a command line tool which helps you search and download music from multiple sources.
 
 Support for QQ music, Netease music, Xiami music, Kugou music and Baidu music. See [supported sources](#supported-sources).
@@ -132,4 +133,4 @@ Welcome to submit plugins to support more music sources! Refer to the files in `
 
 ## LICENSE
 
-[MIT License]('https://github.com/0xHJK/music-dl/master/LICENSE')
+[MIT License]('https://github.com/0xHJK/music-dl/blob/master/LICENSE')
