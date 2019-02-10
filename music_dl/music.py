@@ -46,15 +46,15 @@ class Music:
         idx = colorize("[ %s ] " % self.idx, "cyan")
         source = colorize("%s" % self.source.upper(), self.source)
         return (
-            "\n ------------ \n"
-            + " -> 来源：%s%s #%s\n" % (idx, source, self.id)
-            + " -> 歌曲：%s\n" % self.title
-            + " -> 歌手：%s\n" % self.singer
-            + " -> 专辑：%s\n" % self.album
-            + " -> 时长: %s\n" % self.duration
-            + " -> 大小: %sMB\n" % self.size
-            + " -> 比特率: %s\n" % self.rate
-            + " -> URL: %s\n" % self.url
+            _("\n ------------ \n"
+            " -> 来源：{idx}{source} #{id}\n"
+            " -> 歌曲：{title}\n"
+            " -> 歌手：{singer}\n"
+            " -> 专辑：{album}\n"
+            " -> 时长: {duration}\n"
+            " -> 大小: {size}MB\n"
+            " -> 比特率: {rating}\n"
+            " -> URL: {url} \n").format(idx=idx, source=source, id=self.id, title=self.title, singer=self.singer, album=self.album, duration=self.duration, size=self.size, rating=self.rate)
         )
 
     @property
@@ -119,7 +119,7 @@ class Music:
             # 转换成MB并保留两位小数
             self.size = round(size / 1048576, 2)
         except Exception as e:
-            self.logger.info("Request failed: %s" % url)
+            self.logger.info(_("Request failed: {url}").format(url=url))
             self.logger.info(e)
 
     @property
@@ -160,17 +160,17 @@ class Music:
                 proxies=config.get("proxies"),
             )
             total_size = int(r.headers["content-length"])
-            with click.progressbar(length=total_size, label="下载中...") as bar:
+            with click.progressbar(length=total_size, label=_("下载中...")) as bar:
                 with open(outfile, "wb") as f:
                     for chunk in r.iter_content(chunk_size=1024):
                         if chunk:
                             f.write(chunk)
                             bar.update(len(chunk))
-            click.echo("已保存到：%s\n" % outfile)
+            click.echo(_("已保存到：{outfile}").format(outfile=outfile) + "\n")
         except Exception as e:
             click.echo("")
-            self.logger.error("下载音乐失败：")
-            self.logger.error("URL：%s" % self.url)
-            self.logger.error("位置：%s\n" % outfile)
+            self.logger.error(_("下载音乐失败：") + "\n")
+            self.logger.error(_("URL：{url}").format(url=self.url) + "\n")
+            self.logger.error(_("位置：{outfile}").format(outfile=outfile) + "\n")
             if self.verbose:
                 self.logger.error(e)

@@ -10,6 +10,8 @@
 """
 
 import os, sys
+import gettext
+gettext.install('music-dl', 'locale')
 
 _srcdir = '%s/' % os.path.dirname(os.path.realpath(__file__))
 _filepath = os.path.dirname(sys.argv[0])
@@ -20,4 +22,4 @@ if sys.version_info[0] == 3:
     if __name__ == '__main__':
         music_dl.main()
 else: # Python 2
-    print('Python3 Only.')
+    print(_('Python3 Only.'))

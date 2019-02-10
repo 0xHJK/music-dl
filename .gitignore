@@ -50,7 +50,6 @@ report.xml
 
 # Translations
 *.mo
-*.pot
 
 # Django stuff:
 *.log
