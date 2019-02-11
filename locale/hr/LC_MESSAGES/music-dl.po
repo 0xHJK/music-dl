@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-10 15:24-0800\n"
+"PO-Revision-Date: 2019-02-11 08:51-0800\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.1.1\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: hr\n"
+
+#: music_dl/core.py:47
+msgid "下载音乐失败"
+msgstr "Traka neuspešno skinuta"
+
+#: music_dl/music.py:49
+#, python-brace-format
+msgid ""
+"\n"
+" ------------ \n"
+" -> 来源：{idx}{source} #{id}\n"
+" -> 歌曲：{title}\n"
+" -> 歌手：{singer}\n"
+" -> 专辑：{album}\n"
+" -> 时长: {duration}\n"
+" -> 大小: {size}MB\n"
+msgstr ""
+"\n"
+" ------------ \n"
+" -> Izvor: {idx}{source} #{id}\n"
+" -> Naslov: {title}\n"
+" -> Umetnik: {singer}\n"
+" -> Album: {album}\n"
+" -> Dužina: {duration}\n"
+" -> Veličina Datoteke: {size}MB\n"
+
+#: music_dl/music.py:122
+#, python-brace-format
+msgid "Request failed: {url}"
+msgstr "Željba neuspešna: {url}"
+
+#: music_dl/music.py:163
+msgid "下载中..."
+msgstr "Skidam..."
+
+#: music_dl/music.py:169
+#, python-brace-format
+msgid "已保存到：{outfile}"
+msgstr "Sačuvaj kao: {outfile}"
+
+#: music_dl/music.py:172
+msgid "下载音乐失败："
+msgstr "Traka neuspešno skinuta:"
+
+#: music_dl/music.py:173
+#, python-brace-format
+msgid "URL：{url}"
+msgstr "URL：{url}"
+
+#: music_dl/music.py:174
+#, python-brace-format
+msgid "位置：{outfile}"
+msgstr "Lokacija datoteke: {outfile}"
