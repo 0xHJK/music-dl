@@ -5,7 +5,7 @@
 </p>
 <hr>
 <p align="center">
-  <a herf="https://travis-ci.org/0xHJK/music-dl.svg">
+  <a herf="https://travis-ci.org/0xHJK/music-dl">
     <img src="https://travis-ci.org/0xHJK/music-dl.svg">
   </a>
   <a><img src="https://img.shields.io/pypi/pyversions/pymusic-dl.svg"></a>
