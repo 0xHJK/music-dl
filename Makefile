@@ -7,7 +7,7 @@ test:
 	python3 setup.py test
 
 coverage:
-	py.test --cov-config .coveragerc --verbose --cov-report term --cov-report xml --cov=music_dl tests
+	py.test --cov-config .coveragerc --verbose --cov-report term --cov-report xml --cov=music_dl --junitxml=report.xml tests
 
 flake8:
 	flake8 --ignore=E501,F401,W503 music_dl
