@@ -54,7 +54,7 @@ class Music:
             " -> 时长: {duration}\n"
             " -> 大小: {size}MB\n"
             " -> 比特率: {rating}\n"
-            " -> URL: {url} \n").format(idx=idx, source=source, id=self.id, title=self.title, singer=self.singer, album=self.album, duration=self.duration, size=self.size, rating=self.rate)
+            " -> URL: {url} \n").format(idx=idx, source=source, id=self.id, title=self.title, singer=self.singer, album=self.album, duration=self.duration, size=self.size, rating=self.rate, url=self.url)
         )
 
     @property
