@@ -35,6 +35,8 @@ def test_music(capsys):
         assert music.fullname == "/tmp/crowd - cheering%s.mp3" % fix
         open(music.fullname, "w").write("")
 
+    str(music)
+
     music.download()
     out, err = capsys.readouterr()
     assert out.find("/tmp/crowd - cheering")
