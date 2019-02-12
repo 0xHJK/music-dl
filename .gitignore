@@ -111,3 +111,4 @@ test.py
 *.mp3
 *.ogg
 *.flac
+!static/sample.mp3
