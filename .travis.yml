@@ -2,7 +2,7 @@
 language: python
 
 install:
-  - pip install codecov
+  - pip install pytest-cov codecov
   - make install
 
 jobs:
