@@ -51,23 +51,23 @@ def run():
     # 分割线
     click.echo("\n---------------------------")
     # 用户指定下载序号
-    prompt = "请输入%s，支持形如 %s 的格式，输入 %s 跳过下载\n >>" % (
-        colorize("下载序号", "yellow"),
-        colorize("0 3-5 8", "yellow"),
-        colorize("N", "yellow"),
-    )
+    prompt = _("请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)").format(
+        下载序号=colorize(_("下载序号"), "yellow"),
+        numbers=colorize("0 3-5 8", "yellow"),
+        N=colorize("N", "yellow")) + "\n >>"
+               
     choices = click.prompt(prompt)
     while choices.lower() != "n" and not re.match(
         r"^((\d+\-\d+)|(\d+)|\s+)+$", choices
     ):
-        choices = click.prompt("%s%s" % (colorize("输入有误！", "red"), prompt))
+        choices = click.prompt("%s%s" % (colorize(_("输入有误！"), "red"), prompt))
 
     selected_list = get_sequence(choices)
     for idx in selected_list:
         music_download(idx, music_list)
 
     # 下载完后继续搜索
-    keyword = click.prompt("请输入要搜索的歌曲，或Ctrl+C退出\n >>")
+    keyword = click.prompt(_("请输入要搜索的歌曲，或Ctrl+C退出") + "\n >>")
     config.set("keyword", keyword)
     run()
 
@@ -75,7 +75,7 @@ def run():
 @click.command()
 @click.version_option()
 @click.option(
-    "-k", "--keyword", prompt="请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）\n >>", help="搜索关键字"
+    "-k", "--keyword", prompt=_("请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）") + "\n >>", help="搜索关键字"
 )
 @click.option(
     "-s",

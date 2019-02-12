@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-10 15:24-0800\n"
-"PO-Revision-Date: 2019-02-10 16:40-0800\n"
+"POT-Creation-Date: 2019-02-12 15:28-0800\n"
+"PO-Revision-Date: 2019-02-12 15:30-0800\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: zh\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.1.1\n"
-"Last-Translator: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Language: zh\n"
 "X-Poedit-Basepath: ../../..\n"
 "X-Poedit-SearchPath-0: .\n"
 
@@ -24,26 +24,48 @@ msgstr ""
 msgid "下载音乐失败"
 msgstr "下载音乐失败"
 
-#: music_dl/music.py:49
+#. Context from source code may be neccessary.
+#: music_dl/__main__.py:54
+msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
+msgstr "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
+
+#. Context from source code may be neccessary.
+#: music_dl/__main__.py:55
+msgid "下载序号"
+msgstr "下载序号"
+
+#: music_dl/__main__.py:63
+msgid "输入有误！"
+msgstr "输入有误！"
+
+#: music_dl/__main__.py:70
+msgid "请输入要搜索的歌曲，或Ctrl+C退出"
+msgstr "请输入要搜索的歌曲，或Ctrl+C退出"
+
+#: music_dl/__main__.py:78
+msgid "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
+msgstr "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
+
+#: music_dl/music.py:50
 #, python-brace-format
 msgid ""
-"\n"
-" ------------ \n"
 " -> 来源：{idx}{source} #{id}\n"
 " -> 歌曲：{title}\n"
 " -> 歌手：{singer}\n"
 " -> 专辑：{album}\n"
 " -> 时长: {duration}\n"
 " -> 大小: {size}MB\n"
+" -> 比特率: {rating}\n"
+" -> URL: {url} \n"
 msgstr ""
-"\n"
-" ------------ \n"
 " -> 来源：{idx}{source} #{id}\n"
 " -> 歌曲：{title}\n"
 " -> 歌手：{singer}\n"
 " -> 专辑：{album}\n"
 " -> 时长: {duration}\n"
 " -> 大小: {size}MB\n"
+" -> 比特率: {rating}\n"
+" -> URL: {url} \n"
 
 #: music_dl/music.py:122
 #, python-brace-format

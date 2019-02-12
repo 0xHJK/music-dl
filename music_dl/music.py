@@ -46,8 +46,8 @@ class Music:
         idx = colorize("[ %s ] " % self.idx, "cyan")
         source = colorize("%s" % self.source.upper(), self.source)
         return (
-            _("\n ------------ \n"
-            " -> 来源：{idx}{source} #{id}\n"
+            "\n ------------ \n" +
+            _(" -> 来源：{idx}{source} #{id}\n"
             " -> 歌曲：{title}\n"
             " -> 歌手：{singer}\n"
             " -> 专辑：{album}\n"
