@@ -1,7 +1,7 @@
 # Music-dl: Listen to what you want
 
 <p align="center">
-    <img src="https://github.com/0xHJK/music-dl/raw/master/docs/logo.png" height="400" alt="music-dl">
+    <img src="https://github.com/0xHJK/music-dl/raw/master/static/logo.png" height="400" alt="music-dl">
 </p>
 <hr>
 <p align="center">
