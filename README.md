@@ -1,7 +1,7 @@
 # Music-dl: Listen to what you want
 
 <p align="center">
-    <img src="https://github.com/0xHJK/music-dl/raw/master/docs/logo.png" height="400" alt="music-dl">
+    <img src="https://github.com/0xHJK/music-dl/raw/master/static/logo.png" height="400" alt="music-dl">
 </p>
 <hr>
 <p align="center">
@@ -109,11 +109,11 @@ Options:
 
 普通示例（可以不写任何参数运行`music-dl`）：
 
-![](https://github.com/0xHJK/music-dl/raw/master/docs/preview.png)
+![](https://github.com/0xHJK/music-dl/raw/master/static/preview.png)
 
 高级示例（指定数量、关键字、音乐源、保存位置、详细模式、合并搜索结果）：
 
-![](https://github.com/0xHJK/music-dl/raw/master/docs/advance.png)
+![](https://github.com/0xHJK/music-dl/raw/master/static/advance.png)
 
 ## 支持的音乐源列表
 
@@ -128,7 +128,7 @@ Options:
 
 欢迎提交插件支持更多音乐源！插件写法参考`extractors`中的文件
 
-![](https://github.com/0xHJK/music-dl/raw/master/docs/fork.png)
+![](https://github.com/0xHJK/music-dl/raw/master/static/fork.png)
 
 ## 更新记录
 

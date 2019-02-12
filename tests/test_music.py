@@ -13,28 +13,28 @@ from music_dl.music import Music
 def test_music(capsys):
     music = Music()
     music.id = 816477
-    music.title = "晴天"
-    music.singer = "周杰伦"
+    music.title = "cheering"
+    music.singer = "crowd"
     music.ext = "mp3"
-    music.album = "叶惠美"
+    music.album = "sample"
     music.rate = 128
-    music.source = "baidu"
-    music.duration = 269
+    music.source = "sample"
+    music.duration = 28
     music.outdir = "/tmp"
     music.verbose = True
-    music.url = "http://zhangmenshiting.qianqian.com/data2/music/ab9c8eb09a3dac4df11c1256eb6cb422/599519664/816477248400128.mp3?xcode=9df0a76ce2477d6837ff48ca31f559c2"
+    music.url = "https://github.com/0xHJK/music-dl/raw/master/static/sample.mp3"
 
     assert music.avaiable
-    assert music.size == 4.12
-    assert music.duration == "0:04:29"
+    assert music.size == 0.42
+    assert music.duration == "0:00:28"
 
     os.system("rm /tmp/*.mp3")
 
     for i in range(10):
         fix = "" if i == 0 else " (%d)" % i
-        assert music.fullname == "/tmp/周杰伦 - 晴天%s.mp3" % fix
+        assert music.fullname == "/tmp/crowd - cheering%s.mp3" % fix
         open(music.fullname, "w").write("")
 
     music.download()
     out, err = capsys.readouterr()
-    assert out.find("已保存到：/tmp/周杰伦 - 晴天")
+    assert out.find("/tmp/crowd - cheering")
