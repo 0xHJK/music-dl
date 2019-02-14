@@ -22,9 +22,7 @@ def run():
     thread_pool = []
     errors = []
 
-    click.echo(
-        "\nSearching %s from ..." % colorize(config.get("keyword"), "yellow"), nl=False
-    )
+    click.echo("\n正在搜索 %s 来自 ..." % colorize(config.get("keyword"), "yellow"), nl=False)
 
     # 多线程搜索
     for source in config.get("source").split():
@@ -38,7 +36,7 @@ def run():
     click.echo("\n---------------------------\n")
     # 输出错误信息
     for err in errors:
-        logger.error("Get %s music list failed." % err[0].upper())
+        logger.error("音乐列表 %s 获取失败." % err[0].upper())
         logger.error(err[1])
     # 对搜索结果排序和去重
     if config.get("merge"):
