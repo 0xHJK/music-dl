@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-12 15:28-0800\n"
-"PO-Revision-Date: 2019-02-12 15:30-0800\n"
+"POT-Creation-Date: 2019-02-14 17:23-0800\n"
+"PO-Revision-Date: 2019-02-14 17:29-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: zh\n"
@@ -24,27 +24,55 @@ msgstr ""
 msgid "下载音乐失败"
 msgstr "下载音乐失败"
 
-#. Context from source code may be neccessary.
-#: music_dl/__main__.py:54
+#: music_dl/__main__.py:25
+#, python-brace-format
+msgid "正在搜索 {searchterm} 来自 ..."
+msgstr "正在搜索 {searchterm} 来自 ..."
+
+#: music_dl/__main__.py:39
+#, python-brace-format
+msgid "音乐列表 {error} 获取失败."
+msgstr "音乐列表 {error} 获取失败."
+
+#: music_dl/__main__.py:52
 msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
 msgstr "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
 
-#. Context from source code may be neccessary.
-#: music_dl/__main__.py:55
+#: music_dl/__main__.py:53
 msgid "下载序号"
 msgstr "下载序号"
 
-#: music_dl/__main__.py:63
+#: music_dl/__main__.py:61
 msgid "输入有误！"
 msgstr "输入有误！"
 
-#: music_dl/__main__.py:70
+#: music_dl/__main__.py:68
 msgid "请输入要搜索的歌曲，或Ctrl+C退出"
 msgstr "请输入要搜索的歌曲，或Ctrl+C退出"
 
-#: music_dl/__main__.py:78
+#: music_dl/__main__.py:76
 msgid "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
 msgstr "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
+
+#: music_dl/__main__.py:84
+msgid "搜索数量限制"
+msgstr "搜索数量限制"
+
+#: music_dl/__main__.py:85
+msgid "指定输出目录"
+msgstr "指定输出目录"
+
+#: music_dl/__main__.py:86
+msgid "指定代理（如http://127.0.0.1:1087）"
+msgstr "指定代理（如http://127.0.0.1:1087）"
+
+#: music_dl/__main__.py:87
+msgid "对搜索结果去重和排序（默认不去重）"
+msgstr "对搜索结果去重和排序（默认不去重）"
+
+#: music_dl/__main__.py:88
+msgid "详细模式"
+msgstr "详细模式"
 
 #: music_dl/music.py:50
 #, python-brace-format

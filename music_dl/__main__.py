@@ -22,7 +22,7 @@ def run():
     thread_pool = []
     errors = []
 
-    click.echo("\n正在搜索 %s 来自 ..." % colorize(config.get("keyword"), "yellow"), nl=False)
+    click.echo("\n" + _("正在搜索 {searchterm} 来自 ...").format(searchterm=colorize(config.get("keyword"), "yellow")), nl=False)
 
     # 多线程搜索
     for source in config.get("source").split():
@@ -36,7 +36,7 @@ def run():
     click.echo("\n---------------------------\n")
     # 输出错误信息
     for err in errors:
-        logger.error("音乐列表 %s 获取失败." % err[0].upper())
+        logger.error(_("音乐列表 {error} 获取失败.").format(error=err[0].upper()))
         logger.error(err[1])
     # 对搜索结果排序和去重
     if config.get("merge"):
@@ -81,11 +81,11 @@ def run():
     default="qq netease kugou baidu xiami",
     help="数据源目前支持qq netease kugou baidu xiami flac",
 )
-@click.option("-c", "--count", default=5, help="搜索数量限制")
-@click.option("-o", "--outdir", default=".", help="指定输出目录")
-@click.option("-x", "--proxy", default="", help="指定代理（如http://127.0.0.1:1087）")
-@click.option("-m", "--merge", default=False, is_flag=True, help="对搜索结果去重和排序（默认不去重）")
-@click.option("-v", "--verbose", default=False, is_flag=True, help="详细模式")
+@click.option("-c", "--count", default=5, help=_("搜索数量限制"))
+@click.option("-o", "--outdir", default=".", help=_("指定输出目录"))
+@click.option("-x", "--proxy", default="", help=_("指定代理（如http://127.0.0.1:1087）"))
+@click.option("-m", "--merge", default=False, is_flag=True, help=_("对搜索结果去重和排序（默认不去重）"))
+@click.option("-v", "--verbose", default=False, is_flag=True, help=_("详细模式"))
 def main(keyword, source, count, outdir, proxy, merge, verbose):
     """
         Search and download music from netease, qq, kugou, baidu and xiami.
