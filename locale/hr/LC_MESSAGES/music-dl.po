@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-14 17:23-0800\n"
-"PO-Revision-Date: 2019-02-14 17:32-0800\n"
+"PO-Revision-Date: 2019-02-14 18:03-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -16,8 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.1.1\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
 #: music_dl/core.py:47
 msgid "下载音乐失败"
@@ -33,28 +32,29 @@ msgstr ""
 msgid "音乐列表 {error} 获取失败."
 msgstr ""
 
+#. Context from source code may be neccessary.
 #: music_dl/__main__.py:52
+#, fuzzy
 msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
-msgstr ""
+msgstr "Molim vas unesite [下载序号] datoteke koje želite da skinete ili pretisnite N da odkažete proces."
 
+#. Context from source code may be neccessary.
 #: music_dl/__main__.py:53
 msgid "下载序号"
-msgstr ""
+msgstr "ID Datoteke"
 
 #: music_dl/__main__.py:61
 msgid "输入有误！"
-msgstr ""
+msgstr "Pogrešan podatak data!"
 
 #: music_dl/__main__.py:68
 msgid "请输入要搜索的歌曲，或Ctrl+C退出"
-msgstr ""
+msgstr "Molim vas da unesete pesmu koju želite li pritisnite CTRL+C da izađete"
 
 #: music_dl/__main__.py:76
-msgid ""
-"请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
-msgstr ""
+msgid "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
+msgstr "Molim vas da unesete pesmu koju želite, Dodajte dodatne podatke kao što su Umetnik i Album, može poboljšati rezultate potrage. (Na primer: Despacito, Luis Fonsi)"
 
-#: music_dl/__main__.py:84
 msgid "搜索数量限制"
 msgstr ""
 
@@ -111,7 +111,7 @@ msgstr "Sačuvaj kao: {outfile}"
 
 #: music_dl/music.py:172
 msgid "下载音乐失败："
-msgstr "Traka neuspešno skinuta:"
+msgstr "Traka neuspešno skinuta: "
 
 #: music_dl/music.py:173
 #, python-brace-format

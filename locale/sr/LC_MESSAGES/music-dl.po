@@ -33,26 +33,29 @@ msgstr ""
 msgid "音乐列表 {error} 获取失败."
 msgstr ""
 
-#: music_dl/__main__.py:52
-msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
-msgstr ""
 
+#. Context from source code may be neccessary.
+#: music_dl/__main__.py:52
+#, fuzzy
+msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
+msgstr "Молим вас унесите [ИД број] датотеке које желите да скинете или претисните Н да одкажете процес."
+
+#. Context from source code may be neccessary.
 #: music_dl/__main__.py:53
 msgid "下载序号"
-msgstr ""
+msgstr "ИД Датотеке"
 
 #: music_dl/__main__.py:61
 msgid "输入有误！"
-msgstr ""
+msgstr "Погрешан податак дат!"
 
 #: music_dl/__main__.py:68
 msgid "请输入要搜索的歌曲，或Ctrl+C退出"
-msgstr ""
+msgstr "Молим вас да унесете песму коју желите или притисните CTRL+C да изађете"
 
 #: music_dl/__main__.py:76
-msgid ""
-"请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
-msgstr ""
+msgid "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
+msgstr "Молим вас да унесете песму коју желите. Додајте додатне податке као што су Уметник и Албум, може поболјшати резултате потраге. (На пример: Despacito, Luis Fonsi)"
 
 #: music_dl/__main__.py:84
 msgid "搜索数量限制"
@@ -73,13 +76,11 @@ msgstr ""
 #: music_dl/__main__.py:88
 msgid "详细模式"
 msgstr ""
-
 #: music_dl/music.py:50
 #, python-brace-format
 msgid ""
 " -> 来源：{idx}{source} #{id}\n"
 " -> 歌曲：{title}\n"
-" -> 歌手：{singer}\n"
 " -> 专辑：{album}\n"
 " -> 时长: {duration}\n"
 " -> 大小: {size}MB\n"
@@ -111,12 +112,12 @@ msgstr "Сачувај Као: {outfile}"
 
 #: music_dl/music.py:172
 msgid "下载音乐失败："
-msgstr "Трака неуспешно скинута:"
+msgstr "Трака неуспешно скинута: "
 
 #: music_dl/music.py:173
 #, python-brace-format
 msgid "URL：{url}"
-msgstr "УРЛ: {url}"
+msgstr "УРЛ：{url}"
 
 #: music_dl/music.py:174
 #, python-brace-format
