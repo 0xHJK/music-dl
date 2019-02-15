@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-14 17:23-0800\n"
-"PO-Revision-Date: 2019-02-14 17:38-0800\n"
+"PO-Revision-Date: 2019-02-14 17:55-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -33,24 +33,34 @@ msgid "音乐列表 {error} 获取失败."
 msgstr ""
 
 #: music_dl/__main__.py:52
-msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
+msgid ""
+"请输入{下载序号}，支持形如 {numbers} 的格式，输"
+"入 {N} 跳过下载)"
 msgstr ""
 
 #: music_dl/__main__.py:53
 msgid "下载序号"
-msgstr ""
+msgstr "ファイルID番号"
 
 #: music_dl/__main__.py:61
 msgid "输入有误！"
-msgstr ""
+msgstr "入力違った!"
 
 #: music_dl/__main__.py:68
 msgid "请输入要搜索的歌曲，或Ctrl+C退出"
 msgstr ""
+"検索したい曲を入力するか、CTRL+Cを押して終了し"
+"てください。"
 
 #: music_dl/__main__.py:76
-msgid "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
+msgid ""
+"请输入要搜索的歌曲，名称和歌手一起输入可以提高"
+"匹配（如 空帆船 朴树）"
 msgstr ""
+"検索したい曲を入力してください。 音楽人やアルバ"
+"ムなどの検索用語を追加すると、検索結果が向上す"
+"ることがあります。 (例えば： Despacito, Luis "
+"Fonsi)"
 
 #: music_dl/__main__.py:84
 msgid "搜索数量限制"
@@ -90,8 +100,8 @@ msgstr ""
 " -> アルバム；{album}\n"
 " -> 音楽の長さ； {duration}\n"
 " -> ファイルサイズ； {size}MB\n"
-" -> 評価；{rating}\n"
-" -> URL；{url} \n"
+" -> 格付け: {rating}\n"
+" -> URL: {url} \n"
 
 #: music_dl/music.py:122
 #, python-brace-format

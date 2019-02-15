@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-12 15:28-0800\n"
-"PO-Revision-Date: 2019-02-12 21:22-0800\n"
+"POT-Creation-Date: 2019-02-14 17:23-0800\n"
+"PO-Revision-Date: 2019-02-14 17:55-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -22,26 +22,60 @@ msgstr ""
 msgid "下载音乐失败"
 msgstr "Track download failed"
 
-#. Context from source code may be neccessary.
-#: music_dl/__main__.py:54
-msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
-msgstr "Please enter some {下载序号} representing the songs you want，you can also use a range, for example {numbers}，or you could enter {N} to not download any songs."
+#: music_dl/__main__.py:25
+#, python-brace-format
+msgid "正在搜索 {searchterm} 来自 ..."
+msgstr ""
 
-#. Context from source code may be neccessary.
-#: music_dl/__main__.py:55
+#: music_dl/__main__.py:39
+#, python-brace-format
+msgid "音乐列表 {error} 获取失败."
+msgstr ""
+
+#: music_dl/__main__.py:52
+msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)"
+msgstr ""
+"Please enter some {下载序号} representing the songs you want，you can "
+"also use a range, for example {numbers}，or you could enter {N} to not "
+"download any songs."
+
+#: music_dl/__main__.py:53
 msgid "下载序号"
 msgstr "numbers"
 
-#: music_dl/__main__.py:63
+#: music_dl/__main__.py:61
 msgid "输入有误！"
+msgstr "Incorrect input given!"
+
+#: music_dl/__main__.py:68
+msgid "请输入要搜索的歌曲，或Ctrl+C退出"
+msgstr ""
+"Please enter what song you'd like to search for, or press CTRL+C to exit"
+
+#: music_dl/__main__.py:76
+msgid "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
+msgstr ""
+"Please enter the song you want to search. Adding extra search terms like "
+"Artist and Album can improve results. (e.g. Despacito, Luis Fonsi)"
+
+#: music_dl/__main__.py:84
+msgid "搜索数量限制"
 msgstr ""
 
-#: music_dl/__main__.py:70
-msgid "请输入要搜索的歌曲，或Ctrl+C退出"
-msgstr "Please enter what song you'd like to search for, or press Ctrl+c to exit"
+#: music_dl/__main__.py:85
+msgid "指定输出目录"
+msgstr ""
 
-#: music_dl/__main__.py:78
-msgid "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
+#: music_dl/__main__.py:86
+msgid "指定代理（如http://127.0.0.1:1087）"
+msgstr ""
+
+#: music_dl/__main__.py:87
+msgid "对搜索结果去重和排序（默认不去重）"
+msgstr ""
+
+#: music_dl/__main__.py:88
+msgid "详细模式"
 msgstr ""
 
 #: music_dl/music.py:50
