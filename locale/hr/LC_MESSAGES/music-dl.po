@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-14 17:23-0800\n"
-"PO-Revision-Date: 2019-02-14 17:28-0800\n"
+"PO-Revision-Date: 2019-02-14 17:32-0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: hr\n"
@@ -75,7 +75,7 @@ msgid "详细模式"
 msgstr ""
 
 #: music_dl/music.py:50
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid ""
 " -> 来源：{idx}{source} #{id}\n"
 " -> 歌曲：{title}\n"
@@ -92,7 +92,7 @@ msgstr ""
 " -> Album: {album}\n"
 " -> Dužina: {duration}\n"
 " -> Veličina Datoteke: {size}MB\n"
-" -> 比特率: {rating}\n"
+" -> Ocjena: {rating}\n"
 " -> URL: {url} \n"
 
 #: music_dl/music.py:122
