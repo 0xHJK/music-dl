@@ -5,8 +5,8 @@
 </p>
 <hr>
 <p align="center">
-  <a herf="https://travis-ci.org/0xHJK/music-dl">
-    <img src="https://travis-ci.org/0xHJK/music-dl.svg">
+  <a href="https://travis-ci.org/0xHJK/music-dl">
+    <img src="https://travis-ci.org/0xHJK/music-dl.svg?branch=master">
   </a>
   <a><img src="https://img.shields.io/pypi/pyversions/pymusic-dl.svg"></a>
   <a href="https://codecov.io/gh/0xHJK/music-dl">
