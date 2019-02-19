@@ -40,7 +40,7 @@ msgid "下载序号"
 msgstr ""
 
 #: music_dl/__main__.py:61
-msgid "输入有误！"
+msgid "输入有误!"
 msgstr ""
 
 #: music_dl/__main__.py:68
@@ -74,10 +74,10 @@ msgstr ""
 #: music_dl/music.py:50
 #, python-brace-format
 msgid ""
-" -> 来源：{idx}{source} #{id}\n"
-" -> 歌曲：{title}\n"
-" -> 歌手：{singer}\n"
-" -> 专辑：{album}\n"
+" -> 来源: {idx}{source} #{id}\n"
+" -> 歌曲: {title}\n"
+" -> 歌手: {singer}\n"
+" -> 专辑: {album}\n"
 " -> 时长: {duration}\n"
 " -> 大小: {size}MB\n"
 " -> 比特率: {rate}\n"
@@ -95,19 +95,19 @@ msgstr ""
 
 #: music_dl/music.py:169
 #, python-brace-format
-msgid "已保存到：{outfile}"
+msgid "已保存到: {outfile}"
 msgstr ""
 
 #: music_dl/music.py:172
-msgid "下载音乐失败："
+msgid "下载音乐失败: "
 msgstr ""
 
 #: music_dl/music.py:173
 #, python-brace-format
-msgid "URL：{url}"
+msgid "URL: {url}"
 msgstr ""
 
 #: music_dl/music.py:174
 #, python-brace-format
-msgid "位置：{outfile}"
+msgid "位置: {outfile}"
 msgstr ""
