@@ -50,7 +50,6 @@ report.xml
 
 # Translations
 *.mo
-*.pot
 
 # Django stuff:
 *.log
@@ -112,3 +111,4 @@ test.py
 *.ogg
 *.flac
 !static/sample.mp3
+
