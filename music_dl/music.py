@@ -129,7 +129,7 @@ class Music:
             # 转换成MB并保留两位小数
             self.size = round(size / 1048576, 2)
         except Exception as e:
-            self.logger.info(_("Request failed: {url}").format(url=url))
+            self.logger.info(_("请求失败: {url}").format(url=url))
             self.logger.info(e)
 
     @property

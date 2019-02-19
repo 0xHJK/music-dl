@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-19 23:29+0800\n"
-"PO-Revision-Date: 2019-02-19 23:32+0800\n"
+"POT-Creation-Date: 2019-02-19 23:43+0800\n"
+"PO-Revision-Date: 2019-02-19 23:47+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sr\n"
@@ -110,8 +110,8 @@ msgstr ""
 
 #: music_dl/music.py:132
 #, python-brace-format
-msgid "Request failed: {url}"
-msgstr "Желјба неуспешна: {url}"
+msgid "请求失败: {url}"
+msgstr ""
 
 #: music_dl/music.py:173
 msgid "下载中..."
@@ -135,3 +135,6 @@ msgstr "УРЛ: {url}"
 #, python-brace-format
 msgid "位置: {outfile}"
 msgstr "Локација Датотеке: {outfile}"
+
+#~ msgid "Request failed: {url}"
+#~ msgstr "Желјба неуспешна: {url}"
