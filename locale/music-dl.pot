@@ -80,7 +80,7 @@ msgid ""
 " -> 专辑：{album}\n"
 " -> 时长: {duration}\n"
 " -> 大小: {size}MB\n"
-" -> 比特率: {rating}\n"
+" -> 比特率: {rate}\n"
 " -> URL: {url} \n"
 msgstr ""
 
