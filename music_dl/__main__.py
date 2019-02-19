@@ -56,7 +56,7 @@ def run():
     click.echo("\n---------------------------")
     # 用户指定下载序号
     prompt = (
-        _("请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)").format(
+        _("请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载").format(
             下载序号=colorize(_("下载序号"), "yellow"),
             numbers=colorize("0 3-5 8", "yellow"),
             N=colorize("N", "yellow"),
@@ -68,7 +68,7 @@ def run():
     while choices.lower() != "n" and not re.match(
         r"^((\d+\-\d+)|(\d+)|\s+)+$", choices
     ):
-        choices = click.prompt("%s%s" % (colorize(_("输入有误！"), "red"), prompt))
+        choices = click.prompt("%s%s" % (colorize(_("输入有误!"), "red"), prompt))
 
     selected_list = get_sequence(choices)
     for idx in selected_list:
