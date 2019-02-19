@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-02-19 23:29+0800\n"
-"PO-Revision-Date: 2019-02-19 23:30+0800\n"
+"PO-Revision-Date: 2019-02-19 23:39+0800\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: en\n"
@@ -26,7 +26,7 @@ msgstr "Searching {searchterm} from …"
 #: music_dl/__main__.py:45
 #, python-brace-format
 msgid "音乐列表 {error} 获取失败."
-msgstr "Get music list {error} failed."
+msgstr "Music list {error} obtain failed."
 
 #: music_dl/__main__.py:59
 msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载"
@@ -73,7 +73,7 @@ msgstr "Output directory"
 
 #: music_dl/__main__.py:99
 msgid "指定代理（如http://127.0.0.1:1087）"
-msgstr "Proxy (eg. http://127.0.0.1:1087)"
+msgstr "Proxy (e.g. http://127.0.0.1:1087)"
 
 #: music_dl/__main__.py:100
 msgid "对搜索结果去重和排序（默认不去重）"
