@@ -47,10 +47,10 @@ class Music:
         source = colorize("%s" % self.source.upper(), self.source)
         return (
             "\n ------------ \n" +
-            _(" -> 来源：{idx}{source} #{id}\n"
-            " -> 歌曲：{title}\n"
-            " -> 歌手：{singer}\n"
-            " -> 专辑：{album}\n"
+            _(" -> 来源: {idx}{source} #{id}\n"
+            " -> 歌曲: {title}\n"
+            " -> 歌手: {singer}\n"
+            " -> 专辑: {album}\n"
             " -> 时长: {duration}\n"
             " -> 大小: {size}MB\n"
             " -> 比特率: {rate}\n"
@@ -166,11 +166,11 @@ class Music:
                         if chunk:
                             f.write(chunk)
                             bar.update(len(chunk))
-            click.echo(_("已保存到：{outfile}").format(outfile=outfile) + "\n")
+            click.echo(_("已保存到: {outfile}").format(outfile=outfile) + "\n")
         except Exception as e:
             click.echo("")
-            self.logger.error(_("下载音乐失败：") + "\n")
-            self.logger.error(_("URL：{url}").format(url=self.url) + "\n")
-            self.logger.error(_("位置：{outfile}").format(outfile=outfile) + "\n")
+            self.logger.error(_("下载音乐失败: ") + "\n")
+            self.logger.error(_("URL: {url}").format(url=self.url) + "\n")
+            self.logger.error(_("位置: {outfile}").format(outfile=outfile) + "\n")
             if self.verbose:
                 self.logger.error(e)
