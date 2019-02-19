@@ -22,7 +22,13 @@ def run():
     thread_pool = []
     errors = []
 
-    click.echo("\n" + _("正在搜索 {searchterm} 来自 ...").format(searchterm=colorize(config.get("keyword"), "yellow")), nl=False)
+    click.echo(
+        "\n"
+        + _("正在搜索 {searchterm} 来自 ...").format(
+            searchterm=colorize(config.get("keyword"), "yellow")
+        ),
+        nl=False,
+    )
 
     # 多线程搜索
     for source in config.get("source").split():
@@ -49,11 +55,15 @@ def run():
     # 分割线
     click.echo("\n---------------------------")
     # 用户指定下载序号
-    prompt = _("请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)").format(
-        下载序号=colorize(_("下载序号"), "yellow"),
-        numbers=colorize("0 3-5 8", "yellow"),
-        N=colorize("N", "yellow")) + "\n >>"
-               
+    prompt = (
+        _("请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载)").format(
+            下载序号=colorize(_("下载序号"), "yellow"),
+            numbers=colorize("0 3-5 8", "yellow"),
+            N=colorize("N", "yellow"),
+        )
+        + "\n >>"
+    )
+
     choices = click.prompt(prompt)
     while choices.lower() != "n" and not re.match(
         r"^((\d+\-\d+)|(\d+)|\s+)+$", choices
@@ -73,13 +83,16 @@ def run():
 @click.command()
 @click.version_option()
 @click.option(
-    "-k", "--keyword", prompt=_("请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）") + "\n >>", help="搜索关键字"
+    "-k",
+    "--keyword",
+    prompt=_("请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）") + "\n >>",
+    help=_("搜索关键字"),
 )
 @click.option(
     "-s",
     "--source",
     default="qq netease kugou baidu xiami",
-    help="数据源目前支持qq netease kugou baidu xiami flac",
+    help=_("支持的数据源: ") + "qq netease kugou baidu xiami flac",
 )
 @click.option("-c", "--count", default=5, help=_("搜索数量限制"))
 @click.option("-o", "--outdir", default=".", help=_("指定输出目录"))

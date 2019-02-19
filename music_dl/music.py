@@ -45,16 +45,26 @@ class Music:
         """ 在打印详情时调用 """
         idx = colorize("[ %s ] " % self.idx, "cyan")
         source = colorize("%s" % self.source.upper(), self.source)
-        return (
-            "\n ------------ \n" +
-            _(" -> 来源: {idx}{source} #{id}\n"
+        return "\n ------------ \n" + _(
+            " -> 来源: {idx}{source} #{id}\n"
             " -> 歌曲: {title}\n"
             " -> 歌手: {singer}\n"
             " -> 专辑: {album}\n"
             " -> 时长: {duration}\n"
             " -> 大小: {size}MB\n"
             " -> 比特率: {rate}\n"
-            " -> URL: {url} \n").format(idx=idx, source=source, id=self.id, title=self.title, singer=self.singer, album=self.album, duration=self.duration, size=self.size, rate=self.rate, url=self.url)
+            " -> URL: {url} \n"
+        ).format(
+            idx=idx,
+            source=source,
+            id=self.id,
+            title=self.title,
+            singer=self.singer,
+            album=self.album,
+            duration=self.duration,
+            size=self.size,
+            rate=self.rate,
+            url=self.url,
         )
 
     @property

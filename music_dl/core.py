@@ -19,7 +19,6 @@ from .utils import colorize
 from .exceptions import RequestError, ResponseError, DataError
 
 
-
 def music_search(source, music_list, errors):
     """ 音乐搜索，music_list是搜索结果 """
     try:
