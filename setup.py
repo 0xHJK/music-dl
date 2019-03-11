@@ -48,6 +48,7 @@ setuptools.setup(
         'requests',
         'click',
         'pycryptodome',
+        'prettytable',
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
