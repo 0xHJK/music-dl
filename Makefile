@@ -14,6 +14,7 @@ flake8:
 
 clean:
 	rm -fr build dist .egg pymusic_dl.egg-info
+	rm -fr *.mp3 .pytest_cache coverage.xml report.xml
 	find . | grep __pycache__ | xargs rm -fr
 	find . | grep .pyc | xargs rm -f
 
