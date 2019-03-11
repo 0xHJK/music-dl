@@ -18,7 +18,7 @@
   <a><img src="https://img.shields.io/github/license/0xHJK/music-dl.svg"></a>
 </p>
 
-**Music-dl** is a command line tool which helps you search and download music from multiple sources.
+**[Music-dl](https://github.com/0xHJK/music-dl)** is a command line tool which helps you search and download music from multiple sources.
 
 Support for QQ music, Netease music, Xiami music, Kugou music and Baidu music. See [supported sources](#supported-sources).
 
@@ -33,6 +33,7 @@ English | [中文文档](https://github.com/0xHJK/music-dl/blob/master/README.md
 - Support for HTTP and SOCKS proxy
 - Support for multithreading searching
 - Support for merging and sorting results
+- Support keyword highlighting
 
 ## Installation
 
@@ -82,32 +83,9 @@ Options:
   --help               Show this message and exit.
 ```
 
-Example (Omitted some search results):
+Example:
 
-```
-$ music-dl -k "Bruno Mars"
-
-Searching Bruno Mars from ... QQ ... KUGOU ... NETEASE ... XIAMI ... BAIDU ...
----------------------------
-
- [  0 ]      QQ | 0:04:30 -  4.13MB - Mark Ronson、Bruno Mars - Uptown Funk - Uptown Special
-...
- [  7 ]   KUGOU | 0:03:37 -  3.33MB - Bruno Mars - Talking to the Moon - It's Better If You Don't Understand
-...
- [ 22 ]   BAIDU | 0:03:12 -  2.95MB - Bruno Mars - The lazy song - Enjoy the best karaoke's songs
-
----------------------------
-
-Please enter the download serial number, support the format of 0 3-5 8, enter N to skip download
- >>: 7
- [  7 ]   KUGOU | 0:03:37 -  3.33MB - Bruno Mars - Talking to the Moon - It's Better If You Don't Understand
-Downloading...  [####################################]  100%
-Saved at：/tmp/Bruno Mars - Talking to the Moon.mp3
-```
-
-Advanced usage:
-
-![](https://github.com/0xHJK/music-dl/raw/master/static/advance.png)
+![](https://github.com/0xHJK/music-dl/raw/master/static/preview-en.png)
 
 ## Supported sources
 
