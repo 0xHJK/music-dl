@@ -16,6 +16,8 @@ from . import config
 from .utils import colorize
 from .core import music_search, music_download, music_list_merge, get_sequence
 
+import gettext
+gettext.install('music-dl', 'locale')
 
 def run():
     logger = logging.getLogger(__name__)
