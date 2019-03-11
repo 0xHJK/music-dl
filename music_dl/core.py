@@ -43,7 +43,7 @@ def music_download(idx, music_list):
         addon = importlib.import_module(".extractors." + music.source, __package__)
         addon.download(music)
     except Exception as e:
-        logger.error("下载音乐失败")
+        logger.error(_("下载音乐失败"))
         err = traceback.format_exc() if config.get("verbose") else str(e)
         logger.error(err)
 

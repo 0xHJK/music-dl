@@ -1,0 +1,139 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-19 23:43+0800\n"
+"PO-Revision-Date: 2019-02-19 23:44+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: music_dl/__main__.py:27
+#, python-brace-format
+msgid "正在搜索 {searchterm} 来自 ..."
+msgstr "Searching {searchterm} from …"
+
+#: music_dl/__main__.py:45
+#, python-brace-format
+msgid "音乐列表 {error} 获取失败."
+msgstr "Music list {error} obtain failed."
+
+#: music_dl/__main__.py:59
+msgid "请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载"
+msgstr ""
+"Please enter some {下载序号} representing the songs you want，you can "
+"also use a range, for example {numbers}，or you could enter {N} to not "
+"download any songs"
+
+#: music_dl/__main__.py:60
+msgid "下载序号"
+msgstr "numbers"
+
+#: music_dl/__main__.py:71
+msgid "输入有误!"
+msgstr "Incorrect input given!"
+
+#: music_dl/__main__.py:78
+msgid "请输入要搜索的歌曲，或Ctrl+C退出"
+msgstr ""
+"Please enter what song you'd like to search for, or press CTRL+C to exit"
+
+#: music_dl/__main__.py:88
+msgid "请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）"
+msgstr ""
+"Please enter the song you want to search. Adding extra search terms like "
+"Artist and Album can improve results. (e.g. Despacito, Luis Fonsi)"
+
+#: music_dl/__main__.py:89
+msgid "搜索关键字"
+msgstr "Keyword"
+
+#: music_dl/__main__.py:95
+msgid "支持的数据源: "
+msgstr "Supported music source: "
+
+#: music_dl/__main__.py:97
+msgid "搜索数量限制"
+msgstr "Number of search results"
+
+#: music_dl/__main__.py:98
+msgid "指定输出目录"
+msgstr "Output directory"
+
+#: music_dl/__main__.py:99
+msgid "指定代理（如http://127.0.0.1:1087）"
+msgstr "Proxy (e.g. http://127.0.0.1:1087)"
+
+#: music_dl/__main__.py:100
+msgid "对搜索结果去重和排序（默认不去重）"
+msgstr "Merge search results (Default does not merge)"
+
+#: music_dl/__main__.py:101
+msgid "详细模式"
+msgstr "Verbose mode"
+
+#: music_dl/core.py:46
+msgid "下载音乐失败"
+msgstr "Track download failed"
+
+#: music_dl/music.py:49
+#, python-brace-format
+msgid ""
+" -> 来源: {idx}{source} #{id}\n"
+" -> 歌曲: {title}\n"
+" -> 歌手: {singer}\n"
+" -> 专辑: {album}\n"
+" -> 时长: {duration}\n"
+" -> 大小: {size}MB\n"
+" -> 比特率: {rate}\n"
+" -> URL: {url} \n"
+msgstr ""
+" -> Source: {idx}{source} #{id}\n"
+" -> Title: {title}\n"
+" -> Artist: {singer}\n"
+" -> Album: {album}\n"
+" -> Length: {duration}\n"
+" -> Filesize: {size}MB\n"
+" -> Bitrate: {rate}\n"
+" -> URL: {url} \n"
+
+#: music_dl/music.py:132
+#, python-brace-format
+msgid "请求失败: {url}"
+msgstr "Request failed: {url}"
+
+#: music_dl/music.py:173
+msgid "下载中..."
+msgstr "Downloading..."
+
+#: music_dl/music.py:179
+#, python-brace-format
+msgid "已保存到: {outfile}"
+msgstr "Saved to: {outfile}"
+
+#: music_dl/music.py:182
+msgid "下载音乐失败: "
+msgstr "Track download failed: "
+
+#: music_dl/music.py:183
+#, python-brace-format
+msgid "URL: {url}"
+msgstr "URL: {url}"
+
+#: music_dl/music.py:184
+#, python-brace-format
+msgid "位置: {outfile}"
+msgstr "File location: {outfile}"
+
+#~ msgid "Request failed: {url}"
+#~ msgstr "Request failed: {url}"

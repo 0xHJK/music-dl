@@ -1,3 +1,4 @@
 click
 requests
 pycryptodome
+prettytable

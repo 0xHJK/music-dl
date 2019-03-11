@@ -1,7 +1,9 @@
 # Music-dl: Listen to what you want
 
 <p align="center">
+  <a href="https://github.com/0xHJK/music-dl">
     <img src="https://github.com/0xHJK/music-dl/raw/master/static/logo.png" height="400" alt="music-dl">
+  </a>
 </p>
 <hr>
 <p align="center">
@@ -18,7 +20,7 @@
   <a><img src="https://img.shields.io/github/license/0xHJK/music-dl.svg"></a>
 </p>
 
-**Music-dl** is a command line tool which helps you search and download music from multiple sources.
+**[Music-dl](https://github.com/0xHJK/music-dl)** is a command line tool which helps you search and download music from multiple sources.
 
 Support for QQ music, Netease music, Xiami music, Kugou music and Baidu music. See [supported sources](#支持的音乐源列表).
 
@@ -26,7 +28,9 @@ Support for QQ music, Netease music, Xiami music, Kugou music and Baidu music. S
 
 [English](https://github.com/0xHJK/music-dl/blob/master/README.en.md) | 中文文档
 
-**Music-dl**是一个基于Python3的命令行工具，可以从多个网站搜索和下载音乐，方便寻找音乐，解决不知道哪个网站有版权的问题。工具的本意是**聚合搜索**，API是从公开的网络中获得，**不是破解版**，也听不了付费歌曲。
+**[Music-dl](https://github.com/0xHJK/music-dl)
+**是一个基于Python3的命令行工具，可以从多个网站搜索和下载音乐，方便寻找音乐，解决不知道哪个网站有版权的问题。工具的本意是**聚合搜索**，API
+是从公开的网络中获得，**不是破解版**，也听不了付费歌曲。
 
 **禁止将本工具用于商业用途**，如产生法律纠纷与本人无关。
 
@@ -34,12 +38,12 @@ Support for QQ music, Netease music, Xiami music, Kugou music and Baidu music. S
 
 > 注意: 部分音乐源在一些国家和地区不可用，可以考虑使用中国大陆代理。获取公共代理的方式可以参考我的另一个项目<https://github.com/0xHJK/Proxies>，两分钟获得数千个有效代理。
 
-- 支持无损音乐（部分歌曲，默认不打开）
-
+- 部分歌曲支持无损音乐
 - 优先搜索高品质音乐（flac -> 320K -> 128K）
 - 支持 HTTP 和 SOCKS 代理
 - 支持多线程搜索
-- 支持搜索结果去重和排序（默认不打开）
+- 支持搜索结果去重和排序
+- 支持搜索关键字高亮
 
 > 注意：仅支持Python3，建议使用 **Python3.5 以上版本**
 
@@ -96,24 +100,20 @@ Options:
   -c, --count INTEGER  搜索数量限制
   -o, --outdir TEXT    指定输出目录
   -x, --proxy TEXT     指定代理（如http://127.0.0.1:1087）
-  -m, --merge          对搜索结果去重和排序（默认不去重）
+  -m, --merge          对搜索结果去重和排序（默认去重）
   -v, --verbose        详细模式
   --help               Show this message and exit.
 ```
 
-- 默认搜索`qq netease kugou baidu xiami`，每个数量限制为5，保存目录为当前目录，不合并搜索结果。
+- 默认搜索`qq netease kugou baidu xiami flac`，每个数量限制为5，保存目录为当前目录。
 - 指定序号时可以使用`1-5 7 10`的形式。
-- 需要合并搜索结果时，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
-- 无损音乐歌曲数量较少，需要指定`-s "flac"`打开，如果没有无损会显示320K或128K。
+- 默认对搜索结果排序和去重，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
+- 无损音乐歌曲数量较少，如果没有无损会显示320K或128K。
 - 支持http代理和socks代理，格式形如`-x http://127.0.0.1:1087`或`-x socks5://127.0.0.1:1086`
 
-普通示例（可以不写任何参数运行`music-dl`）：
+示例（可以不写任何参数运行`music-dl`）：
 
 ![](https://github.com/0xHJK/music-dl/raw/master/static/preview.png)
-
-高级示例（指定数量、关键字、音乐源、保存位置、详细模式、合并搜索结果）：
-
-![](https://github.com/0xHJK/music-dl/raw/master/static/advance.png)
 
 ## 支持的音乐源列表
 
@@ -132,6 +132,8 @@ Options:
 
 ## 更新记录
 
+- 2019-03-11 开启默认支持所有音乐源，默认对搜索结果排序去重，优化显示效果，高亮搜索关键字和高品质音乐
+- 2019-02 完成部分翻译（英语、德语、日语、克罗地亚语）感谢@anomie31 @DarkLinkXXXX @terorie的帮助，目前翻译尚未完善，欢迎提交PR改进翻译
 - 2019-01-31 新增单元测试，集成发布，新增LOGO，新增小徽章，发布v2.1.0版本
 - 2019-01-28 重写一半以上代码，全面优化，发布到pip库，发布v2.0.0版本
 - 2019-01-26 支持http和socks代理，删除wget库，新增click库，发布v1.1版
