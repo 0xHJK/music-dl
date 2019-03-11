@@ -10,6 +10,7 @@ music object
 """
 
 import os
+import re
 import datetime
 import logging
 import click
@@ -109,6 +110,39 @@ class Music:
             + h
             + self.album
         )
+
+    @property
+    def row(self):
+        """ 歌曲摘要信息，列出搜索歌曲时使用PrettyTable """
+        keywords = re.split(";|,|\s|\*", config.get("keyword"))
+
+        def highlight(s, k):
+            return s.replace(k, colorize(k, "xiami")).replace(
+                k.title(), colorize(k.title(), "xiami")
+            )
+
+        ht_singer = self.singer
+        ht_title = self.title
+        ht_album = self.album
+        for k in keywords:
+            if not k:
+                continue
+            ht_singer = highlight(ht_singer, k)
+            ht_title = highlight(ht_title, k)
+            ht_album = highlight(ht_album, k)
+
+        size = "%sMB" % self.size
+        ht_size = size if int(self.size) < 8 else colorize(size, "flac")
+
+        return [
+            colorize(self.idx, "baidu"),
+            ht_singer,
+            ht_title,
+            ht_size,
+            self.duration,
+            ht_album,
+            self.source.upper(),
+        ]
 
     @property
     def url(self):

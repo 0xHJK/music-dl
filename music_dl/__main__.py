@@ -11,6 +11,7 @@ import re
 import threading
 import click
 import logging
+import prettytable as pt
 from . import config
 from .utils import colorize
 from .core import music_search, music_download, music_list_merge, get_sequence
@@ -42,15 +43,21 @@ def run():
     click.echo("\n---------------------------\n")
     # 输出错误信息
     for err in errors:
-        logger.error(_("音乐列表 {error} 获取失败.").format(error=err[0].upper()))
-        logger.error(err[1])
+        logger.debug(_("音乐列表 {error} 获取失败.").format(error=err[0].upper()))
+        logger.debug(err[1])
     # 对搜索结果排序和去重
     if config.get("merge"):
         music_list = music_list_merge(music_list)
+    # 创建table
+    tb = pt.PrettyTable()
+    tb.field_names = ["序号", "歌手", "歌名", "大小", "时长", "专辑", "来源"]
     # 遍历输出搜索列表
     for index, music in enumerate(music_list):
         music.idx = index
-        click.echo(music.info)
+        tb.add_row(music.row)
+        # click.echo(music.info)
+    tb.align = "l"
+    click.echo(tb)
 
     # 分割线
     click.echo("\n---------------------------")
@@ -91,13 +98,13 @@ def run():
 @click.option(
     "-s",
     "--source",
-    default="qq netease kugou baidu xiami",
+    default="qq netease kugou baidu xiami flac",
     help=_("支持的数据源: ") + "qq netease kugou baidu xiami flac",
 )
 @click.option("-c", "--count", default=5, help=_("搜索数量限制"))
 @click.option("-o", "--outdir", default=".", help=_("指定输出目录"))
 @click.option("-x", "--proxy", default="", help=_("指定代理（如http://127.0.0.1:1087）"))
-@click.option("-m", "--merge", default=False, is_flag=True, help=_("对搜索结果去重和排序（默认不去重）"))
+@click.option("-m", "--merge", default=True, is_flag=True, help=_("对搜索结果去重和排序（默认去重）"))
 @click.option("-v", "--verbose", default=False, is_flag=True, help=_("详细模式"))
 def main(keyword, source, count, outdir, proxy, merge, verbose):
     """
