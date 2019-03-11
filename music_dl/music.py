@@ -121,9 +121,9 @@ class Music:
                 k.title(), colorize(k.title(), "xiami")
             )
 
-        ht_singer = self.singer
-        ht_title = self.title
-        ht_album = self.album
+        ht_singer = self.singer if len(self.singer) < 30 else self.singer[:30] + "..."
+        ht_title = self.title if len(self.title) < 30 else self.title[:30] + "..."
+        ht_album = self.album if len(self.album) < 20 else self.album[:20] + "..."
         for k in keywords:
             if not k:
                 continue
