@@ -1,11 +1,13 @@
 # Music-dl: Listen to what you want
 
 <p align="center">
+  <a href="https://github.com/0xHJK/music-dl">
     <img src="https://github.com/0xHJK/music-dl/raw/master/static/logo.png" height="400" alt="music-dl">
+  </a>
 </p>
 <hr>
 <p align="center">
-  <a herf="https://travis-ci.org/0xHJK/music-dl">
+  <a href="https://travis-ci.org/0xHJK/music-dl">
     <img src="https://travis-ci.org/0xHJK/music-dl.svg">
   </a>
   <a><img src="https://img.shields.io/pypi/pyversions/pymusic-dl.svg"></a>

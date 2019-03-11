@@ -1,11 +1,13 @@
 # Music-dl: Listen to what you want
 
 <p align="center">
+  <a href="https://github.com/0xHJK/music-dl">
     <img src="https://github.com/0xHJK/music-dl/raw/master/static/logo.png" height="400" alt="music-dl">
+  </a>
 </p>
 <hr>
 <p align="center">
-  <a herf="https://travis-ci.org/0xHJK/music-dl">
+  <a href="https://travis-ci.org/0xHJK/music-dl">
     <img src="https://travis-ci.org/0xHJK/music-dl.svg">
   </a>
   <a><img src="https://img.shields.io/pypi/pyversions/pymusic-dl.svg"></a>
@@ -98,15 +100,15 @@ Options:
   -c, --count INTEGER  搜索数量限制
   -o, --outdir TEXT    指定输出目录
   -x, --proxy TEXT     指定代理（如http://127.0.0.1:1087）
-  -m, --merge          对搜索结果去重和排序（默认不去重）
+  -m, --merge          对搜索结果去重和排序（默认去重）
   -v, --verbose        详细模式
   --help               Show this message and exit.
 ```
 
-- 默认搜索`qq netease kugou baidu xiami`，每个数量限制为5，保存目录为当前目录，不合并搜索结果。
+- 默认搜索`qq netease kugou baidu xiami flac`，每个数量限制为5，保存目录为当前目录。
 - 指定序号时可以使用`1-5 7 10`的形式。
-- 需要合并搜索结果时，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
-- 无损音乐歌曲数量较少，需要指定`-s "flac"`打开，如果没有无损会显示320K或128K。
+- 默认对搜索结果排序和去重，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
+- 无损音乐歌曲数量较少，如果没有无损会显示320K或128K。
 - 支持http代理和socks代理，格式形如`-x http://127.0.0.1:1087`或`-x socks5://127.0.0.1:1086`
 
 示例（可以不写任何参数运行`music-dl`）：
@@ -130,6 +132,8 @@ Options:
 
 ## 更新记录
 
+- 2019-03-11 开启默认支持所有音乐源，默认对搜索结果排序去重，优化显示效果，高亮搜索关键字和高品质音乐
+- 2019-02 完成部分翻译（英语、德语、日语、克罗地亚语）感谢@anomie31 @DarkLinkXXXX @terorie的帮助，目前翻译尚未完善，欢迎提交PR改进翻译
 - 2019-01-31 新增单元测试，集成发布，新增LOGO，新增小徽章，发布v2.1.0版本
 - 2019-01-28 重写一半以上代码，全面优化，发布到pip库，发布v2.0.0版本
 - 2019-01-26 支持http和socks代理，删除wget库，新增click库，发布v1.1版
