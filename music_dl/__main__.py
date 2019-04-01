@@ -81,7 +81,8 @@ def run():
 
     selected_list = get_sequence(choices)
     for idx in selected_list:
-        music_download(idx, music_list)
+        if idx < len(music_list):
+            music_download(idx, music_list)
 
     # 下载完后继续搜索
     keyword = click.prompt(_("请输入要搜索的歌曲，或Ctrl+C退出") + "\n >>")
