@@ -195,7 +195,7 @@ class Music:
         else:
             click.echo(self.info)
 
-        outfile = self.fullname
+        outfile = self.fullname.replace("?", "")
         try:
             r = requests.get(
                 self.url,
