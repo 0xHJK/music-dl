@@ -44,6 +44,7 @@ Support for QQ music, Netease music, Xiami music, Kugou music and Baidu music. S
 - 支持多线程搜索
 - 支持搜索结果去重和排序
 - 支持搜索关键字高亮
+- 支持下载歌词和封面（部分）
 
 > 注意：仅支持Python3，建议使用 **Python3.5 以上版本**
 
@@ -55,7 +56,7 @@ Support for QQ music, Netease music, Xiami music, Kugou music and Baidu music. S
 $ pip3 install pymusic-dl
 ```
 
-手动安装：
+手动安装（最新）：
 
 ```bash
 $ git clone https://github.com/0xHJK/music-dl.git
@@ -122,12 +123,12 @@ Options:
 
 | 音乐源       | 缩写    | 网址                      | 歌词 | 封面 |
 | ------------ | ------- | ------------------------- | ---- | ---- |
-| QQ音乐       | qq      | <https://y.qq.com/>       | ❌    | ❌    |
-| 酷狗音乐     | kugou   | <http://www.kugou.com/>   | ❌    | ✅️    |
-| 网易云音乐   | netease | <https://music.163.com/>  | ❌    | ✅️    |
-| 百度音乐     | baidu   | <http://music.baidu.com/> | ✅️    | ✅️    |
-| 虾米音乐     | xiami   | <https://www.xiami.com/>  | ✅️    | ✅️    |
-| 百度无损音乐 | flac    | <http://music.baidu.com/> | ✅️    | ✅️    |
+| QQ音乐       | qq      | <https://y.qq.com/>       | ✕    | ✕    |
+| 酷狗音乐     | kugou   | <http://www.kugou.com/>   | ✕    | ✓    |
+| 网易云音乐   | netease | <https://music.163.com/>  | ✕    | ✓    |
+| 百度音乐     | baidu   | <http://music.baidu.com/> | ✓    | ✓    |
+| 虾米音乐     | xiami   | <https://www.xiami.com/>  | ✓    | ✓    |
+| 百度无损音乐 | flac    | <http://music.baidu.com/> | ✓    | ✓    |
 
 欢迎提交插件支持更多音乐源！插件写法参考`extractors`中的文件
 
@@ -168,6 +169,12 @@ Options:
 - <https://github.com/soimort/you-get>
 - <https://github.com/maicong/music>
 - <https://github.com/YongHaoWu/NeteaseCloudMusicFlac>
+
+## 打赏
+
+欢迎丢馒头包子可乐手抓饼鸡翅秋刀鱼给我，谢谢~
+
+![](https://github.com/0xHJK/music-dl/raw/master/static/wepay.jpg)
 
 ## LICENSE
 
