@@ -42,7 +42,6 @@ def xiami_search(keyword) -> list:
     if r.status_code != requests.codes.ok:
         raise RequestError(r.text)
     j = r.json()
-
     thread_pool = []
 
     for m in j["data"]["songs"]:
@@ -55,6 +54,8 @@ def xiami_search(keyword) -> list:
         music.title = m["song_name"]
         music.singer = m["artist_name"]
         music.album = m["album_name"]
+        music.cover = m["album_logo"]
+        music.lyrics = m["lyric"]
         # 默认使用320K
         music.url = m["listen_file"].replace("m128.xiami.net", "m320.xiami.net")
         music.rate = 320
