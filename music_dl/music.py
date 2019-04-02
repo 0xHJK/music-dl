@@ -204,11 +204,11 @@ class Music:
         music_file = self.fullname.replace("?", "")
         self._download_file(self.url, music_file, stream=True)
 
-        if config.get("lyrics"):
+        if config.get("lyrics") and self.lyrics:
             lyrics_file = music_file.rpartition(".")[0] + ".lrc"
             self._download_file(self.lyrics, lyrics_file)
 
-        if config.get("picture"):
+        if config.get("picture") and self.cover:
             cover_file = music_file.rpartition(".")[0] + ".jpg"
             self._download_file(self.cover, cover_file)
 
