@@ -36,6 +36,8 @@ class Music:
         self.size = ""
         self.rate = ""
         self.source = ""
+        self.lyrics = ""
+        self.cover = ""
         self._duration = ""
         self._url = ""
         self.outdir = config.get("outdir")
@@ -55,6 +57,8 @@ class Music:
             " -> 大小: {size}MB\n"
             " -> 比特率: {rate}\n"
             " -> URL: {url} \n"
+            " -> 歌词: {lyrics} \n"
+            " -> 封面: {cover} \n"
         ).format(
             idx=idx,
             source=source,
@@ -66,6 +70,8 @@ class Music:
             size=self.size,
             rate=self.rate,
             url=self.url,
+            lyrics=self.lyrics,
+            cover=self.cover,
         )
 
     @property
@@ -195,25 +201,49 @@ class Music:
         else:
             click.echo(self.info)
 
-        outfile = self.fullname.replace("?", "")
+        music_file = self.fullname.replace("?", "")
+        self._download_file(self.url, music_file, stream=True)
+
+        if config.get("lyrics"):
+            lyrics_file = music_file.rpartition(".")[0] + ".lrc"
+            self._download_file(self.lyrics, lyrics_file)
+
+        if config.get("picture"):
+            cover_file = music_file.rpartition(".")[0] + ".jpg"
+            self._download_file(self.cover, cover_file)
+
+        click.echo("-------------\n")
+
+    def _download_file(self, url, outfile, stream=False):
+        """
+            下载文件用的辅助函数
+        :param url: 下载地址
+        :param outfile: 含完整路径的文件名
+        :param stream: 是否需要进度条
+        :return:
+        """
         try:
             r = requests.get(
-                self.url,
-                stream=True,
+                url,
+                stream=stream,
                 headers=config.get("wget_headers"),
                 proxies=config.get("proxies"),
             )
-            total_size = int(r.headers["content-length"])
-            with click.progressbar(length=total_size, label=_("下载中...")) as bar:
+            if stream:
+                total_size = int(r.headers["content-length"])
+                with click.progressbar(length=total_size, label=_("下载中...")) as bar:
+                    with open(outfile, "wb") as f:
+                        for chunk in r.iter_content(chunk_size=1024):
+                            if chunk:
+                                f.write(chunk)
+                                bar.update(len(chunk))
+            else:
                 with open(outfile, "wb") as f:
-                    for chunk in r.iter_content(chunk_size=1024):
-                        if chunk:
-                            f.write(chunk)
-                            bar.update(len(chunk))
-            click.echo(_("已保存到: {outfile}").format(outfile=outfile) + "\n")
+                    f.write(r.content)
+            click.echo(_("已保存到: {outfile}").format(outfile=outfile))
         except Exception as e:
             click.echo("")
-            self.logger.error(_("下载音乐失败: ") + "\n")
+            self.logger.error(_("下载失败: ") + "\n")
             self.logger.error(_("URL: {url}").format(url=self.url) + "\n")
             self.logger.error(_("位置: {outfile}").format(outfile=outfile) + "\n")
             if self.verbose:

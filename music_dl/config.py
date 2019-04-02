@@ -29,6 +29,10 @@ def init():
         "merge": False,
         # 代理
         "proxies": None,
+        # 下载歌词
+        "lyrics": False,
+        # 下载封面
+        "picture": False,
         # 一般情况下的headers
         "fake_headers": {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",  # noqa

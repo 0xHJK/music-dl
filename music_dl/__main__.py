@@ -17,7 +17,9 @@ from .utils import colorize
 from .core import music_search, music_download, music_list_merge, get_sequence
 
 import gettext
-gettext.install('music-dl', 'locale')
+
+gettext.install("music-dl", "locale")
+
 
 def run():
     logger = logging.getLogger(__name__)
@@ -109,7 +111,9 @@ def run():
 @click.option("-x", "--proxy", default="", help=_("指定代理（如http://127.0.0.1:1087）"))
 @click.option("-m", "--merge", default=True, is_flag=True, help=_("对搜索结果去重和排序（默认去重）"))
 @click.option("-v", "--verbose", default=False, is_flag=True, help=_("详细模式"))
-def main(keyword, source, count, outdir, proxy, merge, verbose):
+@click.option("-l", "--lyrics", default=False, is_flag=True, help=_("同时下载歌词"))
+@click.option("-p", "--picture", default=False, is_flag=True, help=_("同时下载封面"))
+def main(keyword, source, count, outdir, proxy, merge, verbose, lyrics, picture):
     """
         Search and download music from netease, qq, kugou, baidu and xiami.
         Example: music-dl -k "周杰伦"
@@ -122,6 +126,8 @@ def main(keyword, source, count, outdir, proxy, merge, verbose):
     config.set("outdir", outdir)
     config.set("merge", merge)
     config.set("verbose", verbose)
+    config.set("lyrics", lyrics)
+    config.set("picture", picture)
     if proxy:
         proxies = {"http": proxy, "https": proxy}
         config.set("proxies", proxies)
