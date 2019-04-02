@@ -205,7 +205,7 @@ class Music:
         self._download_file(self.url, music_file, stream=True)
 
         if config.get("lyrics") and self.lyrics:
-            lyrics_file = music_file.rpartition(".")[0] + "." + self.lyrics.rpartition(".")[1]
+            lyrics_file = music_file.rpartition(".")[0] + "." + self.lyrics.rpartition(".")[-1]
             self._download_file(self.lyrics, lyrics_file)
 
         if config.get("picture") and self.cover:
