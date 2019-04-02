@@ -84,6 +84,7 @@ def kugou_download(music):
     music.url = j["url"]
     music.rate = j["bitRate"]
     music.ext = j["extName"]
+    music.cover = j["album_img"].replace("{size}", "150")
 
     music.download()
 
