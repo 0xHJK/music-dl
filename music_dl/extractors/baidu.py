@@ -46,6 +46,7 @@ def baidu_search(keyword) -> list:
         music.title = m["title"].replace("<em>", "").replace("</em>", "")
         music.singer = m["author"].replace("<em>", "").replace("</em>", "")
         music.album = m["album_title"].replace("<em>", "").replace("</em>", "")
+        music.lyrics = "http://musicapi.qianqian.com/v1/restserver/ting" + m["lrclink"]
 
         s.headers.update({"referer": "http://music.baidu.com/song/" + music.id})
         m_params = {"songIds": music.id}
@@ -63,6 +64,7 @@ def baidu_search(keyword) -> list:
         music.duration = mj_music["time"]
         music.rate = mj_music["rate"]
         music.ext = mj_music["format"]
+        music.cover = mj_music["songPicRadio"]
         music_list.append(music)
 
     return music_list
