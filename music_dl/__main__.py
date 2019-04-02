@@ -54,7 +54,7 @@ def run():
         music_list = music_list_merge(music_list)
     # 创建table
     tb = pt.PrettyTable()
-    tb.field_names = ["序号", "歌手", "歌名", "大小", "时长", "专辑", "来源"]
+    tb.field_names = ["序号", "歌名", "歌手", "大小", "时长", "专辑", "来源"]
     # 遍历输出搜索列表
     for index, music in enumerate(music_list):
         music.idx = index

@@ -142,8 +142,8 @@ class Music:
 
         return [
             colorize(self.idx, "baidu"),
-            ht_singer,
             ht_title,
+            ht_singer,
             ht_size,
             self.duration,
             ht_album,
