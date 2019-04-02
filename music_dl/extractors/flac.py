@@ -59,6 +59,8 @@ def flac_search(keyword) -> list:
         music.rate = mj_music["rate"]
         music.ext = mj_music["format"]
         music.album = mj_music["albumName"]
+        music.lyrics = mj_music["lrcLink"]
+        music.cover = mj_music["songPicRadio"]
         music_list.append(music)
 
     return music_list
