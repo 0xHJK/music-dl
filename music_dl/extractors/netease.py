@@ -68,6 +68,7 @@ def netease_search(keyword) -> list:
             music.album = m["al"]["name"]
             music.duration = int(m["dt"] / 1000)
             music.size = round(size / 1048576, 2)
+            music.cover = m["al"]["picUrl"]
             music_list.append(music)
     except Exception as e:
         raise DataError(e)
