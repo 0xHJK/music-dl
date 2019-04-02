@@ -95,13 +95,16 @@ Usage: music-dl [OPTIONS]
 
 Options:
   --version            Show the version and exit.
-  -k, --keyword TEXT   搜索关键字
-  -s, --source TEXT    数据源目前支持qq netease kugou baidu xiami flac
-  -c, --count INTEGER  搜索数量限制
-  -o, --outdir TEXT    指定输出目录
-  -x, --proxy TEXT     指定代理（如http://127.0.0.1:1087）
+  -k, --keyword TEXT   Keyword
+  -s, --source TEXT    Supported music source: qq netease kugou baidu xiami
+                       flac
+  -c, --count INTEGER  Number of search results
+  -o, --outdir TEXT    Output directory
+  -x, --proxy TEXT     Proxy (e.g. http://127.0.0.1:1087)
   -m, --merge          对搜索结果去重和排序（默认去重）
-  -v, --verbose        详细模式
+  -v, --verbose        Verbose mode
+  -l, --lyrics         同时下载歌词
+  -p, --picture        同时下载封面
   --help               Show this message and exit.
 ```
 
@@ -117,14 +120,14 @@ Options:
 
 ## 支持的音乐源列表
 
-| 音乐源       | 缩写    | 网址                      |
-| ------------ | ------- | ------------------------- |
-| QQ音乐       | qq      | <https://y.qq.com/>       |
-| 酷狗音乐     | kugou   | <http://www.kugou.com/>   |
-| 网易云音乐   | netease | <https://music.163.com/>  |
-| 百度音乐     | baidu   | <http://music.baidu.com/> |
-| 虾米音乐     | xiami   | <https://www.xiami.com/>  |
-| 百度无损音乐 | flac    | <http://music.baidu.com/> |
+| 音乐源       | 缩写    | 网址                      | 歌词 | 封面 |
+| ------------ | ------- | ------------------------- | ---- | ---- |
+| QQ音乐       | qq      | <https://y.qq.com/>       | ❌    | ❌    |
+| 酷狗音乐     | kugou   | <http://www.kugou.com/>   | ❌    | ✅️    |
+| 网易云音乐   | netease | <https://music.163.com/>  | ❌    | ✅️    |
+| 百度音乐     | baidu   | <http://music.baidu.com/> | ✅️    | ✅️    |
+| 虾米音乐     | xiami   | <https://www.xiami.com/>  | ✅️    | ✅️    |
+| 百度无损音乐 | flac    | <http://music.baidu.com/> | ✅️    | ✅️    |
 
 欢迎提交插件支持更多音乐源！插件写法参考`extractors`中的文件
 
@@ -132,6 +135,7 @@ Options:
 
 ## 更新记录
 
+- 2019-04-02 修复#18和#21的BUG，优化显示效果，支持部分音乐源歌词和封面下载
 - 2019-03-11 开启默认支持所有音乐源，默认对搜索结果排序去重，优化显示效果，高亮搜索关键字和高品质音乐
 - 2019-02 完成部分翻译（英语、德语、日语、克罗地亚语）感谢@anomie31 @DarkLinkXXXX @terorie的帮助，目前翻译尚未完善，欢迎提交PR改进翻译
 - 2019-01-31 新增单元测试，集成发布，新增LOGO，新增小徽章，发布v2.1.0版本
