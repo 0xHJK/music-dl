@@ -86,9 +86,12 @@ def xiami_music_info(music, music_list, s):
     mr = s.get("http://www.xiami.com/song/playlist/id/%s/type/0/cat/json" % music.id)
     if mr.status_code != requests.codes.ok:
         raise RequestError(mr.text)
-    mj = mr.json()
-    if not mj["data"]["trackList"]:
-        # raise DataError('no data.trackList')
+    try:
+        mj = mr.json()
+        if not mj["data"]["trackList"]:
+            # raise DataError('no data.trackList')
+            return
+    except:
         return
 
     mj_music = mj["data"]["trackList"][0]
