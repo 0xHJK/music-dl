@@ -103,7 +103,7 @@ def run():
 @click.option(
     "-s",
     "--source",
-    default="qq netease kugou baidu xiami flac",
+    default="qq netease kugou baidu flac",
     help=_("支持的数据源: ") + "qq netease kugou baidu xiami flac",
 )
 @click.option("-c", "--count", default=5, help=_("搜索数量限制"))
