@@ -43,6 +43,7 @@ class BasicSong:
         self.lyrics_url = ""
         self.lyrics_text = ""
         # self.lyrics_file = ""
+        self._fullname = ""
         self.logger = logging.getLogger(__name__)
 
     def __repr__(self):
@@ -107,6 +108,9 @@ class BasicSong:
             size = int(r.headers.get("Content-Length", 0))
             # 转换成MB并保留两位小数
             self.size = round(size / 1048576, 2)
+            # 设置完整的文件名（不含后缀）
+            if not self._fullname:
+                self._set_fullname()
         except Exception as e:
             self.logger.info(_("Request failed: {url}").format(url=url))
             self.logger.info(e)
@@ -144,14 +148,13 @@ class BasicSong:
             self.source.upper(),
         ]
 
-    @property
-    def _fullname(self):
+    def _set_fullname(self):
         """ Full name without suffix, to resolve file name conflicts"""
         outdir = config.get("outdir")
         outfile = os.path.abspath(os.path.join(outdir, self.name))
         if os.path.exists(outfile):
             name, ext = self.name.rsplit(".", 1)
-            names = [x for x in os.listdir(outdir) if x.startswith(name)]
+            names = [x for x in os.listdir(outdir) if x.startswith(name) and x.endswith(ext)]
             names = [x.rsplit(".", 1)[0] for x in names]
             suffixes = [x.replace(name, "") for x in names]
             # filter suffixes that match ' (x)' pattern
@@ -162,10 +165,9 @@ class BasicSong:
             idx = 1
             if indexes:
                 idx += sorted(indexes)[-1]
-            fullname = os.path.abspath(os.path.join(outdir, "%s (%d)" % (name, idx)))
+            self._fullname = os.path.abspath(os.path.join(outdir, "%s (%d)" % (name, idx)))
         else:
-            fullname = outfile.rpartition(".")[0]
-        return fullname
+            self._fullname = outfile.rpartition(".")[0]
 
     @property
     def song_fullname(self):
@@ -238,7 +240,7 @@ class BasicSong:
         self.download_song()
         if config.get("lyrics"):
             self.download_lyrics()
-        if config.get("cover"):
+        if config.get("picture"):
             self.download_cover()
 
         click.echo("-------------\n")
