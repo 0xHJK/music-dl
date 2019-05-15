@@ -15,8 +15,8 @@ import re
 import logging
 import click
 import requests
-from .. import config
-from ..utils import colorize
+from . import config
+from .utils import colorize
 
 
 class BasicSong:
@@ -26,6 +26,7 @@ class BasicSong:
     """
 
     def __init__(self):
+        self.idx = 0
         self.id = 0
         self.title = ""
         self.singer = ""
@@ -35,14 +36,20 @@ class BasicSong:
         self.rate = ""
         self.duration = ""
         self.source = ""
-        self.song_url = ""
-        self.song_file = ""
+        self._song_url = ""
+        # self.song_file = ""
         self.cover_url = ""
-        self.cover_file = ""
+        # self.cover_file = ""
         self.lyrics_url = ""
         self.lyrics_text = ""
-        self.lyrics_file = ""
+        # self.lyrics_file = ""
         self.logger = logging.getLogger(__name__)
+
+    def __repr__(self):
+        """ Abstract of the song """
+        source = colorize("%s" % self.source.upper(), self.source)
+        return "%s #%s %s-%s-%s \n %s \n" % (source, self.id, self.title, self.singer, self.album, self.song_url)
+
 
     def __str__(self):
         """ Song details """
@@ -83,6 +90,28 @@ class BasicSong:
         return "%s - %s.%s" % (self.singer, self.title, self.ext)
 
     @property
+    def song_url(self) -> str:
+        return self._song_url
+
+    @song_url.setter
+    def song_url(self, url):
+        """ Set song url and update size. """
+        try:
+            r = requests.get(
+                url,
+                stream=True,
+                headers=config.get("wget_headers"),
+                proxies=config.get("proxies"),
+            )
+            self._song_url = url
+            size = int(r.headers.get("Content-Length", 0))
+            # 转换成MB并保留两位小数
+            self.size = round(size / 1048576, 2)
+        except Exception as e:
+            self.logger.info(_("Request failed: {url}").format(url=url))
+            self.logger.info(e)
+
+    @property
     def row(self) -> list:
         """ Song details in list form """
         keywords = re.split(";|,|\s|\*", config.get("keyword"))
@@ -106,7 +135,7 @@ class BasicSong:
         ht_size = size if int(self.size) < 8 else colorize(size, "flac")
 
         return [
-            # colorize(self.idx, "baidu"),
+            colorize(self.idx, "baidu"),
             ht_title,
             ht_singer,
             ht_size,
@@ -190,13 +219,13 @@ class BasicSong:
                 self.logger.error(e)
 
     def download_song(self):
-        self._download_file(self.song_url, self.song_file, stream=True)
+        self._download_file(self.song_url, self.song_fullname, stream=True)
 
     def download_lyrics(self):
-        self._download_file(self.lyrics_url, self.lyrics_file, stream=False)
+        self._download_file(self.lyrics_url, self.lyrics_fullname, stream=False)
 
     def download_cover(self):
-        self._download_file(self.cover_url, self.cover_file, stream=False)
+        self._download_file(self.cover_url, self.cover_fullname, stream=False)
 
     def download(self):
         """ Main download function """
