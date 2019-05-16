@@ -48,13 +48,7 @@ class QQSong(BasicSong):
         json_data = r.json()
         lyric = json_data["lyric"]
         self.lyrics_text = base64.b64decode(lyric).decode("utf-8")
-        with open(self.lyrics_fullname, "w") as f:
-            f.write(self.lyrics_text)
-            click.echo(
-                _(" :: Saved to: {outfile}").format(
-                    outfile=colorize(self.lyrics_fullname, "highlight")
-                )
-            )
+        super(QQSong, self)._save_lyrics_text()
 
     def download_cover(self):
         pass

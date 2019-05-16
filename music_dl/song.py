@@ -244,6 +244,15 @@ class BasicSong:
             if config.get("verbose"):
                 self.logger.error(e)
 
+    def _save_lyrics_text(self):
+        with open(self.lyrics_fullname, "w") as f:
+            f.write(self.lyrics_text)
+            click.echo(
+                _(" :: Saved to: {outfile}").format(
+                    outfile=colorize(self.lyrics_fullname, "highlight")
+                )
+            )
+
     def download_song(self):
         self._download_file(self.song_url, self.song_fullname, stream=True)
 
