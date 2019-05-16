@@ -12,6 +12,7 @@
 
 import os
 import re
+import datetime
 import logging
 import click
 import requests
@@ -34,7 +35,7 @@ class BasicSong:
         self.album = ""
         self.size = ""
         self.rate = ""
-        self.duration = ""
+        self._duration = ""
         self.source = ""
         self._song_url = ""
         # self.song_file = ""
@@ -49,8 +50,14 @@ class BasicSong:
     def __repr__(self):
         """ Abstract of the song """
         source = colorize("%s" % self.source.upper(), self.source)
-        return "%s #%s %s-%s-%s \n %s \n" % (source, self.id, self.title, self.singer, self.album, self.song_url)
-
+        return "%s #%s %s-%s-%s \n %s \n" % (
+            source,
+            self.id,
+            self.title,
+            self.singer,
+            self.album,
+            self.song_url,
+        )
 
     def __str__(self):
         """ Song details """
@@ -89,6 +96,15 @@ class BasicSong:
     def name(self) -> str:
         """ Song file name """
         return "%s - %s.%s" % (self.singer, self.title, self.ext)
+
+    @property
+    def duration(self):
+        """ 持续时间 H:M:S """
+        return self._duration
+
+    @duration.setter
+    def duration(self, seconds):
+        self._duration = str(datetime.timedelta(seconds=int(seconds)))
 
     @property
     def song_url(self) -> str:
@@ -154,7 +170,9 @@ class BasicSong:
         outfile = os.path.abspath(os.path.join(outdir, self.name))
         if os.path.exists(outfile):
             name, ext = self.name.rsplit(".", 1)
-            names = [x for x in os.listdir(outdir) if x.startswith(name) and x.endswith(ext)]
+            names = [
+                x for x in os.listdir(outdir) if x.startswith(name) and x.endswith(ext)
+            ]
             names = [x.rsplit(".", 1)[0] for x in names]
             suffixes = [x.replace(name, "") for x in names]
             # filter suffixes that match ' (x)' pattern
@@ -165,7 +183,9 @@ class BasicSong:
             idx = 1
             if indexes:
                 idx += sorted(indexes)[-1]
-            self._fullname = os.path.abspath(os.path.join(outdir, "%s (%d)" % (name, idx)))
+            self._fullname = os.path.abspath(
+                os.path.join(outdir, "%s (%d)" % (name, idx))
+            )
         else:
             self._fullname = outfile.rpartition(".")[0]
 
