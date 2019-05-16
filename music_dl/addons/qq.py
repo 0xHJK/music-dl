@@ -7,7 +7,9 @@
 """
 
 import random
+import base64
 import requests
+import click
 from .. import config
 from ..exceptions import RequestError, ResponseError, DataError
 from ..song import BasicSong
@@ -19,7 +21,35 @@ class QQSong(BasicSong):
         self.mid = ""
 
     def download_lyrics(self):
-        pass
+        url = "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg"
+        params = {
+            "songmid": self.mid,
+            "loginUin": "0",
+            "hostUin": "0",
+            "format": "json",
+            "inCharset": "utf8",
+            "outCharset": "utf-8",
+            "notice": "0",
+            "platform": "yqq.json",
+            "needNewCode": "0",
+        }
+        s = requests.Session()
+        s.headers.update(config.get("fake_headers"))
+        if config.get("proxies"):
+            s.proxies.update(config.get("proxies"))
+        s.headers.update(
+            {
+                "referer": "https://y.qq.com/portal/player.html",
+                "User-Agent": config.get("ios_useragent"),
+            }
+        )
+        r = s.get(url, params=params)
+        json_data = r.json()
+        lyric = json_data["lyric"]
+        self.lyrics_text = base64.b64decode(lyric).decode("utf-8")
+        with open(self.lyrics_fullname, "w") as f:
+            f.write(self.lyrics_text)
+            click.echo(_("Saved to: {outfile}").format(outfile=self.lyrics_fullname))
 
     def download_cover(self):
         pass
