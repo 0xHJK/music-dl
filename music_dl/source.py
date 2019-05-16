@@ -13,17 +13,20 @@
 import threading
 import importlib
 import traceback
+import logging
 import click
 from . import config
 from .utils import colorize
 from .exceptions import *
 
+
 class MusicSource:
     """
         Music source proxy object
     """
+
     def __init__(self):
-        pass
+        self.logger = logging.getLogger(__name__)
 
     def search(self, keyword, sources_list) -> list:
         sources_map = {
@@ -43,12 +46,10 @@ class MusicSource:
             if not source_key in sources_list:
                 raise ParameterError("Invalid music source.")
 
-            t = threading.Thread(target=self.search_thread, args=(
-                sources_map.get(source_key),
-                keyword,
-                ret_music_list,
-                ret_errors,
-            ))
+            t = threading.Thread(
+                target=self.search_thread,
+                args=(sources_map.get(source_key), keyword, ret_music_list, ret_errors),
+            )
             thread_pool.append(t)
             t.start()
 
@@ -56,10 +57,30 @@ class MusicSource:
             t.join()
 
         click.echo("\n---------------------------")
-        # print(ret_errors)
+        # 输出错误信息
+        for err in ret_errors:
+            self.logger.debug(_("音乐列表 {error} 获取失败.").format(error=err[0].upper()))
+            self.logger.debug(err[1])
+
+        # 对搜索结果排序和去重
+        if config.get("merge"):
+            ret_music_list.sort(
+                key=lambda song: (song.singer, song.title, song.size), reverse=True
+            )
+            tmp_list = []
+            for i in range(len(ret_music_list)):
+                # 如果名称、歌手都一致的话就去重，保留最大的文件
+                if (
+                    i > 0
+                    and ret_music_list[i].size <= ret_music_list[i - 1].size
+                    and ret_music_list[i].title == ret_music_list[i - 1].title
+                    and ret_music_list[i].singer == ret_music_list[i - 1].singer
+                ):
+                    continue
+                tmp_list.append(ret_music_list[i])
+            ret_music_list = tmp_list
 
         return ret_music_list
-
 
     def search_thread(self, source, keyword, ret_music_list, ret_errors):
         try:
@@ -74,7 +95,6 @@ class MusicSource:
         finally:
             # 放在搜索后输出是为了营造出搜索很快的假象
             click.echo(" %s ..." % colorize(source.upper(), source), nl=False)
-
 
     def playlist(self, url) -> list:
         sources_map = {
@@ -102,5 +122,4 @@ class MusicSource:
         finally:
             click.echo(" %s ..." % colorize(source.upper(), source), nl=False)
 
-
-
+        return ret_music_list
