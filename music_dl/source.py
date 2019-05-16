@@ -10,6 +10,7 @@
     Music source proxy object
 """
 
+import re
 import threading
 import importlib
 import traceback
@@ -31,16 +32,24 @@ class MusicSource:
     def search(self, keyword, sources_list) -> list:
         sources_map = {
             "baidu": "baidu",
-            "flac": "flac",
+            # "flac": "flac",
             "kugou": "kugou",
             "netease": "netease",
             "163": "netease",
             "qq": "qq",
-            "xiami": "xiami",
+            # "xiami": "xiami",
         }
         thread_pool = []
-        ret_music_list = []
+        ret_songs_list = []
         ret_errors = []
+
+        click.echo("")
+        click.echo(
+            _("Searching {keyword} from ...").format(
+                keyword=colorize(config.get("keyword"), "highlight")
+            ),
+            nl=False,
+        )
 
         for source_key in sources_list:
             if not source_key in sources_list:
@@ -48,7 +57,7 @@ class MusicSource:
 
             t = threading.Thread(
                 target=self.search_thread,
-                args=(sources_map.get(source_key), keyword, ret_music_list, ret_errors),
+                args=(sources_map.get(source_key), keyword, ret_songs_list, ret_errors),
             )
             thread_pool.append(t)
             t.start()
@@ -56,7 +65,7 @@ class MusicSource:
         for t in thread_pool:
             t.join()
 
-        click.echo("\n---------------------------")
+        click.echo("")
         # 输出错误信息
         for err in ret_errors:
             self.logger.debug(_("音乐列表 {error} 获取失败.").format(error=err[0].upper()))
@@ -64,28 +73,28 @@ class MusicSource:
 
         # 对搜索结果排序和去重
         if not config.get("nomerge"):
-            ret_music_list.sort(
+            ret_songs_list.sort(
                 key=lambda song: (song.singer, song.title, song.size), reverse=True
             )
             tmp_list = []
-            for i in range(len(ret_music_list)):
+            for i in range(len(ret_songs_list)):
                 # 如果名称、歌手都一致的话就去重，保留最大的文件
                 if (
                     i > 0
-                    and ret_music_list[i].size <= ret_music_list[i - 1].size
-                    and ret_music_list[i].title == ret_music_list[i - 1].title
-                    and ret_music_list[i].singer == ret_music_list[i - 1].singer
+                    and ret_songs_list[i].size <= ret_songs_list[i - 1].size
+                    and ret_songs_list[i].title == ret_songs_list[i - 1].title
+                    and ret_songs_list[i].singer == ret_songs_list[i - 1].singer
                 ):
                     continue
-                tmp_list.append(ret_music_list[i])
-            ret_music_list = tmp_list
+                tmp_list.append(ret_songs_list[i])
+            ret_songs_list = tmp_list
 
-        return ret_music_list
+        return ret_songs_list
 
-    def search_thread(self, source, keyword, ret_music_list, ret_errors):
+    def search_thread(self, source, keyword, ret_songs_list, ret_errors):
         try:
             addon = importlib.import_module(".addons." + source, __package__)
-            ret_music_list += addon.search(keyword)
+            ret_songs_list += addon.search(keyword)
         except (RequestError, ResponseError, DataError) as e:
             ret_errors.append((source, e))
         except Exception as e:
@@ -95,6 +104,9 @@ class MusicSource:
         finally:
             # 放在搜索后输出是为了营造出搜索很快的假象
             click.echo(" %s ..." % colorize(source.upper(), source), nl=False)
+
+    def download(self, url):
+        pass
 
     def playlist(self, url) -> list:
         sources_map = {
@@ -108,11 +120,11 @@ class MusicSource:
         source = [v for k, v in sources_map if k in url][0]
         if not source:
             raise ParameterError("Invalid url.")
-        ret_music_list = []
+        ret_songs_list = []
         ret_errors = []
         try:
             addon = importlib.import_module(".addon." + source, __package__)
-            ret_music_list = addon.palylist(url)
+            ret_songs_list = addon.palylist(url)
         except (RequestError, ResponseError, DataError) as e:
             ret_errors.append((source, e))
         except Exception as e:
@@ -122,4 +134,4 @@ class MusicSource:
         finally:
             click.echo(" %s ..." % colorize(source.upper(), source), nl=False)
 
-        return ret_music_list
+        return ret_songs_list

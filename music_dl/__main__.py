@@ -8,44 +8,30 @@
 
 import sys
 import re
+import gettext
 import click
 import logging
 import prettytable as pt
 from . import config
 from .utils import colorize
 from .source import MusicSource
-from .exceptions import ParameterError
-
-import gettext
 
 gettext.install("music-dl", "locale")
 
 
-def run():
-    click.echo(
-        "\n"
-        + _("正在搜索 {searchterm} 来自 ...").format(
-            searchterm=colorize(config.get("keyword"), "yellow")
-        ),
-        nl=False,
-    )
-
-    ms = MusicSource()
-    music_list = ms.search(config.get("keyword"), config.get("source").split())
-
+def menu(songs_list):
     # 创建table
     tb = pt.PrettyTable()
     tb.field_names = ["序号", "歌名", "歌手", "大小", "时长", "专辑", "来源"]
     # 遍历输出搜索列表
-    for index, music in enumerate(music_list):
-        music.idx = index
-        tb.add_row(music.row)
-        # click.echo(music.info)
+    for index, song in enumerate(songs_list):
+        song.idx = index
+        tb.add_row(song.row)
+        # click.echo(song.info)
     tb.align = "l"
     click.echo(tb)
+    click.echo("")
 
-    # 分割线
-    click.echo("\n---------------------------")
     # 用户指定下载序号
     prompt = (
         _("请输入{下载序号}，支持形如 {numbers} 的格式，输入 {N} 跳过下载").format(
@@ -62,6 +48,7 @@ def run():
     ):
         choices = click.prompt("%s%s" % (colorize(_("输入有误!"), "red"), prompt))
 
+    click.echo("")
     selected_list = []
     for choice in choices.split():
         start, to, end = choice.partition("-")
@@ -71,15 +58,24 @@ def run():
             selected_list.append(int(start))
 
     for idx in selected_list:
-        if idx < len(music_list):
-            # music_download(idx, music_list)
-            music_list[idx].download()
+        if idx < len(songs_list):
+            songs_list[idx].download()
 
-    # 下载完后继续搜索
+
+def run():
+    ms = MusicSource()
     if config.get("keyword"):
-        keyword = click.prompt(_("请输入要搜索的歌曲，或Ctrl+C退出") + "\n >>")
-        config.set("keyword", keyword)
+        songs_list = ms.search(config.get("keyword"), config.get("source").split())
+        menu(songs_list)
+        config.set("keyword", click.prompt(_("请输入要搜索的歌曲，或Ctrl+C退出") + "\n >>"))
         run()
+    elif config.get("playlist"):
+        songs_list = ms.playlist(config.get("playlist"))
+        menu(songs_list)
+    elif config.get("url"):
+        ms.download(config.get("url"))
+    else:
+        return
 
 
 @click.command()
@@ -87,7 +83,6 @@ def run():
 @click.option(
     "-k",
     "--keyword",
-    # prompt=_("请输入要搜索的歌曲，名称和歌手一起输入可以提高匹配（如 空帆船 朴树）") + "\n >>",
     help=_("搜索关键字，歌名和歌手同时输入可以提高匹配（如 空帆船 朴树）"),
 )
 @click.option("-u", "--url", default="", help=_("通过指定的歌曲URL下载音乐"))

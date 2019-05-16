@@ -13,6 +13,7 @@ import click
 from .. import config
 from ..exceptions import RequestError, ResponseError, DataError
 from ..song import BasicSong
+from ..utils import colorize
 
 
 class QQSong(BasicSong):
@@ -49,7 +50,11 @@ class QQSong(BasicSong):
         self.lyrics_text = base64.b64decode(lyric).decode("utf-8")
         with open(self.lyrics_fullname, "w") as f:
             f.write(self.lyrics_text)
-            click.echo(_("Saved to: {outfile}").format(outfile=self.lyrics_fullname))
+            click.echo(
+                _(" :: Saved to: {outfile}").format(
+                    outfile=colorize(self.lyrics_fullname, "highlight")
+                )
+            )
 
     def download_cover(self):
         pass

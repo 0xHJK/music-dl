@@ -219,7 +219,7 @@ class BasicSong:
             if stream:
                 total_size = int(r.headers["content-length"])
                 with click.progressbar(
-                    length=total_size, label=_("Downloading...")
+                    length=total_size, label=_(" :: Downloading ...")
                 ) as bar:
                     with open(outfile, "wb") as f:
                         for chunk in r.iter_content(chunk_size=1024):
@@ -229,7 +229,11 @@ class BasicSong:
             else:
                 with open(outfile, "wb") as f:
                     f.write(r.content)
-            click.echo(_("Saved to: {outfile}").format(outfile=outfile))
+            click.echo(
+                _(" :: Saved to: {outfile}").format(
+                    outfile=colorize(outfile, "highlight")
+                )
+            )
         except Exception as e:
             click.echo("")
             self.logger.error(_("Download failed: ") + "\n")
@@ -251,7 +255,7 @@ class BasicSong:
 
     def download(self):
         """ Main download function """
-        click.echo("\n ------------ \n")
+        click.echo("===============================================================")
         if config.get("verbose"):
             click.echo(str(self))
         else:
@@ -263,4 +267,4 @@ class BasicSong:
         if config.get("cover"):
             self.download_cover()
 
-        click.echo("-------------\n")
+        click.echo("===============================================================\n")
