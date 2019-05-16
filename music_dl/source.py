@@ -117,21 +117,19 @@ class MusicSource:
             "qq.com": "qq",
             "xiami.com": "xiami",
         }
-        source = [v for k, v in sources_map if k in url][0]
+        source = [v for k, v in sources_map.items() if k in url][0]
         if not source:
             raise ParameterError("Invalid url.")
+        click.echo(_("Parsing music playlist from %s ..." % source.upper()))
         ret_songs_list = []
-        ret_errors = []
         try:
-            addon = importlib.import_module(".addon." + source, __package__)
-            ret_songs_list = addon.palylist(url)
+            addon = importlib.import_module(".addons." + source, __package__)
+            ret_songs_list = addon.playlist(url)
         except (RequestError, ResponseError, DataError) as e:
-            ret_errors.append((source, e))
+            self.logger.error(e)
         except Exception as e:
             # 最后一起输出错误信息免得影响搜索结果列表排版
             err = traceback.format_exc() if config.get("verbose") else str(e)
-            ret_errors.append((source, err))
-        finally:
-            click.echo(" %s ..." % colorize(source.upper(), source), nl=False)
+            self.logger.error(err)
 
         return ret_songs_list
