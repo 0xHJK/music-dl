@@ -52,11 +52,11 @@ class NeteaseSong(BasicSong):
 
 def netease_search(keyword) -> list:
     """ 从网易云音乐搜索 """
-    count = config.get("count") or 5
+    number = config.get("number") or 5
     eparams = {
         "method": "POST",
         "url": "http://music.163.com/api/cloudsearch/pc",
-        "params": {"s": keyword, "type": 1, "offset": 0, "limit": count},
+        "params": {"s": keyword, "type": 1, "offset": 0, "limit": number},
     }
     data = {"eparams": encode_netease_data(eparams)}
 

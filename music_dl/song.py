@@ -260,7 +260,7 @@ class BasicSong:
         self.download_song()
         if config.get("lyrics"):
             self.download_lyrics()
-        if config.get("picture"):
+        if config.get("cover"):
             self.download_cover()
 
         click.echo("-------------\n")

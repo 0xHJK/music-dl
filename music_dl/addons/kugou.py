@@ -22,7 +22,6 @@ class KugouSong(BasicSong):
 
     def download(self):
         params = {"cmd": "playInfo", "hash": self.hash}
-        print(params)
         s = requests.Session()
         s.headers.update(config.get("fake_headers"))
         if config.get("proxies"):
@@ -37,7 +36,6 @@ class KugouSong(BasicSong):
         j = r.json()
         if j["status"] != 1:
             raise ResponseError(r.text)
-        print(r.text)
         self.song_url = j["url"]
         self.rate = j["bitRate"]
         self.ext = j["extName"]
@@ -48,13 +46,13 @@ class KugouSong(BasicSong):
 
 def kugou_search(keyword) -> list:
     """ 搜索音乐 """
-    count = config.get("count") or 5
+    number = config.get("number") or 5
     params = {
         "keyword": keyword,
         "platform": "WebFilter",
         "format": "json",
         "page": 1,
-        "pagesize": count,
+        "pagesize": number,
     }
     s = requests.Session()
     s.headers.update(config.get("fake_headers"))

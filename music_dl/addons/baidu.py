@@ -19,13 +19,13 @@ class BaiduSong(BasicSong):
 
 def baidu_search(keyword) -> list:
     """ 搜索音乐 """
-    count = config.get("count") or 5
+    number = config.get("number") or 5
     params = {
         "query": keyword,
         "method": "baidu.ting.search.common",
         "format": "json",
         "page_no": 1,
-        "page_size": count,
+        "page_size": number,
     }
     s = requests.Session()
     s.headers.update(config.get("fake_headers"))

@@ -63,7 +63,7 @@ class MusicSource:
             self.logger.debug(err[1])
 
         # 对搜索结果排序和去重
-        if config.get("merge"):
+        if not config.get("nomerge"):
             ret_music_list.sort(
                 key=lambda song: (song.singer, song.title, song.size), reverse=True
             )

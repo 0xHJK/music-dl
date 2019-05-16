@@ -61,8 +61,8 @@ class QQSong(BasicSong):
 
 def qq_search(keyword) -> list:
     """ 搜索音乐 """
-    count = config.get("count") or 5
-    params = {"w": keyword, "format": "json", "p": 1, "n": count}
+    number = config.get("number") or 5
+    params = {"w": keyword, "format": "json", "p": 1, "n": number}
     s = requests.Session()
     s.headers.update(config.get("fake_headers"))
     if config.get("proxies"):

@@ -16,23 +16,27 @@ def init():
     global opts
     opts = {
         # 自定义来源 -s --source
-        "source": "qq netease kugou baidu xiami",
-        # 自定义数量 -c --count
-        "count": 5,
+        "source": "qq netease kugou baidu",
+        # 自定义数量 -n --number
+        "number": 5,
         # 保存目录 -o --outdir
         "outdir": ".",
-        # 搜索关键字
+        # 搜索关键字 -k --keyword
         "keyword": "",
-        # 显示详情
-        "verbose": False,
-        # 搜索结果排序和去重
-        "merge": False,
-        # 代理
+        # 从URL下载 -u --url
+        "url": "",
+        # 下载歌单 -p --playlist
+        "playlist": "",
+        # 代理 -x --proxy
         "proxies": None,
-        # 下载歌词
+        # 显示详情 -v --verbose
+        "verbose": False,
+        # 搜索结果不排序去重 --nomerge
+        "nomerge": False,
+        # 下载歌词 --lyrics
         "lyrics": False,
-        # 下载封面
-        "picture": False,
+        # 下载封面 --cover
+        "cover": False,
         # 一般情况下的headers
         "fake_headers": {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",  # noqa
