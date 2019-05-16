@@ -134,7 +134,6 @@ class BasicSong:
     @property
     def row(self) -> list:
         """ Song details in list form """
-        keywords = re.split(";|,|\s|\*", config.get("keyword"))
 
         def highlight(s, k):
             return s.replace(k, colorize(k, "xiami")).replace(
@@ -144,12 +143,15 @@ class BasicSong:
         ht_singer = self.singer if len(self.singer) < 30 else self.singer[:30] + "..."
         ht_title = self.title if len(self.title) < 30 else self.title[:30] + "..."
         ht_album = self.album if len(self.album) < 20 else self.album[:20] + "..."
-        for k in keywords:
-            if not k:
-                continue
-            ht_singer = highlight(ht_singer, k)
-            ht_title = highlight(ht_title, k)
-            ht_album = highlight(ht_album, k)
+
+        if config.get("keyword"):
+            keywords = re.split(";|,|\s|\*", config.get("keyword"))
+            for k in keywords:
+                if not k:
+                    continue
+                ht_singer = highlight(ht_singer, k)
+                ht_title = highlight(ht_title, k)
+                ht_album = highlight(ht_album, k)
 
         size = "%sMB" % self.size
         ht_size = size if int(self.size) < 8 else colorize(size, "flac")
