@@ -23,6 +23,8 @@ colors = {
     "baidu": "\033[96m",
     "xiami": "\033[93m",
     "flac": "\033[95m",
+    "highlight": "\033[93m",
+    "error": "\033[31m",
 }
 
 
