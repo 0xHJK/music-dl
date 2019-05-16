@@ -7,6 +7,7 @@
 """
 
 import os
+import re
 import binascii
 import base64
 import json
@@ -22,12 +23,7 @@ class NeteaseSong(BasicSong):
         super(NeteaseSong, self).__init__()
 
     def download_lyrics(self):
-        row_data = {
-            "csrf_token": "",
-            "id": self.id,
-            "lv": -1,
-            "tv": -1
-        }
+        row_data = {"csrf_token": "", "id": self.id, "lv": -1, "tv": -1}
         data = encrypted_request(row_data)
         s = requests.Session()
         s.headers.update(config.get("fake_headers"))
@@ -43,20 +39,14 @@ class NeteaseSong(BasicSong):
 
     def download(self):
         """ Download song from netease music """
-        eparams = {
-            "method": "POST",
-            "url": "http://music.163.com/api/song/enhance/player/url",
-            "params": {"ids": [self.id], "br": 320000},
-        }
-        data = {"eparams": encode_netease_data(eparams)}
-
+        data = encrypted_request(dict(ids=[self.id], br=32000))
         s = requests.Session()
         s.headers.update(config.get("fake_headers"))
         if config.get("proxies"):
             s.proxies.update(config.get("proxies"))
         s.headers.update({"referer": "http://music.163.com/"})
 
-        r = s.post("http://music.163.com/api/linux/forward", data=data)
+        r = s.post("http://music.163.com/weapi/song/enhance/player/url", data=data)
         if r.status_code != requests.codes.ok:
             raise RequestError(r.text)
         j = r.json()
@@ -135,6 +125,7 @@ def encode_netease_data(data) -> str:
     byte_data = (data + fix).encode("utf-8")
     return binascii.hexlify(encryptor.encrypt(byte_data)).upper().decode()
 
+
 def encrypted_request(data) -> dict:
     MODULUS = (
         "00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7"
@@ -169,8 +160,46 @@ def rsa(text, pubkey, modulus):
 def create_key(size):
     return binascii.hexlify(os.urandom(size))[:16]
 
-def netease_playlist(url):
-    pass
+
+def netease_playlist(url) -> list:
+    songs_list = []
+    playlist_id = re.findall(r".+playlist\\*\?id\\*=(\d+)", url)[0]
+    if playlist_id:
+        print(playlist_id)
+        params = dict(
+            id=playlist_id, total="true", limit=1000, n=1000, offest=0, csrf_token=""
+        )
+        data = encrypted_request(params)
+        s = requests.Session()
+        s.headers.update(config.get("fake_headers"))
+        if config.get("proxies"):
+            s.proxies.update(config.get("proxies"))
+        s.headers.update({"referer": "http://music.163.com/"})
+        r = s.post("http://music.163.com/weapi/v3/playlist/detail", data=data)
+        j = r.json()
+
+        for track in j["playlist"]["tracks"]:
+            song = NeteaseSong()
+            # 获得歌手名字
+            singers = [s["name"] for s in track["ar"]]
+            # 获得最优音质的文件大小
+            if "h" in track and track["h"]:
+                # 有时候即使>=320000，h属性依然为None
+                size = track["h"]["size"]
+            elif "m" in track and track["m"]:
+                size = track["m"]["size"]
+            else:
+                size = track["l"]["size"]
+            song.source = "netease"
+            song.id = track["id"]
+            song.title = track["name"]
+            song.singer = "、".join(singers)
+            song.album = track["al"]["name"]
+            song.duration = int(track["dt"] / 1000)
+            song.size = round(size / 1048576, 2)
+            song.cover_url = track["al"]["picUrl"]
+            songs_list.append(song)
+    return songs_list
 
 
 search = netease_search
