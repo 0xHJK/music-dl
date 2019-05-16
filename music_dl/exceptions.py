@@ -30,6 +30,7 @@ class DataError(RuntimeError):
     def __init__(self, *args, **kwargs):
         pass
 
+
 class ParameterError(RuntimeError):
     """ 输入的参数错误 """
 
