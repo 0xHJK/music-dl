@@ -80,11 +80,7 @@ def run():
 
 @click.command()
 @click.version_option()
-@click.option(
-    "-k",
-    "--keyword",
-    help=_("搜索关键字，歌名和歌手同时输入可以提高匹配（如 空帆船 朴树）"),
-)
+@click.option("-k", "--keyword", help=_("搜索关键字，歌名和歌手同时输入可以提高匹配（如 空帆船 朴树）"))
 @click.option("-u", "--url", default="", help=_("通过指定的歌曲URL下载音乐"))
 @click.option("-p", "--playlist", default="", help=_("通过指定的歌单URL下载音乐"))
 @click.option(

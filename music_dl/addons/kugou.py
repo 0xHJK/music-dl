@@ -60,7 +60,7 @@ def kugou_search(keyword) -> list:
         s.proxies.update(config.get("proxies"))
     s.headers.update({"referer": "http://www.kugou.com"})
 
-    music_list = []
+    songs_list = []
     r = s.get("http://songsearch.kugou.com/song_search_v2", params=params)
     if r.status_code != requests.codes.ok:
         raise RequestError(r.text)
@@ -85,9 +85,9 @@ def kugou_search(keyword) -> list:
         else:
             song.hash = m["FileHash"]
 
-        music_list.append(song)
+        songs_list.append(song)
 
-    return music_list
+    return songs_list
 
 
 def kugou_playlist(url):

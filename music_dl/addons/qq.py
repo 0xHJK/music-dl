@@ -100,7 +100,7 @@ def qq_search(keyword) -> list:
         {"referer": "http://m.y.qq.com", "User-Agent": config.get("ios_useragent")}
     )
 
-    music_list = []
+    songs_list = []
     r = s.get("http://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp", params=params)
     if r.status_code != requests.codes.ok:
         raise RequestError(r.text)
@@ -122,9 +122,9 @@ def qq_search(keyword) -> list:
         # 特有字段
         song.mid = m["songmid"]
 
-        music_list.append(song)
+        songs_list.append(song)
 
-    return music_list
+    return songs_list
 
 
 def qq_playlist(url):

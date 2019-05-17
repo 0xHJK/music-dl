@@ -82,7 +82,7 @@ def netease_search(keyword) -> list:
     if j["code"] != 200:
         raise ResponseError(r.text)
 
-    music_list = []
+    songs_list = []
     try:
         for m in j["result"]["songs"]:
             if m["privilege"]["fl"] == 0:
@@ -108,11 +108,11 @@ def netease_search(keyword) -> list:
             song.duration = int(m["dt"] / 1000)
             song.size = round(size / 1048576, 2)
             song.cover_url = m["al"]["picUrl"]
-            music_list.append(song)
+            songs_list.append(song)
     except Exception as e:
         raise DataError(e)
 
-    return music_list
+    return songs_list
 
 
 def encode_netease_data(data) -> str:

@@ -33,7 +33,7 @@ def baidu_search(keyword) -> list:
         s.proxies.update(config.get("proxies"))
     s.headers.update({"referer": "http://music.baidu.com/"})
 
-    music_list = []
+    songs_list = []
     r = s.get("http://musicapi.qianqian.com/v1/restserver/ting", params=params)
     if r.status_code != requests.codes.ok:
         raise RequestError(r.text)
@@ -67,9 +67,9 @@ def baidu_search(keyword) -> list:
         song.rate = mj_music["rate"]
         song.ext = mj_music["format"]
         song.cover_url = mj_music["songPicRadio"]
-        music_list.append(song)
+        songs_list.append(song)
 
-    return music_list
+    return songs_list
 
 
 def baidu_playlist(url):
