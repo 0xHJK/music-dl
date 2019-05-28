@@ -73,7 +73,8 @@ def run():
         songs_list = ms.playlist(config.get("playlist"))
         menu(songs_list)
     elif config.get("url"):
-        ms.download(config.get("url"))
+        song = ms.single(config.get("url"))
+        song.download()
     else:
         return
 

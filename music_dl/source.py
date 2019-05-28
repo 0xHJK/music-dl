@@ -105,8 +105,29 @@ class MusicSource:
             # 放在搜索后输出是为了营造出搜索很快的假象
             click.echo(" %s ..." % colorize(source.upper(), source), nl=False)
 
-    def download(self, url):
-        pass
+    def single(self, url):
+        sources_map = {
+            # "baidu.com": "baidu",
+            # "flac": "flac",
+            # "kugou.com": "kugou",
+            "163.com": "netease",
+            # "qq.com": "qq",
+            # "xiami.com": "xiami",
+        }
+        source = [v for k, v in sources_map.items() if k in url][0]
+        if not source:
+            raise ParameterError("Invalid url.")
+        click.echo(_("Downloading song from %s ..." % source.upper()))
+        try:
+            addon = importlib.import_module(".addons." + source, __package__)
+            song = addon.single(url)
+            return song
+        except (RequestError, ResponseError, DataError) as e:
+            self.logger.error(e)
+        except Exception as e:
+            # 最后一起输出错误信息免得影响搜索结果列表排版
+            err = traceback.format_exc() if config.get("verbose") else str(e)
+            self.logger.error(err)
 
     def playlist(self, url) -> list:
         sources_map = {

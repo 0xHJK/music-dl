@@ -149,6 +149,30 @@ def netease_playlist(url) -> list:
     return songs_list
 
 
+def netease_single(url) -> NeteaseSong:
+    song_id = re.findall(r".+song\\*\?id\\*=(\d+)", url)[0]
+    data_detail = NeteaseApi.encrypted_request(
+        dict(c=json.dumps([{"id": song_id}]), ids=[song_id])
+    )
+    res_data_detail = NeteaseApi.request(
+        "http://music.163.com/weapi/v3/song/detail", method="POST", data=data_detail
+    ).get("songs", [])
+    if len(res_data_detail) > 0:
+        item = res_data_detail[0]
+        song = NeteaseSong()
+        song.source = "netease"
+        song.id = item.get("id", "")
+        song.title = item.get("name", "")
+        singers = [s.get("name", "") for s in item.get("ar", {})]
+        song.singer = "、".join(singers)
+        song.album = item.get("al", {}).get("name", "")
+        song.duration = int(item.get("dt", 0) / 1000)
+        song.cover_url = item.get("al", {}).get("picUrl", "")
+        return song
+    else:
+        raise DataError("Get song detail failed.")
+
+
 class NeteaseApi:
     """ Netease music api http://music.163.com """
 
@@ -220,3 +244,4 @@ class NeteaseApi:
 
 search = netease_search
 playlist = netease_playlist
+single = netease_single
