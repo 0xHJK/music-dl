@@ -50,23 +50,24 @@ def baidu_search(keyword) -> list:
             "http://musicapi.qianqian.com/v1/restserver/ting" + m["lrclink"]
         )
 
-        s.headers.update({"referer": "http://music.baidu.com/song/" + song.id})
-        m_params = {"songIds": song.id}
-        mr = s.get("http://music.baidu.com/data/music/links", params=m_params)
+        # s.headers.update({"referer": "http://music.baidu.com/song/" + song.id})
+        # m_params = {"songIds": song.id}
+        # mr = s.get("http://music.baidu.com/data/music/links", params=m_params)
+        m_params = dict(method="baidu.ting.song.play", bit=320, songid=song.id)
+        mr = s.get("http://tingapi.ting.baidu.com/v1/restserver/ting", params=m_params)
         if mr.status_code != requests.codes.ok:
             raise RequestError(mr.text)
         mj = mr.json()
-        if not mj["data"]["songList"]:
+        bitrate = mj.get("bitrate", {})
+        if not bitrate:
             continue
-
-        mj_music = mj["data"]["songList"][0]
-        song.song_url = mj_music["songLink"]
+        song.song_url = bitrate.get("file_link", "")
         if not song.available:  # 如果URL拿不到内容
             continue
-        song.duration = mj_music["time"]
-        song.rate = mj_music["rate"]
-        song.ext = mj_music["format"]
-        song.cover_url = mj_music["songPicRadio"]
+        song.duration = bitrate.get("file_duration", 0)
+        song.rate = bitrate.get("file_bitrate", 128)
+        song.ext = bitrate.get("file_extension", "mp3")
+        song.cover_url = mj.get("songinfo", {}).get("pic_radio", "")
         songs_list.append(song)
 
     return songs_list
