@@ -34,6 +34,8 @@ Support for QQ music, Netease music, Xiami music, Kugou music and Baidu music. S
 
 **禁止将本工具用于商业用途**，如产生法律纠纷与本人无关。
 
+建了一个QQ群，方便交流：**785798493**
+
 支持QQ音乐、网易云音乐、虾米音乐、酷狗音乐和百度音乐，查看 [支持的音乐源列表](#支持的音乐源列表)
 
 > 注意: 部分音乐源在一些国家和地区不可用，可以考虑使用中国大陆代理。获取公共代理的方式可以参考我的另一个项目<https://github.com/0xHJK/Proxies>，两分钟获得数千个有效代理。
@@ -87,6 +89,8 @@ $ ./music-dl
 
 ## 使用方式
 
+v3.0预览版命令有较大的改变，建议先查看帮助
+
 ```
 $ music-dl --help
 Usage: music-dl [OPTIONS]
@@ -95,47 +99,49 @@ Usage: music-dl [OPTIONS]
   Example: music-dl -k "周杰伦"
 
 Options:
-  --version            Show the version and exit.
-  -k, --keyword TEXT   Keyword
-  -s, --source TEXT    Supported music source: qq netease kugou baidu xiami
-                       flac
-  -c, --count INTEGER  Number of search results
-  -o, --outdir TEXT    Output directory
-  -x, --proxy TEXT     Proxy (e.g. http://127.0.0.1:1087)
-  -m, --merge          对搜索结果去重和排序（默认去重）
-  -v, --verbose        Verbose mode
-  -l, --lyrics         同时下载歌词
-  -p, --picture        同时下载封面
-  --help               Show this message and exit.
+  --version             Show the version and exit.
+  -k, --keyword TEXT    搜索关键字，歌名和歌手同时输入可以提高匹配（如 空帆船 朴树）
+  -u, --url TEXT        通过指定的歌曲URL下载音乐
+  -p, --playlist TEXT   通过指定的歌单URL下载音乐
+  -s, --source TEXT     Supported music source: qq netease kugou baidu
+  -n, --number INTEGER  Number of search results
+  -o, --outdir TEXT     Output directory
+  -x, --proxy TEXT      Proxy (e.g. http://127.0.0.1:1087)
+  -v, --verbose         Verbose mode
+  --lyrics              同时下载歌词
+  --cover               同时下载封面
+  --nomerge             不对搜索结果列表排序和去重
+  --help                Show this message and exit.
 ```
 
-- 默认搜索`qq netease kugou baidu xiami flac`，每个数量限制为5，保存目录为当前目录。
+- 默认搜索`qq netease kugou baidu `，每个数量限制为5，保存目录为当前目录。
 - 指定序号时可以使用`1-5 7 10`的形式。
 - 默认对搜索结果排序和去重，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
 - 无损音乐歌曲数量较少，如果没有无损会显示320K或128K。
 - 支持http代理和socks代理，格式形如`-x http://127.0.0.1:1087`或`-x socks5://127.0.0.1:1086`
 
-示例（可以不写任何参数运行`music-dl`）：
+示例：
 
 ![](https://github.com/0xHJK/music-dl/raw/master/static/preview.png)
 
 ## 支持的音乐源列表
 
-| 音乐源       | 缩写    | 网址                      | 音乐 | 封面 | 歌词 |
-| ------------ | ------- | ------------------------- | ---- | ---- | ---- |
-| QQ音乐       | qq      | <https://y.qq.com/>       | ✓    | ✕    | ✕    |
-| 酷狗音乐     | kugou   | <http://www.kugou.com/>   | ✓    | ✓    | ✕    |
-| 网易云音乐   | netease | <https://music.163.com/>  | ✓    | ✓    | ✕    |
-| 百度音乐     | baidu   | <http://music.baidu.com/> | ✓    | ✓    | ✓    |
-| 虾米音乐     | xiami   | <https://www.xiami.com/>  | ✕    | -    | -    |
-| 百度无损音乐 | flac    | <http://music.baidu.com/> | ✓    | ✓    | ✓    |
+| 音乐源       | 缩写    | 网址                      | 音乐 | 封面 | 歌词 | 歌单 | 单曲 |
+| ------------ | ------- | ------------------------- | ---- | ---- | ---- | ---- | ---- |
+| QQ音乐       | qq      | <https://y.qq.com/>       | ✓    | ✕    | ✕    | ✕    | ✕    |
+| 酷狗音乐     | kugou   | <http://www.kugou.com/>   | ✓    | ✓    | ✕    | ✕    | ✕    |
+| 网易云音乐   | netease | <https://music.163.com/>  | ✓    | ✓    | ✓    | ✓    | ✓    |
+| 百度音乐     | baidu   | <http://music.baidu.com/> | ✓    | ✓    | ✓    | ✕    | ✕    |
+| 虾米音乐     | xiami   | <https://www.xiami.com/>  | ✕    | -    | -    | ✕    | ✕    |
+| 百度无损音乐 | flac    | <http://music.baidu.com/> | ✕    | -    | -    | ✕    | ✕    |
 
-欢迎提交插件支持更多音乐源！插件写法参考`extractors`中的文件
+欢迎提交插件支持更多音乐源！插件写法参考`addons`中的文件
 
 ![](https://github.com/0xHJK/music-dl/raw/master/static/fork.png)
 
 ## 更新记录
 
+- 2019-06-11 v3.0预览版，代码重构，支持网易云音乐歌单和单曲下载，支持百度高品质音乐
 - 2019-04-08 发布v2.2.1版本
 - 2019-04-04 因为虾米音乐API变更，暂时屏蔽虾米搜索结果#22
 - 2019-04-02 修复#18和#21的BUG，优化显示效果，支持部分音乐源歌词和封面下载
@@ -171,6 +177,7 @@ Options:
 - <https://github.com/soimort/you-get>
 - <https://github.com/maicong/music>
 - <https://github.com/YongHaoWu/NeteaseCloudMusicFlac>
+- <https://github.com/darknessomi/musicbox>
 
 ## 打赏
 
