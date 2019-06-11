@@ -73,7 +73,6 @@ def kugou_search(keyword) -> list:
             if hash and hash != "00000000000000000000000000000000":
                 song.hash = hash
                 break
-        print(song)
         songs_list.append(song)
 
     return songs_list
