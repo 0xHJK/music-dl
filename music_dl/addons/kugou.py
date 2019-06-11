@@ -32,6 +32,9 @@ class KugouSong(BasicSong):
         res_data = KugouApi.request(
             "http://m.kugou.com/app/i/getSongInfo.php", method="GET", data=params
         )
+        if not res_data.get("url", ""):
+            self.logger.error(self.name + " @KUGOU is not available.")
+            return
         self.song_url = res_data.get("url", "")
         self.rate = res_data.get("bitRate", 128)
         self.ext = res_data.get("extName", "mp3")
