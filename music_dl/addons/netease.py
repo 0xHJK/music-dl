@@ -11,13 +11,67 @@ import re
 import binascii
 import base64
 import json
-import requests
+import copy
 from Crypto.Cipher import AES
 from .. import config
+from ..api import MusicApi
 from ..exceptions import RequestError, ResponseError, DataError
 from ..song import BasicSong
 
 __all__ = ["search", "playlist"]
+
+
+class NeteaseApi(MusicApi):
+    """ Netease music api http://music.163.com """
+
+    session = copy.deepcopy(MusicApi.session)
+    session.headers.update({"referer": "http://music.163.com/"})
+
+    @classmethod
+    def encode_netease_data(cls, data) -> str:
+        data = json.dumps(data)
+        key = binascii.unhexlify("7246674226682325323F5E6544673A51")
+        encryptor = AES.new(key, AES.MODE_ECB)
+        # 补足data长度，使其是16的倍数
+        pad = 16 - len(data) % 16
+        fix = chr(pad) * pad
+        byte_data = (data + fix).encode("utf-8")
+        return binascii.hexlify(encryptor.encrypt(byte_data)).upper().decode()
+
+    @classmethod
+    def encrypted_request(cls, data) -> dict:
+        MODULUS = (
+            "00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7"
+            "b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280"
+            "104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932"
+            "575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b"
+            "3ece0462db0a22b8e7"
+        )
+        PUBKEY = "010001"
+        NONCE = b"0CoJUm6Qyw8W8jud"
+        data = json.dumps(data).encode("utf-8")
+        secret = cls.create_key(16)
+        params = cls.aes(cls.aes(data, NONCE), secret)
+        encseckey = cls.rsa(secret, PUBKEY, MODULUS)
+        return {"params": params, "encSecKey": encseckey}
+
+    @classmethod
+    def aes(cls, text, key):
+        pad = 16 - len(text) % 16
+        text = text + bytearray([pad] * pad)
+        encryptor = AES.new(key, 2, b"0102030405060708")
+        ciphertext = encryptor.encrypt(text)
+        return base64.b64encode(ciphertext)
+
+    @classmethod
+    def rsa(cls, text, pubkey, modulus):
+        text = text[::-1]
+        rs = pow(int(binascii.hexlify(text), 16), int(pubkey, 16), int(modulus, 16))
+        return format(rs, "x").zfill(256)
+
+    @classmethod
+    def create_key(cls, size):
+        return binascii.hexlify(os.urandom(size))[:16]
 
 
 class NeteaseSong(BasicSong):
@@ -171,75 +225,6 @@ def netease_single(url) -> NeteaseSong:
         return song
     else:
         raise DataError("Get song detail failed.")
-
-
-class NeteaseApi:
-    """ Netease music api http://music.163.com """
-
-    # class property
-    session = requests.Session()
-    session.headers.update(config.get("fake_headers"))
-    if config.get("proxies"):
-        session.proxies.update(config.get("proxies"))
-    session.headers.update({"referer": "http://music.163.com/"})
-
-    @classmethod
-    def request(cls, url, method="POST", data=None):
-        if method == "GET":
-            resp = cls.session.get(url, params=data)
-        else:
-            resp = cls.session.post(url, data=data)
-        if resp.status_code != requests.codes.ok:
-            raise RequestError(resp.text)
-        if not resp.text:
-            raise ResponseError("No response data.")
-        return resp.json()
-
-    @classmethod
-    def encode_netease_data(cls, data) -> str:
-        data = json.dumps(data)
-        key = binascii.unhexlify("7246674226682325323F5E6544673A51")
-        encryptor = AES.new(key, AES.MODE_ECB)
-        # 补足data长度，使其是16的倍数
-        pad = 16 - len(data) % 16
-        fix = chr(pad) * pad
-        byte_data = (data + fix).encode("utf-8")
-        return binascii.hexlify(encryptor.encrypt(byte_data)).upper().decode()
-
-    @classmethod
-    def encrypted_request(cls, data) -> dict:
-        MODULUS = (
-            "00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7"
-            "b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280"
-            "104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932"
-            "575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b"
-            "3ece0462db0a22b8e7"
-        )
-        PUBKEY = "010001"
-        NONCE = b"0CoJUm6Qyw8W8jud"
-        data = json.dumps(data).encode("utf-8")
-        secret = cls.create_key(16)
-        params = cls.aes(cls.aes(data, NONCE), secret)
-        encseckey = cls.rsa(secret, PUBKEY, MODULUS)
-        return {"params": params, "encSecKey": encseckey}
-
-    @classmethod
-    def aes(cls, text, key):
-        pad = 16 - len(text) % 16
-        text = text + bytearray([pad] * pad)
-        encryptor = AES.new(key, 2, b"0102030405060708")
-        ciphertext = encryptor.encrypt(text)
-        return base64.b64encode(ciphertext)
-
-    @classmethod
-    def rsa(cls, text, pubkey, modulus):
-        text = text[::-1]
-        rs = pow(int(binascii.hexlify(text), 16), int(pubkey, 16), int(modulus, 16))
-        return format(rs, "x").zfill(256)
-
-    @classmethod
-    def create_key(cls, size):
-        return binascii.hexlify(os.urandom(size))[:16]
 
 
 search = netease_search
