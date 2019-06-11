@@ -211,6 +211,9 @@ class BasicSong:
         :param stream: need process bar or not
         :return:
         """
+        if not url:
+            self.logger.error("URL is empty.")
+            return
         try:
             r = requests.get(
                 url,
@@ -256,13 +259,16 @@ class BasicSong:
             )
 
     def download_song(self):
-        self._download_file(self.song_url, self.song_fullname, stream=True)
+        if self.song_url:
+            self._download_file(self.song_url, self.song_fullname, stream=True)
 
     def download_lyrics(self):
-        self._download_file(self.lyrics_url, self.lyrics_fullname, stream=False)
+        if self.lyrics_url:
+            self._download_file(self.lyrics_url, self.lyrics_fullname, stream=False)
 
     def download_cover(self):
-        self._download_file(self.cover_url, self.cover_fullname, stream=False)
+        if self.cover_url:
+            self._download_file(self.cover_url, self.cover_fullname, stream=False)
 
     def download(self):
         """ Main download function """
