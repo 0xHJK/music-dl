@@ -131,12 +131,12 @@ class MusicSource:
 
     def playlist(self, url) -> list:
         sources_map = {
-            "baidu.com": "baidu",
+            # "baidu.com": "baidu",
             # "flac": "flac",
-            "kugou.com": "kugou",
+            # "kugou.com": "kugou",
             "163.com": "netease",
-            "qq.com": "qq",
-            "xiami.com": "xiami",
+            # "qq.com": "qq",
+            # "xiami.com": "xiami",
         }
         source = [v for k, v in sources_map.items() if k in url][0]
         if not source:
