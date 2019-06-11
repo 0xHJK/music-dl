@@ -7,4 +7,7 @@
 """
 
 import gettext
+from music_dl import config
+
+config.init()
 gettext.install('music-dl', 'locale')
