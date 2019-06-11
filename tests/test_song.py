@@ -10,6 +10,7 @@ import os
 from music_dl.song import BasicSong
 from music_dl import config
 
+
 def test_music(capsys):
     config.init()
     config.set("outdir", "/tmp")

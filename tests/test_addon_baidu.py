@@ -9,6 +9,7 @@
 
 from music_dl.addons import baidu
 
+
 def test_baidu():
     songs_list = baidu.search("许巍")
     assert songs_list is not None
