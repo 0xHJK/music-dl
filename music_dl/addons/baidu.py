@@ -6,9 +6,9 @@
 @time: 2019-05-08
 """
 
-import requests
+import copy
 from .. import config
-from ..exceptions import RequestError, ResponseError, DataError
+from ..api import MusicApi
 from ..song import BasicSong
 
 
@@ -17,48 +17,46 @@ class BaiduSong(BasicSong):
         super(BaiduSong, self).__init__()
 
 
+class BaiduApi(MusicApi):
+    session = copy.deepcopy(MusicApi.session)
+    session.headers.update({"referer": "http://music.baidu.com/"})
+
+
 def baidu_search(keyword) -> list:
     """ 搜索音乐 """
     number = config.get("number") or 5
-    params = {
-        "query": keyword,
-        "method": "baidu.ting.search.common",
-        "format": "json",
-        "page_no": 1,
-        "page_size": number,
-    }
-    s = requests.Session()
-    s.headers.update(config.get("fake_headers"))
-    if config.get("proxies"):
-        s.proxies.update(config.get("proxies"))
-    s.headers.update({"referer": "http://music.baidu.com/"})
+    params = dict(
+        query=keyword,
+        method="baidu.ting.search.common",
+        format="json",
+        page_no=1,
+        page_size=number,
+    )
 
     songs_list = []
-    r = s.get("http://musicapi.qianqian.com/v1/restserver/ting", params=params)
-    if r.status_code != requests.codes.ok:
-        raise RequestError(r.text)
-    j = r.json()
+    res_data = BaiduApi.request(
+        "http://musicapi.qianqian.com/v1/restserver/ting", method="GET", data=params
+    ).get("song_list", [])
 
-    for m in j["song_list"]:
+    for item in res_data:
         song = BaiduSong()
         song.source = "baidu"
-        song.id = m["song_id"]
-        song.title = m["title"].replace("<em>", "").replace("</em>", "")
-        song.singer = m["author"].replace("<em>", "").replace("</em>", "")
-        song.album = m["album_title"].replace("<em>", "").replace("</em>", "")
-        song.lyrics_url = (
-            "http://musicapi.qianqian.com/v1/restserver/ting" + m["lrclink"]
+        song.id = item.get("song_id", "")
+        song.title = item.get("title", "").replace("<em>", "").replace("</em>", "")
+        song.singer = item.get("author").replace("<em>", "").replace("</em>", "")
+        song.album = item.get("album_title").replace("<em>", "").replace("</em>", "")
+        song.lyrics_url = "http://musicapi.qianqian.com/v1/restserver/ting" + item.get(
+            "lrclink", ""
         )
 
-        # s.headers.update({"referer": "http://music.baidu.com/song/" + song.id})
-        # m_params = {"songIds": song.id}
-        # mr = s.get("http://music.baidu.com/data/music/links", params=m_params)
         m_params = dict(method="baidu.ting.song.play", bit=320, songid=song.id)
-        mr = s.get("http://tingapi.ting.baidu.com/v1/restserver/ting", params=m_params)
-        if mr.status_code != requests.codes.ok:
-            raise RequestError(mr.text)
-        mj = mr.json()
-        bitrate = mj.get("bitrate", {})
+        res_song_data = BaiduApi.request(
+            "http://tingapi.ting.baidu.com/v1/restserver/ting",
+            method="GET",
+            data=m_params,
+        )
+
+        bitrate = res_song_data.get("bitrate", {})
         if not bitrate:
             continue
         song.song_url = bitrate.get("file_link", "")
@@ -67,7 +65,7 @@ def baidu_search(keyword) -> list:
         song.duration = bitrate.get("file_duration", 0)
         song.rate = bitrate.get("file_bitrate", 128)
         song.ext = bitrate.get("file_extension", "mp3")
-        song.cover_url = mj.get("songinfo", {}).get("pic_radio", "")
+        song.cover_url = res_song_data.get("songinfo", {}).get("pic_radio", "")
         songs_list.append(song)
 
     return songs_list
