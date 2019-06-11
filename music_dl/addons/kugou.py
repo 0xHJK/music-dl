@@ -6,10 +6,17 @@
 @time: 2019-05-08
 """
 
-import requests
+import copy
 from .. import config
-from ..exceptions import RequestError, ResponseError, DataError
+from ..api import MusicApi
 from ..song import BasicSong
+
+
+class KugouApi(MusicApi):
+    session = copy.deepcopy(MusicApi.session)
+    session.headers.update(
+        {"referer": "http://m.kugou.com", "User-Agent": config.get("ios_headers")}
+    )
 
 
 class KugouSong(BasicSong):
@@ -21,25 +28,14 @@ class KugouSong(BasicSong):
         pass
 
     def download(self):
-        params = {"cmd": "playInfo", "hash": self.hash}
-        s = requests.Session()
-        s.headers.update(config.get("fake_headers"))
-        if config.get("proxies"):
-            s.proxies.update(config.get("proxies"))
-        s.headers.update(
-            {"referer": "http://m.kugou.com", "User-Agent": config.get("ios_headers")}
+        params = dict(cmd="playInfo", hash=self.hash)
+        res_data = KugouApi.request(
+            "http://m.kugou.com/app/i/getSongInfo.php", method="GET", data=params
         )
-
-        r = s.get("http://m.kugou.com/app/i/getSongInfo.php", params=params)
-        if r.status_code != requests.codes.ok:
-            raise RequestError(r.text)
-        j = r.json()
-        if j["status"] != 1:
-            raise ResponseError(r.text)
-        self.song_url = j["url"]
-        self.rate = j["bitRate"]
-        self.ext = j["extName"]
-        self.cover_url = j["album_img"].replace("{size}", "150")
+        self.song_url = res_data.get("url", "")
+        self.rate = res_data.get("bitRate", 128)
+        self.ext = res_data.get("extName", "mp3")
+        self.cover_url = res_data.get("album_img", "").replace("{size}", "150")
 
         super(KugouSong, self).download()
 
@@ -47,44 +43,37 @@ class KugouSong(BasicSong):
 def kugou_search(keyword) -> list:
     """ 搜索音乐 """
     number = config.get("number") or 5
-    params = {
-        "keyword": keyword,
-        "platform": "WebFilter",
-        "format": "json",
-        "page": 1,
-        "pagesize": number,
-    }
-    s = requests.Session()
-    s.headers.update(config.get("fake_headers"))
-    if config.get("proxies"):
-        s.proxies.update(config.get("proxies"))
-    s.headers.update({"referer": "http://www.kugou.com"})
+    params = dict(
+        keyword=keyword, platform="WebFilter", format="json", page=1, pagesize=number
+    )
 
     songs_list = []
-    r = s.get("http://songsearch.kugou.com/song_search_v2", params=params)
-    if r.status_code != requests.codes.ok:
-        raise RequestError(r.text)
-    j = r.json()
-    if j["status"] != 1:
-        raise ResponseError(r.text)
+    res_data = (
+        KugouApi.request(
+            "http://songsearch.kugou.com/song_search_v2", method="GET", data=params
+        )
+        .get("data", {})
+        .get("lists", [])
+    )
 
-    for m in j["data"]["lists"]:
+    for item in res_data:
         song = KugouSong()
         song.source = "kugou"
-        song.id = m["Scid"]
-        song.title = m["SongName"]
-        song.singer = m["SingerName"]
-        song.duration = m["Duration"]
-        song.album = m["AlbumName"]
-        song.size = round(m["FileSize"] / 1048576, 2)
+        song.id = item.get("Scid", "")
+        song.title = item.get("SongName", "")
+        song.singer = item.get("SingerName", "")
+        song.duration = item.get("Duration", 0)
+        song.album = item.get("AlbumName", "")
+        song.size = round(item.get("FileSize", 0) / 1048576, 2)
+        song.hash = item.get("FileHash", "")
         # 如果有更高品质的音乐选择高品质（尽管好像没什么卵用）
-        if m["SQFileHash"] and m["SQFileHash"] != "00000000000000000000000000000000":
-            song.hash = m["SQFileHash"]
-        elif m["HQFileHash"] and m["HQFileHash"] != "00000000000000000000000000000000":
-            song.hash = m["HQFileHash"]
-        else:
-            song.hash = m["FileHash"]
-
+        keys_list = ["SQFileHash", "HQFileHash"]
+        for key in keys_list:
+            hash = item.get(key, "")
+            if hash and hash != "00000000000000000000000000000000":
+                song.hash = hash
+                break
+        print(song)
         songs_list.append(song)
 
     return songs_list
