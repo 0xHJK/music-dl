@@ -37,7 +37,7 @@ class MusicSource:
             "netease": "netease",
             "163": "netease",
             "qq": "qq",
-            # "xiami": "xiami",
+            "xiami": "xiami",
         }
         thread_pool = []
         ret_songs_list = []
