@@ -33,11 +33,11 @@ class MusicSource:
         sources_map = {
             "baidu": "baidu",
             # "flac": "flac",
-            "kugou": "kugou",
-            "netease": "netease",
-            "163": "netease",
-            "qq": "qq",
-            "xiami": "xiami",
+            # "kugou": "kugou",
+            # "netease": "netease",
+            # "163": "netease",
+            # "qq": "qq",
+            # "xiami": "xiami",
         }
         thread_pool = []
         ret_songs_list = []
@@ -52,7 +52,7 @@ class MusicSource:
         )
 
         for source_key in sources_list:
-            if not source_key in sources_list:
+            if not source_key in sources_map:
                 raise ParameterError("Invalid music source.")
 
             t = threading.Thread(
@@ -110,13 +110,14 @@ class MusicSource:
             # "baidu.com": "baidu",
             # "flac": "flac",
             # "kugou.com": "kugou",
-            "163.com": "netease",
+            # "163.com": "netease",
             # "qq.com": "qq",
             # "xiami.com": "xiami",
         }
-        source = [v for k, v in sources_map.items() if k in url][0]
-        if not source:
+        sources = [v for k, v in sources_map.items() if k in url]
+        if not sources:
             raise ParameterError("Invalid url.")
+        source = sources[0]
         click.echo(_("Downloading song from %s ..." % source.upper()))
         try:
             addon = importlib.import_module(".addons." + source, __package__)
@@ -134,13 +135,14 @@ class MusicSource:
             # "baidu.com": "baidu",
             # "flac": "flac",
             # "kugou.com": "kugou",
-            "163.com": "netease",
+            # "163.com": "netease",
             # "qq.com": "qq",
             # "xiami.com": "xiami",
         }
-        source = [v for k, v in sources_map.items() if k in url][0]
-        if not source:
+        sources = [v for k, v in sources_map.items() if k in url]
+        if not sources:
             raise ParameterError("Invalid url.")
+        source = sources[0]
         click.echo(_("Parsing music playlist from %s ..." % source.upper()))
         ret_songs_list = []
         try:

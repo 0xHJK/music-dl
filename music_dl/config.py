@@ -16,7 +16,7 @@ def init():
     global opts
     opts = {
         # 自定义来源 -s --source
-        "source": "qq netease kugou baidu",
+        "source": "baidu",
         # 自定义数量 -n --number
         "number": 5,
         # 保存目录 -o --outdir
