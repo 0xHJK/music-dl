@@ -115,10 +115,11 @@ def main(
         Example: music-dl -k "周杰伦"
     """
     if sum([bool(keyword), bool(url), bool(playlist)]) != 1:
-        click.echo(_("ERROR: 必须指定搜索关键字、歌曲的URL或歌单的URL中的一个") + "\n", err=True)
-        ctx = click.get_current_context()
-        click.echo(ctx.get_help())
-        ctx.exit()
+        # click.echo(_("ERROR: 必须指定搜索关键字、歌曲的URL或歌单的URL中的一个") + "\n", err=True)
+        # ctx = click.get_current_context()
+        # click.echo(ctx.get_help())
+        # ctx.exit()
+        keyword = click.prompt(_("搜索关键字，歌名和歌手同时输入可以提高匹配（如 空帆船 朴树）") + "\n >>")
 
     # 初始化全局变量
     config.init()
