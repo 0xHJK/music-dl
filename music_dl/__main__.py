@@ -43,9 +43,10 @@ def menu(songs_list):
     )
 
     choices = click.prompt(prompt)
-    while choices.lower() != "n" and not re.match(
-        r"^((\d+\-\d+)|(\d+)|\s+)+$", choices
-    ):
+
+    if choices.lower() == "n":
+        return
+    while not re.match(r"^((\d+\-\d+)|(\d+)|\s+)+$", choices):
         choices = click.prompt("%s%s" % (colorize(_("输入有误!"), "red"), prompt))
 
     click.echo("")
@@ -87,8 +88,8 @@ def run():
 @click.option(
     "-s",
     "--source",
-    default="qq netease kugou baidu",
-    help=_("支持的数据源: ") + "qq netease kugou baidu",
+    # default="qq netease kugou baidu",
+    help=_("支持的数据源: ") + "baidu",
 )
 @click.option("-n", "--number", default=5, help=_("搜索数量限制"))
 @click.option("-o", "--outdir", default=".", help=_("指定输出目录"))
@@ -126,7 +127,8 @@ def main(
     config.set("keyword", keyword)
     config.set("url", url)
     config.set("playlist", playlist)
-    config.set("source", source)
+    if source:
+        config.set("source", source)
     config.set("number", min(number, 50))
     config.set("outdir", outdir)
     config.set("verbose", verbose)
