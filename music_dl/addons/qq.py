@@ -58,27 +58,41 @@ class QQSong(BasicSong):
     def download(self):
         # 计算vkey
         guid = str(random.randrange(1000000000, 10000000000))
-        params = {"guid": guid, "format": "json", "json": 3}
-
+        params = {"guid": guid,
+                  "loginUin": "3051522991",
+                  "format": "json",
+                  "platform": "yqq",
+                  "cid": "205361747",
+                  "uin": "3051522991",
+                  "songmid": self.mid,
+                  "needNewCode": 0}
+        rate_list = [
+            ("A000", "ape", 800),
+            ("F000", "flac", 800),
+            ("M800", "mp3", 320),
+            ("C400", "m4a", 128),
+            ("M500", "mp3", 128),
+        ]
         QQApi.session.headers.update({"referer": "http://y.qq.com"})
-        res_data = QQApi.request(
-            "http://base.music.qq.com/fcgi-bin/fcg_musicexpress.fcg",
-            method="GET",
-            data=params,
-        )
-        vkey = res_data.get("key", "")
-
-        for prefix in ["M800", "M500", "C400"]:
-            url = (
-                "http://dl.stream.qqmusic.qq.com/%s%s.mp3?vkey=%s&guid=%s&fromtag=1"
-                % (prefix, self.mid, vkey, guid)
+        for rate in rate_list:
+            params["filename"] = "%s%s.%s" % (rate[0], self.mid, rate[1])
+            res_data = QQApi.request(
+                "https://c.y.qq.com/base/fcgi-bin/fcg_music_express_mobile3.fcg",
+                method="GET",
+                data=params,
             )
-            self.song_url = url
-            if self.available:
-                self.rate = 320 if prefix == "M800" else 128
-                break
+            vkey = res_data.get("data", {}).get("items", [])[0].get("vkey", "")
+            if vkey:
+                url = (
+                        "http://dl.stream.qqmusic.qq.com/%s?vkey=%s&guid=%s&uin=3051522991&fromtag=64"
+                        % (params["filename"], vkey, guid)
+                )
+                self.song_url = url
+                if self.available:
+                    self.ext = rate[1]
+                    self.rate = rate[2]
+                    break
         super(QQSong, self).download()
-
 
 def qq_search(keyword) -> list:
     """ 搜索音乐 """

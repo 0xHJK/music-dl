@@ -36,7 +36,7 @@ class MusicSource:
             # "kugou": "kugou",
             # "netease": "netease",
             # "163": "netease",
-            # "qq": "qq",
+            "qq": "qq",
             # "xiami": "xiami",
         }
         thread_pool = []
