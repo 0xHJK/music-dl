@@ -32,10 +32,11 @@ Support for QQ music, Netease music, Xiami music, Kugou music and Baidu music. S
 **是一个基于Python3的命令行工具，可以从多个网站搜索和下载音乐，方便寻找音乐，解决不知道哪个网站有版权的问题。工具的本意是**聚合搜索**，API
 是从公开的网络中获得，**不是破解版**，也听不了付费歌曲。
 
-**禁止将本工具用于商业用途**，如产生法律纠纷与本人无关。
+**禁止将本工具用于商业用途**，如产生法律纠纷与本人无关，如有侵权，请联系我删除。
 
+微博：[可乐芬达王老吉](https://weibo.com/p/1005056970125848/home?is_all=1)
 
-建了一个QQ群，方便交流：**785798493**
+QQ群：[785798493](//shang.qq.com/wpa/qunwpa?idkey=ead6a77d50b8dbaa73cf78809aca0bd20c306b12f9984a17436f0342b1c0d65c)
 
 最近API封杀有点多，个人有点维护不过来，需要大家帮忙更新。查看 [支持的音乐源列表](#支持的音乐源列表)
 
@@ -187,9 +188,9 @@ Options:
 - <https://github.com/YongHaoWu/NeteaseCloudMusicFlac>
 - <https://github.com/darknessomi/musicbox>
 
-## 打赏
+## 用爱发电
 
-欢迎丢馒头包子可乐手抓饼鸡翅秋刀鱼给我，谢谢~
+维护不易，欢迎扫描恰饭二维码
 
 ![](https://github.com/0xHJK/music-dl/raw/master/static/wepay.jpg)
 
