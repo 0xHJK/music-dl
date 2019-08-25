@@ -33,7 +33,7 @@ class MusicSource:
         sources_map = {
             "baidu": "baidu",
             # "flac": "flac",
-            # "kugou": "kugou",
+            "kugou": "kugou",
             "netease": "netease",
             "163": "netease",
             "qq": "qq",
