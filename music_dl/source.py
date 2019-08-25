@@ -34,8 +34,8 @@ class MusicSource:
             "baidu": "baidu",
             # "flac": "flac",
             # "kugou": "kugou",
-            # "netease": "netease",
-            # "163": "netease",
+            "netease": "netease",
+            "163": "netease",
             "qq": "qq",
             # "xiami": "xiami",
         }
@@ -110,7 +110,7 @@ class MusicSource:
             # "baidu.com": "baidu",
             # "flac": "flac",
             # "kugou.com": "kugou",
-            # "163.com": "netease",
+            "163.com": "netease",
             # "qq.com": "qq",
             # "xiami.com": "xiami",
         }
@@ -135,7 +135,7 @@ class MusicSource:
             # "baidu.com": "baidu",
             # "flac": "flac",
             # "kugou.com": "kugou",
-            # "163.com": "netease",
+            "163.com": "netease",
             # "qq.com": "qq",
             # "xiami.com": "xiami",
         }
