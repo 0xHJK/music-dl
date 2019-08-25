@@ -58,14 +58,16 @@ class QQSong(BasicSong):
     def download(self):
         # 计算vkey
         guid = str(random.randrange(1000000000, 10000000000))
-        params = {"guid": guid,
-                  "loginUin": "3051522991",
-                  "format": "json",
-                  "platform": "yqq",
-                  "cid": "205361747",
-                  "uin": "3051522991",
-                  "songmid": self.mid,
-                  "needNewCode": 0}
+        params = {
+            "guid": guid,
+            "loginUin": "3051522991",
+            "format": "json",
+            "platform": "yqq",
+            "cid": "205361747",
+            "uin": "3051522991",
+            "songmid": self.mid,
+            "needNewCode": 0,
+        }
         rate_list = [
             ("A000", "ape", 800),
             ("F000", "flac", 800),
@@ -84,8 +86,8 @@ class QQSong(BasicSong):
             vkey = res_data.get("data", {}).get("items", [])[0].get("vkey", "")
             if vkey:
                 url = (
-                        "http://dl.stream.qqmusic.qq.com/%s?vkey=%s&guid=%s&uin=3051522991&fromtag=64"
-                        % (params["filename"], vkey, guid)
+                    "http://dl.stream.qqmusic.qq.com/%s?vkey=%s&guid=%s&uin=3051522991&fromtag=64"
+                    % (params["filename"], vkey, guid)
                 )
                 self.song_url = url
                 if self.available:
@@ -93,6 +95,7 @@ class QQSong(BasicSong):
                     self.rate = rate[2]
                     break
         super(QQSong, self).download()
+
 
 def qq_search(keyword) -> list:
     """ 搜索音乐 """
