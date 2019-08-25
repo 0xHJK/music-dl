@@ -37,6 +37,7 @@ class MusicSource:
             "netease": "netease",
             "163": "netease",
             "qq": "qq",
+            "migu": "migu",
             # "xiami": "xiami",
         }
         thread_pool = []
