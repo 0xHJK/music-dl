@@ -250,7 +250,7 @@ class BasicSong:
                 self.logger.error(e)
 
     def _save_lyrics_text(self):
-        with open(self.lyrics_fullname, "w") as f:
+        with open(self.lyrics_fullname, "w", encoding="utf-8") as f:
             f.write(self.lyrics_text)
             click.echo(
                 _(" :: Saved to: {outfile}").format(
