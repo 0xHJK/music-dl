@@ -29,8 +29,8 @@ class BasicSong:
     def __init__(self):
         self.idx = 0
         self.id = 0
-        self.title = ""
-        self.singer = ""
+        self._title = ""
+        self._singer = ""
         self.ext = "mp3"
         self.album = ""
         self.size = ""
@@ -165,6 +165,25 @@ class BasicSong:
             ht_album,
             self.source.upper(),
         ]
+
+
+    @property
+    def title(self):
+        return self._title
+
+    @title.setter
+    def title(self, value):
+        value = re.sub(r'[\\/:*?"<>|]', "", value)
+        self._title = value
+
+    @property
+    def singer(self):
+        return self._singer
+
+    @singer.setter
+    def singer(self, value):
+        value = re.sub(r'[\\/:*?"<>|]', "", value)
+        self._singer = value
 
     def _set_fullname(self):
         """ Full name without suffix, to resolve file name conflicts"""
