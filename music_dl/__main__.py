@@ -44,9 +44,9 @@ def menu(songs_list):
 
     choices = click.prompt(prompt)
 
-    if choices.lower() == "n":
-        return
     while not re.match(r"^((\d+\-\d+)|(\d+)|\s+)+$", choices):
+        if choices.lower() == "n":
+            return
         choices = click.prompt("%s%s" % (colorize(_("输入有误!"), "red"), prompt))
 
     click.echo("")
