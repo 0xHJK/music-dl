@@ -10,7 +10,8 @@ import copy
 from .. import config
 from ..api import MusicApi
 from ..song import BasicSong
-
+from urllib.parse import urlparse, parse_qs
+import math
 
 class KugouApi(MusicApi):
     session = copy.deepcopy(MusicApi.session)
@@ -44,7 +45,7 @@ class KugouSong(BasicSong):
 
 
 def kugou_search(keyword) -> list:
-    """ 搜索音乐 """
+    """搜索音乐"""
     number = config.get("number") or 5
     params = dict(
         keyword=keyword, platform="WebFilter", format="json", page=1, pagesize=number
@@ -80,9 +81,46 @@ def kugou_search(keyword) -> list:
 
     return songs_list
 
+def repeat_get_resource(query) -> list:
+    return KugouApi.request("https://m3ws.kugou.com/zlist/list", method="GET", data=query).get('list', {}).get('info', [])
 
-def kugou_playlist(url):
-    pass
+def kugou_playlist(url) -> list:
+    songs_list = []
+    res = KugouApi.requestInstance(
+        url,
+        method="GET",
+    )
+    url = urlparse(res.url)
+    query = parse_qs(url.query)
+    query["page"] = 1
+    query["pagesize"] = 100 # 最大100
+    res_list = (
+        KugouApi.request("https://m3ws.kugou.com/zlist/list", method="GET", data=query).get('list', {})
+    )
+    res_data = res_list.get('info', [])
+    res_count = res_list.get('count', 0)
+    repeat_count = math.floor(res_count / (query["page"] * query["pagesize"]))
+
+    while repeat_count > 0:
+        repeat_count -= 1
+        query["page"] += 1
+        for item in repeat_get_resource(query):
+            res_data.append(item)
+
+    for item in res_data:
+        song = KugouSong()
+        song.source = "kugou"
+        song.id = item.get("fileid", "")
+        singer_title = item.get("name", "").split(' - ')
+        song.title = singer_title[1]
+        song.singer = singer_title[0]
+        song.duration = int(item.get("timelen", 0) / 1000) 
+        song.album = item.get("album_id", "")
+        song.size = round(item.get("size", 0) / 1048576, 2)
+        song.hash = item.get("hash", "")
+        songs_list.append(song)
+
+    return songs_list
 
 
 search = kugou_search

@@ -31,3 +31,15 @@ class MusicApi:
         if not resp.text:
             raise ResponseError("No response data.")
         return resp.json()
+
+    @classmethod
+    def requestInstance(cls, url, method="POST", data=None):
+        if method == "GET":
+            resp = cls.session.get(url, params=data, timeout=7)
+        else:
+            resp = cls.session.post(url, data=data, timeout=7)
+        if resp.status_code != requests.codes.ok:
+            raise RequestError(resp.text)
+        if not resp.text:
+            raise ResponseError("No response data.")
+        return resp
