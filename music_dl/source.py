@@ -135,7 +135,7 @@ class MusicSource:
         sources_map = {
             # "baidu.com": "baidu",
             # "flac": "flac",
-            # "kugou.com": "kugou",
+            "kugou.com": "kugou",
             "163.com": "netease",
             # "qq.com": "qq",
             # "xiami.com": "xiami",
