@@ -26,7 +26,19 @@ class KugouSong(BasicSong):
         self.hash = ""
 
     def download_lyrics(self):
-        pass
+        url = f"http://krcs.kugou.com/search?ver=1&client=mobi&duration=&hash={self.hash}&album_audio_id="
+        req = KugouApi.request(url, method="GET")
+        id = req.get('candidates')[0].get('id')
+        accesskey = req.get('candidates')[0].get('accesskey')
+        song = req.get('candidates')[0].get('song')
+        url_lrc = f"http://lyrics.kugou.com/download?ver=1&client=pc&id={id}&accesskey={accesskey}&fmt=lrc&charset=utf8"
+        res_lrc = KugouApi.request(
+            url_lrc, method="GET"
+        )
+        import base64
+        self.lyrics_text = base64.b64decode(res_lrc.get('content')).decode("utf-8")
+        if self.lyrics_text:
+            super(KugouSong, self)._save_lyrics_text()
 
     def download(self):
         params = dict(cmd="playInfo", hash=self.hash)
