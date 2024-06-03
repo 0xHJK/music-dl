@@ -98,6 +98,7 @@ def run():
 @click.option("--lyrics", default=False, is_flag=True, help=_("同时下载歌词"))
 @click.option("--cover", default=False, is_flag=True, help=_("同时下载封面"))
 @click.option("--nomerge", default=False, is_flag=True, help=_("不对搜索结果列表排序和去重"))
+@click.option("-f", "--filename", default="search_list.txt", help=_("从指定文件中搜索"))
 def main(
     keyword,
     url,
@@ -110,12 +111,13 @@ def main(
     lyrics,
     cover,
     nomerge,
+    filename,
 ):
     """
         Search and download music from netease, qq, kugou, baidu and xiami.
         Example: music-dl -k "周杰伦"
     """
-    if sum([bool(keyword), bool(url), bool(playlist)]) != 1:
+    if sum([bool(keyword), bool(url), bool(playlist)]) != 1 and not filename:
         # click.echo(_("ERROR: 必须指定搜索关键字、歌曲的URL或歌单的URL中的一个") + "\n", err=True)
         # ctx = click.get_current_context()
         # click.echo(ctx.get_help())
@@ -147,9 +149,24 @@ def main(
     )
 
     try:
-        run()
+        if filename:
+            click.echo(f"从文件中下载音乐列表: {filename}")
+            search_list = []
+            with open(file=filename, mode="r", encoding="utf-8") as f:
+                search_list = [line for line in f.readlines() if line.strip()]
+            if search_list:
+                process_song_list(search_list)
+        else:
+            run()
     except (EOFError, KeyboardInterrupt):
         sys.exit(0)
+
+
+def process_song_list(song_list):
+    ms = MusicSource()
+    for keyword in song_list:
+        songs_list = ms.search(keyword, config.get("source").split())
+        menu(songs_list)
 
 
 if __name__ == "__main__":
