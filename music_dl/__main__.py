@@ -25,8 +25,6 @@ def menu(songs_list):
     tb.field_names = ["序号", "歌名", "歌手", "大小", "时长", "专辑", "来源"]
     # 遍历输出搜索列表
     songs_list.sort(key=lambda x: x.size)
-    for song in songs_list:
-        print(song.size)
     for index, song in enumerate(songs_list):
         song.idx = index
         tb.add_row(song.row)
