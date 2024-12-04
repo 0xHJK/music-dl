@@ -36,7 +36,7 @@ class KugouSong(BasicSong):
             url_lrc, method="GET"
         )
         import base64
-        self.lyrics_text = base64.b64decode(res_lrc.get('content')).decode("utf-8")
+        self.lyrics_text = base64.b64decode(res_lrc.get('content')).decode("utf-8-sig")
         if self.lyrics_text:
             super(KugouSong, self)._save_lyrics_text()
 
