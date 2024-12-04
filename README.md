@@ -78,7 +78,7 @@ $ cd music-dl
 $ pip3 install -r requirements.txt
 $ ./music-dl
 
-# 或 python3 music-dl
+# 或 python3 -m music-dl
 ```
 
 在以下环境测试通过：
