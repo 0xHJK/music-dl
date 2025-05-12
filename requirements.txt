@@ -2,3 +2,4 @@ click
 requests
 pycryptodome
 prettytable
+pygame>=2.0.0

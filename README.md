@@ -51,6 +51,10 @@ QQ群：[785798493](//shang.qq.com/wpa/qunwpa?idkey=ead6a77d50b8dbaa73cf78809aca
 - 支持搜索结果去重和排序
 - 支持搜索关键字高亮
 - 支持下载歌词和封面（部分）
+- 支持按文件大小和歌曲时长过滤搜索结果 (使用`--filter`参数)
+- 支持下载后自动播放功能 (使用`--play`参数)
+- 播放器支持常见控制功能：空格暂停/继续，左右切换歌曲，,/.前进后退5秒，q退出
+- 播放时可以用d键删除不喜欢的歌曲（从硬盘和播放列表中删除）
 
 > 注意：仅支持Python3，建议使用 **Python3.5 以上版本**
 
@@ -115,6 +119,8 @@ Options:
   --lyrics              同时下载歌词
   --cover               同时下载封面
   --nomerge             不对搜索结果列表排序和去重
+  --filter TEXT         按文件大小和歌曲时长过滤搜索结果
+  --play                开启下载后自动播放功能
   --help                Show this message and exit.
 ```
 
@@ -123,6 +129,23 @@ Options:
 - 默认对搜索结果排序和去重，排序顺序按照歌手和歌名排序，当两者都相同时保留最大的文件。
 - 无损音乐歌曲数量较少，如果没有无损会显示320K或128K。
 - 支持http代理和socks代理，格式形如`-x http://127.0.0.1:1087`或`-x socks5://127.0.0.1:1086`
+
+- filter支持的属性包括：
+  - `size`: 文件大小，单位为MB
+  - `length`: 歌曲时长，单位为秒
+
+- filter支持的操作符包括：
+  - `>`: 大于
+  - `<`: 小于
+  - `=`: 等于
+
+  ```bash
+  music-dl -k --filter "size>8" #只显示大于8MB的歌曲
+  music-dl -k --filter "size<3" #只显示小于3MB的歌曲
+  music-dl -k --filter "length>300" #只显示大于5分钟的歌曲
+  music-dl -k --filter "length>180,length<300" #只显示3-5分钟之间的歌曲
+  music-dl -k --filter "size>3,size<8,length>240" #只显示3-8MB之间的歌曲，且时长超过4分钟
+  ```
 
 示例：
 
