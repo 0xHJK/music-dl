@@ -37,6 +37,10 @@ def init():
         "lyrics": False,
         # 下载封面 --cover
         "cover": False,
+        # 下载后播放 --play
+        "play": False,
+        # 过滤器，如'size>8,length>300'表示大于8MB且时长超过5分钟
+        "filter": "",
         # 一般情况下的headers
         "fake_headers": {
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",  # noqa

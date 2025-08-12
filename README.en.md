@@ -36,6 +36,10 @@ English | [中文文档](https://github.com/0xHJK/music-dl/blob/master/README.md
 - Support for multithreading searching
 - Support for merging and sorting results
 - Support keyword highlighting
+- Support for filtering search results by file size and song duration (using `--filter` parameter)
+- Support for auto-play after downloading (using `--play` parameter)
+- Player supports common controls: space to pause/resume, left/right to switch songs, ,/. to move 5 seconds backward/forward, q to quit
+- While playing, press d to delete songs you don't like (removes from disk and playlist)
 
 ## Installation
 
@@ -82,8 +86,36 @@ Options:
   -x, --proxy TEXT     Set proxy (like http://127.0.0.1:1087)
   -m, --merge          Sort and merge
   -v, --verbose        Verbose mode
+  --lyrics              Download lyrics
+  --cover               Download cover image
+  --nomerge             Don't sort and merge search results
+  --filter TEXT         Filter search results by file size and song duration
+  --play                Enable auto-play after downloading
   --help               Show this message and exit.
 ```
+
+- Default search sources are `qq netease kugou baidu`, with a limit of 5 results each, and the save directory is the current directory.
+- When specifying numbers, you can use formats like `1-5 7 10`.
+- By default, search results are sorted and deduplicated. Sorting is based on artist and song name, and when both are the same, the largest file is kept.
+- Lossless music tracks are limited in number. If lossless is not available, 320K or 128K will be displayed.
+- HTTP and SOCKS proxies are supported, in formats like `-x http://127.0.0.1:1087` or `-x socks5://127.0.0.1:1086`.
+
+- Attributes supported by filter include:
+  - `size`: File size in MB
+  - `length`: Song duration in seconds
+
+- Operators supported by filter include:
+  - `>`: Greater than
+  - `<`: Less than
+  - `=`: Equal to
+
+  ```bash
+  music-dl -k --filter "size>8" # Only show songs larger than 8MB
+  music-dl -k --filter "size<3" # Only show songs smaller than 3MB
+  music-dl -k --filter "length>300" # Only show songs longer than 5 minutes
+  music-dl -k --filter "length>180,length<300" # Only show songs between 3-5 minutes
+  music-dl -k --filter "size>3,size<8,length>240" # Only show songs between 3-8MB and longer than 4 minutes
+  ```
 
 Example:
 

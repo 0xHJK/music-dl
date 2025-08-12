@@ -280,6 +280,8 @@ class BasicSong:
     def download_song(self):
         if self.song_url:
             self._download_file(self.song_url, self.song_fullname, stream=True)
+        else:
+            self.logger.error(_("Download failed: song URL is empty"))
 
     def download_lyrics(self):
         if self.lyrics_url:
